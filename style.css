@@ -1,0 +1,96 @@
+.barrita {
+    height: 100vh;
+}
+
+.derecha {
+    /* background-color: aqua */
+}
+
+.azul {
+    /* background-color: blue */
+}
+
+.roja {
+    /* background-color: red */
+}
+
+.verde {
+    /* background-color: green; */
+    height: 50vh;
+    max-height: 50vh;
+}
+
+#mapa {
+    height: 50vh;
+    max-height: 50vh;
+}
+
+.testimonios {
+    height: 50vh;
+    max-height: 50vh;
+}
+
+#burbujas {
+    height: 50vh;
+    max-height: 50vh;
+}
+
+.gen {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+body {
+    background-color: black;
+}
+
+.axis line {
+    stroke: white;
+}
+
+.axis path {
+    stroke: white;
+}
+
+.axis text {
+    fill: white;
+}
+
+.slider {
+    width: 50%;
+    margin: 100px auto;
+}
+
+.slick-slide {
+    margin: 0px 20px;
+}
+
+.slick-slide img {
+    width: 100%;
+}
+
+.slick-prev:before, .slick-next:before {
+    color: black;
+}
+
+.slick-slide {
+    transition: all ease-in-out .3s;
+    opacity: .2;
+}
+
+.slick-active {
+    opacity: .5;
+}
+
+.slick-current {
+    opacity: 1;
+}
+
+#push {
+    float: right;
+    float: left;
+}
+
+.slick-track{
+    width: 100% !important
+}
