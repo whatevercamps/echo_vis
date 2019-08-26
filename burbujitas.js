@@ -18,6 +18,7 @@ d3.json("https://raw.githubusercontent.com/whatevercamps/graph_jsons_tw_unfpa/ma
         iwidth = width_col_burb / 2 - margin.left - margin.right;
         iheight = height_col_burb - margin.top - margin.bottom;
         var xx = div_burb.append("svg").attr("width", width_col_burb).attr("height", height_col_burb).attr("id", "burbujas_svg");
+        xx.attr("transform", "translate(" + (div_width_bar/2*(-1)) + ", " + 0 + ")").attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);;
         var svg = xx
             .attr("width", width_col_burb)
             .attr("height", height_col_burb);
