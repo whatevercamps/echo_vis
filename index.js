@@ -139,13 +139,6 @@ fetch('https://raw.githubusercontent.com/whatevercamps/graph_jsons_tw_unfpa/mast
 				})
 
 			//fin historias
-
-			setTimeout(function(){
-				document.getElementById('nav').style.visibility = "visible";
-			
-				document.getElementById('loading').style.visibility = "hidden";
-			}, 1000);
-
 		}, 0);
 	})
 
