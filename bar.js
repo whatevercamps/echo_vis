@@ -3,7 +3,7 @@ setTimeout(function () {
     document.getElementById('nav').style.visibility = "visible";
 
     document.getElementById('loading').style.visibility = "hidden";
-}, 400);
+}, 200);
 
 var data = null;
 var div_bar = d3.select("#bar");
