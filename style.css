@@ -39,6 +39,9 @@
     padding-left: 10px !important;
     padding-right: 10px !important;
 }
+.navbarmargin{
+ height: 60px;
+}
 
 body {
     background-color: black;
@@ -102,9 +105,7 @@ body, .badgescard, .firstinfo {
     align-items: center;
 }
 
-html {
-    height: 100%;
-}
+
 
 body {
     font-family: 'Open Sans', sans-serif;
@@ -114,9 +115,9 @@ body {
     overflow: hidden;
 }
 
-*, *:before, *:after {
+/* *, *:before, *:after {
     box-sizing: border-box;
-}
+} */
 
 .content {
     position: relative;
@@ -333,4 +334,22 @@ body {
         width: 20px;
         height: 20px;
     }
+}
+
+
+#loading{
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; height:100%; 
+    background-color: #FFF; 
+    z-index: 1000;
+    
+}
+#loading img{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -20px;
+    margin-left: -30px;
 }

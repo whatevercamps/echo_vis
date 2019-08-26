@@ -36,11 +36,11 @@
 		}
 		col = d3.select("#mapa");
 		bounds_div = col.node().getBoundingClientRect();
-		height_svg = bounds_div.height - bounds_div.height * 10 / 100;
+		height_svg = bounds_div.height + bounds_div.height * 10 / 100;
 		scale = height_svg / 942.52;
 		svg = d3.select("#mapa_svg")
 			.attr("width", 1106.55 * scale)
-			.attr("height", height_svg);
+			.attr("height", height_svg).attr("transform", "translate(" + 0 + ", " + ((bounds_div.height * 10 / 100)+60)*(-1) + ")");
 
 		comunas_svg = svg.select('#Layer_2').select('#Layer_1-2');
 		data.forEach(element => {
