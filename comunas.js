@@ -49,7 +49,7 @@
 					return ods[element["first"]] != undefined ? ods[element.first].color : "rgb(255,255,255)"
 				}
 				return "rgb(255,255,255)";
-			}).on("mouseover", dy => console.log(dy)).on("mouseout", mouseOut);
+			}).on("mouseover", dy => console.log(male)).on("mouseout", mouseOut);
 
 		});
 

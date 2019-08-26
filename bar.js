@@ -8,12 +8,12 @@ setTimeout(function () {
 var data = null;
 var div_bar = d3.select("#bar");
 var bounds_div_bar = div_bar.node().getBoundingClientRect();
-var div_width_bar = bounds_div_bar.width;
+margin_bar = { top: 30, right: 0, bottom: 30, left: 70 }
+var div_width_bar = bounds_div_bar.width - margin_bar.left - margin_bar.right;
 var div_height_bar = bounds_div_bar.height - 60;
 var duration = 750;
 var barStep = div_height_bar / 19;
 barPadding = 3 / barStep;
-margin_bar = { top: 30, right: 30, bottom: 30, left: 70 }
 x = d3.scaleLinear().range([margin_bar.left, div_width_bar - margin_bar.right])
 
 function stagger() {
@@ -55,7 +55,11 @@ function bar(svg, down, d, selector) {
 
     bar.append("rect")
         .attr("x", x(0))
-        .attr("width", d => x(d.value) - x(0))
+        .attr("width", d => {
+            console.log(d.value + " y " + x(d.value));
+
+            return x(d.value) - x(0)
+        })
         .attr("height", barStep * (1 - barPadding));
 
     return g;
@@ -102,7 +106,10 @@ function down(svg_bar, d_param) {
         .attr("transform", stagger());
 
     // Update the x-scale domain.
-    x.domain([0, d3.max(d_param.children, d => d.value)]);
+    console.log("escala cambiada");
+    var max_en_down = d3.max(d_param.children, d => { console.log(d.value + " y " + x(d.value)); return d.value });
+    console.log("max en down: " + max_en_down);
+    x.domain([0, max_en_down]);
 
     // Update the x-axis.
     svg_bar.selectAll(".x-axis").transition(transition2)
@@ -117,8 +124,12 @@ function down(svg_bar, d_param) {
         .attr("fill", color_bar(true))
         .attr("fill-opacity", 1)
         .transition(transition2)
-        .attr("fill", d => ods[d.data.name].color)
-        .attr("width", d => x(d.value) - x(0));
+        .attr("fill", d => ods[d.data.name] != undefined ? ods[d.data.name].color : "rgb(255,255,255)")
+        .attr("width", d => {
+            console.log(d);
+            console.log(d.value + " y2 " + x(d.value));
+            return x(d.value) - x(0);
+        });
 }
 
 
@@ -142,6 +153,7 @@ function up(svg_bar, d_param) {
         .attr("class", "exit");
 
     // Update the x-scale domain.
+    console.log("escala cambiada");
     x.domain([0, d3.max(d_param.parent.children, d => d.value)]);
 
     // Update the x-axis.
@@ -158,7 +170,11 @@ function up(svg_bar, d_param) {
 
     // Transition exiting rects to the new scale and fade to parent color.
     exit.selectAll("rect").transition(transition1)
-        .attr("width", d => x(d.value) - x(0))
+        .attr("width", d => {
+            console.log(d.value + " y " + x(d.value));
+
+            return x(d.value) - x(0)
+        })
         .attr("fill", color_bar(true));
 
     // Transition exiting text to fade out.
@@ -186,15 +202,24 @@ function up(svg_bar, d_param) {
         .attr("fill", d => color_bar(!!d.children))
         .attr("fill-opacity", p => p === d_param ? 0 : null)
         .transition(transition2)
-        .attr("width", d => x(d.value) - x(0))
+        .attr("width", d => {
+            console.log(d.value + " y " + x(d.value));
+
+            return x(d.value) - x(0)
+        })
         .on("end", function (p) { d3.select(this).attr("fill-opacity", 1); });
 }
 
 
 d3.json("https://raw.githubusercontent.com/whatevercamps/graph_jsons_tw_unfpa/master/sunburst.json").then(response => {
 
-    data = response;
 
+    dibujar_barritas(response)
+
+})
+
+
+function dibujar_barritas(data) {
     xAxis = g => g
         .attr("class", "x-axis axis")
         .attr("transform", `translate(0,${margin_bar.top})`)
@@ -217,9 +242,9 @@ d3.json("https://raw.githubusercontent.com/whatevercamps/graph_jsons_tw_unfpa/ma
         .sort((a, b) => b.value - a.value)
         .eachAfter(d => d.index = d.parent ? d.parent.index = d.parent.index + 1 || 0 : 0)
 
-
+    div_bar.select("svg").remove();
     const svg_bar = div_bar.append("svg").attr("width", div_width_bar).attr("height", div_height_bar).attr("id", "bar_svg");
-
+    console.log("escala cambiada");
     x.domain([0, root.value]);
 
     svg_bar.append("rect")
@@ -238,6 +263,4 @@ d3.json("https://raw.githubusercontent.com/whatevercamps/graph_jsons_tw_unfpa/ma
         .call(yAxis);
 
     down(svg_bar, root);
-
-
-})
+}
