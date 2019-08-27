@@ -12,7 +12,7 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
-<body class="">
+<body class="noScroll">
 
     <nav id="nav" class="navbar fixed-top navbar-light bg-light" style="visibility: hidden">
         <a class="navbar-brand" href="">
@@ -23,7 +23,7 @@
     <div class="container-fluid" id="myDiv">
 
 
-        <div class="row section">
+        <div id='sect0' class="row section">
 
             <div class="tooltips">
                 <h1>Bienvenido al sistema de visualizaciones ECHO.</h1>
@@ -43,7 +43,7 @@
                 </svg>
             </div>
         </div>
-        <div class="row section">
+        <div id='sect1' class="row section">
             <div class="barrita col-md-4" id="bar">
 
             </div>
@@ -190,13 +190,34 @@
         </div>
     </div>
 
-    <div class="card option_card">
+    <div class="card option_card" style="background-color: #f8f9fa; border-bottom: 4px solid #AAAAAA;">
         <div class="card-body">
-            <ul id="menu">
-                <li><i id="male" class="fa fa-male boton "></i></li>
-                <li><i id="female" class="fa fa-female boton"></i></li>
-                <li id="apply" class="boton">Adelante</li>
-            </ul>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <button id='male' type="button" class="btn btn-hot text-uppercase">Hombre</button>
+                    </div>
+                    <div class="col-6">
+                        <button id='female' type="button" class="btn btn-hot text-uppercase">Mujer</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <button id='edge' type="button" class="btn btn-hot text-uppercase">Joven</button>
+                    </div>
+                    <div class="col-4">
+                        <button id='vibe' type="button" class="btn btn-hot text-uppercase">Adulto</button>
+                    </div>
+                    <div class="col-4">
+                        <button id='one' type="button" class="btn btn-hot text-uppercase">Mayor</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 boton">
+                        <button id='apply' type="button" class="btn btn-hot text-uppercase">Filtrar</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
