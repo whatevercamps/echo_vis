@@ -404,3 +404,8 @@ ul#menu li {
 svg {
     z-index: 100;
 }
+
+
+.row_30vh {
+    height: 30vh;
+}

@@ -194,7 +194,7 @@ function down(svg_bar, d_param, color_ods) {
         .attr("fill", color_bar(true))
         .attr("fill-opacity", 1)
         .transition(transition2)
-        .attr("fill", d => odss_bar[d.data.name] != undefined ? odss_bar[d.data.name].color : color_ods)
+        .attr("fill", d => odss_bar[d.data.name] != undefined ? odss_bar[d.data.name].color : color_ods || "rgb(255,255,255)")
         .attr("width", d => {
             //console.log(d);
             //console.log(d.value + " y2 " + x(d.value));
