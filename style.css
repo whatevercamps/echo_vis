@@ -16,23 +16,23 @@
 
 .verde {
     /* background-color: green; */
-    height: 50vh;
-    max-height: 50vh;
+    height: 30vh;
+    max-height: 30vh;
 }
 
 #mapa {
-    height: 50vh;
-    max-height: 50vh;
+    height: 30vh;
+    max-height: 30vh;
 }
 
 .testimonios {
-    height: 50vh;
-    max-height: 50vh;
+    height: 30vh;
+    max-height: 30vh;
 }
 
 #burbujas {
-    height: 50vh;
-    max-height: 50vh;
+    height: 30vh;
+    max-height: 30vh;
 }
 
 .btn {
@@ -399,4 +399,8 @@ ul#menu li {
 
 .active_boton {
     color: red
+}
+
+svg {
+    z-index: 100;
 }

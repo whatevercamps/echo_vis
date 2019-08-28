@@ -29,7 +29,8 @@ function dibujar_burbujas(res_hist, res_ods) {
     iheight = height_col_burb - margin.top - margin.bottom;
     div_burb.select("svg").remove();
     var xx = div_burb.append("svg").attr("width", width_col_burb).attr("height", height_col_burb).attr("id", "burbujas_svg");
-    xx.attr("transform", "translate(" + (div_width_bar / 2 * (-1)) + ", " + 0 + ")").attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);;
+    //xx.attr("transform", "translate(" + (div_width_bar / 2 * (-1)) + ", " + 0 + ")");
+    xx.attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);;
     var svg = xx
         .attr("width", width_col_burb)
         .attr("height", height_col_burb);

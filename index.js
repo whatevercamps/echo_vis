@@ -70,6 +70,7 @@ this.mapaCalor = function (item) {
 
 };
 
+
 function tooltipHtml(n, d) {	/* function to create html content string in tooltip div. */
 	return "<h4>" + 'Comuna ' + n.split(')')[0] + ': ' + n.split(')')[1] + "</h4><table>" +
 		"<tr><td>1. </td><td>" + (ods[d.first].name) + "</td></tr>" +
@@ -79,67 +80,67 @@ function tooltipHtml(n, d) {	/* function to create html content string in toolti
 }
 
 
-
-fetch('https://raw.githubusercontent.com/whatevercamps/graph_jsons_tw_unfpa/master/comuna_vs_ods.json')
-	.then(function (res) {
-		return res.json();
-	}).then(function (data) {
-
-
-
-		var sampleData = [];	/* Sample random data. */
-		["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "CO1", "CO2", "CO3", "CO4", "CO5"]
-			.forEach(function (dd) {
-				var d = data.find(function (ele) {
-					return ele.id == dd;
-				});
-				if (d != undefined && d.comuna != undefined && d.comuna != null && d.comuna != "") {
-					var first = d.datos[0].name,
-						second = d.datos[1].name,
-						third = d.datos[2].name,
-						id = d.id;
-					sampleData.push( {
-						first: first,
-						second: second,
-						third: third,
-						id: id
-					});
-				} else {
-					sampleData.push( {
-						first: null,
-						second: null,
-						third: null,
-						id: dd
-					});
-				}
-			});
-		//console.log(sampleData);
-		uStates.draw("#statesvg", sampleData, tooltipHtml);
-		// d3.select(self.frameElement).style("height", "600px");
-		//mapa.attr('transform', 'rotate(-90 0 0)');
-
-
-		setTimeout(function () {
-
-			//historias
-
-			/* 
-
-	<h1>John Doe</h1>
-                                        <h3>Swift developer</h3>
-                                        <p class="bio">Lived all my life on the top of mount Fuji, learning the way to
-											be a Ninja Dev.</p>
-											
-											*/
-
-			fetch('https://echoun.herokuapp.com/historias/4').then(data => data.json())
-				.then(res => {
-					var div = document.getElementById('historiajeje');
-
-				})
-
-			//fin historias
-		}, 0);
+req.numero = 3;
+postData('http://echoun.herokuapp.com/odsComuna', req)
+	.then(function (data) {
+		dibujar_mapita(data)
 	})
 
 
+
+function dibujar_mapita(data){
+	console.log(data);
+	var sampleData = [];	/* Sample random data. */
+	["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "CO1", "CO2", "CO3", "CO4", "CO5"]
+		.forEach(function (dd) {
+			var d = data.find(function (ele) {
+				return ele.id == dd;
+			});
+			if (d != undefined && d.comuna != undefined && d.comuna != null && d.comuna != "") {
+				var first = d.datos[0] != undefined ? d.datos[0].name : "",
+					second =  d.datos[1] != undefined ? d.datos[1].name: "",
+					third = d.datos[2] != undefined ? d.datos[2].name: "",
+					id = d.id;
+				sampleData.push( {
+					first: first,
+					second: second,
+					third: third,
+					id: id
+				});
+			} else {
+				sampleData.push( {
+					first: null,
+					second: null,
+					third: null,
+					id: dd
+				});
+			}
+		});
+	//console.log(sampleData);
+	uStates.draw("#statesvg", sampleData, tooltipHtml);
+	// d3.select(self.frameElement).style("height", "600px");
+	//mapa.attr('transform', 'rotate(-90 0 0)');
+
+
+	setTimeout(function () {
+
+		//historias
+
+		/* 
+
+<h1>John Doe</h1>
+									<h3>Swift developer</h3>
+									<p class="bio">Lived all my life on the top of mount Fuji, learning the way to
+										be a Ninja Dev.</p>
+										
+										*/
+
+		fetch('https://echoun.herokuapp.com/historias/4').then(data => data.json())
+			.then(res => {
+				var div = document.getElementById('historiajeje');
+
+			})
+
+		//fin historias
+	}, 0);
+}
