@@ -16,23 +16,48 @@
 
 .verde {
     /* background-color: green; */
-    height: 50vh;
-    max-height: 50vh;
+    height: 30vh;
+    max-height: 30vh;
 }
 
 #mapa {
-    height: 50vh;
-    max-height: 50vh;
+    height: 30vh;
+    max-height: 30vh;
 }
 
 .testimonios {
-    height: 50vh;
-    max-height: 50vh;
+    height: 30vh;
+    max-height: 30vh;
 }
 
 #burbujas {
-    height: 50vh;
-    max-height: 50vh;
+    height: 30vh;
+    max-height: 30vh;
+}
+
+.btn {
+    margin: 4px;
+    box-shadow: 1px 1px 5px #888888;
+}
+
+.btn-hot {
+    color: #000;
+    background-color: #b1b1b1;
+    border-bottom: 2px solid #a4a4a4;
+}
+
+.btn-hot:hover, .btn-sky.active:focus, .btn-hot:focus, .open>.dropdown-toggle.btn-hot {
+    color: #fff;
+    background-color: #df6a78;
+    border-bottom: 2px solid #b25560;
+    outline: none;
+}
+
+.btn-hot:active, .btn-hot.active {
+    color: #fff;
+    background-color: #c04b59;
+    border-top: 2px solid #9a3c47;
+    margin-top: 2px;
 }
 
 .gen {
@@ -341,6 +366,7 @@ body {
     position: fixed;
     top: 60px;
     z-index: 100;
+    width: 15vw;
 }
 
 .boton {
@@ -369,4 +395,12 @@ ul#menu li {
 .tooltips p {
     color: aliceblue;
     font-size: 2vh;
+}
+
+.active_boton {
+    color: red
+}
+
+svg {
+    z-index: 100;
 }

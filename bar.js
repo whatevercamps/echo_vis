@@ -1,4 +1,73 @@
-
+odss_bar = {
+    "ods_1": {
+        "name": "Fin de la pobreza",
+        "color": "rgb(231, 56, 65)"
+    },
+    "ods_2": {
+        "name": "Hambre cero",
+        "color": "rgb(224, 164, 60)"
+    },
+    "ods_3": {
+        "name": "Salud y bienestar",
+        "color": "rgb(78, 160, 73)"
+    },
+    "ods_4": {
+        "name": "Educación de calidad",
+        "color": "rgb(200, 46, 51)"
+    },
+    "ods_5": {
+        "name": "Igualdad de género",
+        "color": "rgb(236, 63, 51)"
+    },
+    "ods_6": {
+        "name": "Agua limpia y saneamiento",
+        "color": "rgb(77, 191, 234)"
+    },
+    "ods_7": {
+        "name": "Energía asequible y no contaminante",
+        "color": "rgb(248, 195, 70)"
+    },
+    "ods_8": {
+        "name": "Trabajo y crecimiento económico",
+        "color": "rgb(167, 40, 70)"
+    },
+    "ods_9": {
+        "name": "Industria, innovación e infraestructura",
+        "color": "rgb(239, 105, 55)"
+    },
+    "ods_10": {
+        "name": "Reducción de las desigualdades",
+        "color": "rgb(224, 58, 104)"
+    },
+    "ods_11": {
+        "name": "Ciudades y comunidades sostenible",
+        "color": "rgb(244, 157, 63)"
+    },
+    "ods_12": {
+        "name": "Producción y consumo responsables",
+        "color": "rgb(191, 138, 50)"
+    },
+    "ods_13": {
+        "name": "Acción por el clima",
+        "color": "rgb(67, 126, 74)"
+    },
+    "ods_14": {
+        "name": "Vida submarina",
+        "color": "rgb(54, 150, 215)"
+    },
+    "ods_15": {
+        "name": "Vida de ecosistemas terrestres",
+        "color": "rgb(93, 184, 72)"
+    },
+    "ods_16": {
+        "name": "Paz, justicia e instituciones sólidas",
+        "color": "rgb(35, 105, 157)"
+    },
+    "ods_17": {
+        "name": "Alianzas para lograr los objetivos",
+        "color": "rgb(21, 71, 108)"
+    }
+};
 setTimeout(function () {
     document.getElementById('nav').style.visibility = "visible";
 
@@ -44,7 +113,8 @@ function bar(svg, down, d, selector) {
         .data(d.children)
         .join("g")
         .attr("cursor", d => !d.children ? null : "pointer")
-        .on("click", d => down(svg, d));
+        
+        .on("click", d => down(svg, d, odss_bar[d.data.name] != undefined ? odss_bar[d.data.name].color : "rgb(255,255,255)"));
 
     bar.append("text")
         .attr("x", margin_bar.left - 6)
@@ -56,7 +126,7 @@ function bar(svg, down, d, selector) {
     bar.append("rect")
         .attr("x", x(0))
         .attr("width", d => {
-            console.log(d.value + " y " + x(d.value));
+            //console.log(d.value + " y " + x(d.value));
 
             return x(d.value) - x(0)
         })
@@ -66,8 +136,8 @@ function bar(svg, down, d, selector) {
 }
 
 
-function down(svg_bar, d_param) {
-    console.log('d_param')
+function down(svg_bar, d_param, color_ods) {
+    //console.log('d_param')
     if (!d_param.children || d3.active(svg_bar.node())) return;
 
     // Rebind the current node to the background.
@@ -106,9 +176,9 @@ function down(svg_bar, d_param) {
         .attr("transform", stagger());
 
     // Update the x-scale domain.
-    console.log("escala cambiada");
-    var max_en_down = d3.max(d_param.children, d => { console.log(d.value + " y " + x(d.value)); return d.value });
-    console.log("max en down: " + max_en_down);
+    //console.log("escala cambiada");
+    var max_en_down = d3.max(d_param.children, d => { return d.value });
+    //console.log("max en down: " + max_en_down);
     x.domain([0, max_en_down]);
 
     // Update the x-axis.
@@ -124,10 +194,10 @@ function down(svg_bar, d_param) {
         .attr("fill", color_bar(true))
         .attr("fill-opacity", 1)
         .transition(transition2)
-        .attr("fill", d => ods[d.data.name] != undefined ? ods[d.data.name].color : "rgb(255,255,255)")
+        .attr("fill", d => odss_bar[d.data.name] != undefined ? odss_bar[d.data.name].color : color_ods)
         .attr("width", d => {
-            console.log(d);
-            console.log(d.value + " y2 " + x(d.value));
+            //console.log(d);
+            //console.log(d.value + " y2 " + x(d.value));
             return x(d.value) - x(0);
         });
 }
@@ -153,7 +223,7 @@ function up(svg_bar, d_param) {
         .attr("class", "exit");
 
     // Update the x-scale domain.
-    console.log("escala cambiada");
+    //console.log("escala cambiada");
     x.domain([0, d3.max(d_param.parent.children, d => d.value)]);
 
     // Update the x-axis.
@@ -171,7 +241,7 @@ function up(svg_bar, d_param) {
     // Transition exiting rects to the new scale and fade to parent color.
     exit.selectAll("rect").transition(transition1)
         .attr("width", d => {
-            console.log(d.value + " y " + x(d.value));
+            //console.log(d.value + " y " + x(d.value));
 
             return x(d.value) - x(0)
         })
@@ -199,11 +269,11 @@ function up(svg_bar, d_param) {
     // Transition entering rects to the new x-scale.
     // When the entering parent rect is done, make it visible!
     enter.selectAll("rect")
-        .attr("fill", d => color_bar(!!d.children))
+    .attr("fill", d => odss_bar[d.data.name] != undefined ? odss_bar[d.data.name].color : "rgb(255,255,255)")
         .attr("fill-opacity", p => p === d_param ? 0 : null)
         .transition(transition2)
         .attr("width", d => {
-            console.log(d.value + " y " + x(d.value));
+            //console.log(d.value + " y " + x(d.value));
 
             return x(d.value) - x(0)
         })
@@ -244,7 +314,7 @@ function dibujar_barritas(data) {
 
     div_bar.select("svg").remove();
     const svg_bar = div_bar.append("svg").attr("width", div_width_bar).attr("height", div_height_bar).attr("id", "bar_svg");
-    console.log("escala cambiada");
+    //console.log("escala cambiada");
     x.domain([0, root.value]);
 
     svg_bar.append("rect")

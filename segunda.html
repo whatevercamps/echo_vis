@@ -12,7 +12,7 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
-<body class="">
+<body class="noScroll">
 
     <nav id="nav" class="navbar fixed-top navbar-light bg-light" style="visibility: hidden">
         <a class="navbar-brand" href="">
@@ -23,7 +23,7 @@
     <div class="container-fluid" id="myDiv">
 
 
-        <div class="row section">
+        <div id='sect0' class="row section">
 
             <div class="tooltips">
                 <h1>Bienvenido al sistema de visualizaciones ECHO.</h1>
@@ -43,7 +43,7 @@
                 </svg>
             </div>
         </div>
-        <div class="row section">
+        <div id='sect1' class="row section">
             <div class="barrita col-md-4" id="bar">
 
             </div>
@@ -104,11 +104,8 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="row">
-                    <div class="roja col-lg-6" id="burbujas">
-                    </div>
                     <div id="mapa" class="col-lg-6 col-md-12 d-flex flex-row-reverse">
                         <svg xmlns="http://www.w3.org/2000/svg" id="mapa_svg" viewBox="0 0 1106.55 942.52"
                             visibility="hidden">
@@ -185,29 +182,58 @@
                             </g>
                         </svg>
                     </div>
+                    <div class="col-lg-6">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+
+                    </div>
+                    <div class="col-lg-4">
+
+                    </div>
+                    <div class="roja col-lg-4" id="burbujas">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="card option_card">
+    <div class="card option_card" style="background-color: #f8f9fa; border-bottom: 4px solid #AAAAAA;">
         <div class="card-body">
-            <ul id="menu">
-                <li><i id="male" class="fa fa-male boton "></i></li>
-                <li><i id="female" class="fa fa-female boton"></i></li>
-                <li id="apply" class="boton">Adelante</li>
-            </ul>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <button id='male' type="button" class="btn btn-hot text-uppercase">Hombre</button>
+                    </div>
+                    <div class="col-6">
+                        <button id='female' type="button" class="btn btn-hot text-uppercase">Mujer</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <button id='edge' type="button" class="btn btn-hot text-uppercase">Joven</button>
+                    </div>
+                    <div class="col-4">
+                        <button id='vibe' type="button" class="btn btn-hot text-uppercase">Adulto</button>
+                    </div>
+                    <div class="col-4">
+                        <button id='one' type="button" class="btn btn-hot text-uppercase">Mayor</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 boton">
+                        <button id='apply' type="button" class="btn btn-hot text-uppercase">Filtrar</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
 <!-- <script src="node_modules/requirejs/require.js"></script> -->
 <script src="https://d3js.org/d3.v5.min.js"></script>
-<script src="bar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-transform/1.0.4/d3-transform.js"></script>
-<script src="burbujitas.js"></script>
-<script src="comunas.js"></script>
-<script src="index.js"></script>
-<script src="gender_count.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -216,6 +242,11 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
 <script src="filtros.js"></script>
+<script src="bar.js"></script>
+<script src="burbujitas.js"></script>
+<script src="comunas.js"></script>
+<script src="index.js"></script>
+<script src="gender_count.js"></script>
 <script src="mapa_principal.js"></script>
 <script src="scroll_manager.js"></script>
 
