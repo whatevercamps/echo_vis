@@ -1,4 +1,5 @@
 var comunas_ordenadas = ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "CO1", "CO2", "CO3", "CO4", "CO5"];
+var datos_comuna_para_per_comuna;
 var ods = {
 	"ods_1": { "name": "Fin de la pobreza", "color": "rgb(231, 56, 65)" },
 	"ods_2": { "name": "Hambre cero", "color": "rgb(224, 164, 60)" },
@@ -89,8 +90,9 @@ postData('http://echoun.herokuapp.com/odsComuna', req)
 
 
 function dibujar_mapita(data){
-	console.log(data);
-	var sampleData = [];	/* Sample random data. */
+	datos_comuna_para_per_comuna = data;
+	var sampleData = [];
+	sel_map(0)	/* Sample random data. */
 		comunas_ordenadas.forEach(function (dd) {
 			var d = data.find(function (ele) {
 				return ele.id == dd;
@@ -114,6 +116,8 @@ function dibujar_mapita(data){
 					id: dd
 				});
 			}
+
+			comunas_ordenadas
 		});
 	//console.log(sampleData);
 	uStates.draw("#statesvg", sampleData, tooltipHtml);
