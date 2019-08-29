@@ -2,7 +2,7 @@ var row_comunas_ind = d3.select("#comunas_ind_row");
 var col_comunas_ind = d3.select("#comunas_ind_col");
 const bounds_row_comunas_ind = row_comunas_ind.node().getBoundingClientRect();
 const bounds_col_comunas_ind = col_comunas_ind.node().getBoundingClientRect();
-console.log(bounds_col_comunas_ind)
+// console.log(bounds_col_comunas_ind)
 const width_col_comunas_ind = bounds_col_comunas_ind.width;
 const height_row_comunas_ind = bounds_row_comunas_ind.height;
 
@@ -33,23 +33,31 @@ function arrow_mouse_leave() {
 }
 
 function click_arrow() {
-    console.log(this.id)
+    // console.log(this.id)
     if (this.id == "prev_comunas_ind" && sel_map_index > 0) {
         sel_map(sel_map_index - 1);
     } else if (this.id == "next_comunas_ind" && sel_map_index < comunas_ordenadas.length) {
-        console.log('next');
+        // console.log('next');
         sel_map(sel_map_index + 1);
     }
 }
 
 var arrows = svg_comunas_ind.select('#arrows_comunas_ind').selectAll("path").on('mouseover', arrow_mouse_over).on("mouseout", arrow_mouse_leave).on("click", click_arrow)
 
+function final_resolve(){
+    setTimeout(function () {
+        sel_map(0);
+        document.getElementById('nav').style.visibility = "visible";
+    
+        document.getElementById('loading').style.visibility = "hidden";
+    }, 300);
+}
 
 function sel_map(nn) {
     grupo_comunas_ind.select('#' + comunas_ordenadas[sel_map_index]).transition().duration(1000).style("opacity", 0)
     grupo_comunas_ind.select('#' + comunas_ordenadas[nn]).style("fill", d => {
-        console.log("asdad", datos_comuna_para_per_comuna);
-        console.log(datos_comuna_para_per_comuna.find(x => x.id == comunas_ordenadas[nn]).datos[0].name)
+        // console.log("asdad", datos_comuna_para_per_comuna);
+        // console.log(datos_comuna_para_per_comuna.find(x => x.id == comunas_ordenadas[nn]).datos[0].name)
         return ods[datos_comuna_para_per_comuna.find(x => x.id == comunas_ordenadas[nn]).datos[0].name] != undefined ? ods[datos_comuna_para_per_comuna.find(x => x.id == comunas_ordenadas[nn]).datos[0].name].color : "rgb(255,255,255)"
     }).transition().duration(1000).style("opacity", 1)
     sel_map_index = nn

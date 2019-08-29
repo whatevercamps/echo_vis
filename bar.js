@@ -68,12 +68,6 @@ odss_bar = {
         "color": "rgb(21, 71, 108)"
     }
 };
-setTimeout(function () {
-    document.getElementById('nav').style.visibility = "visible";
-
-    document.getElementById('loading').style.visibility = "hidden";
-}, 200);
-
 var data = null;
 var div_bar = d3.select("#bar");
 var bounds_div_bar = div_bar.node().getBoundingClientRect();

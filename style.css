@@ -21,8 +21,7 @@
 }
 
 #mapa {
-    height: 30vh;
-    max-height: 30vh;
+
 }
 
 .testimonios {
@@ -31,8 +30,7 @@
 }
 
 #burbujas {
-    height: 30vh;
-    max-height: 30vh;
+
 }
 
 .btn {
@@ -378,6 +376,10 @@ ul#menu li {
 }
 
 .section {
+    height: 100vh;
+}
+
+#sunburst_row{
     height: 100vh;
 }
 

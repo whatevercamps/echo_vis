@@ -36,21 +36,21 @@
 		}
 		col = d3.select("#mapa");
 		bounds_div = col.node().getBoundingClientRect();
-		height_svg = bounds_div.height + bounds_div.height * 80 / 100;
+		height_svg = bounds_div.height - bounds_div.height * 15 / 100;
 		scale = height_svg / 942.52;
 		svg = d3.select("#mapa_svg")
 			.attr("width", 1106.55 * scale)
-			.attr("height", height_svg).attr("transform", "translate(" + 0 + ", " + ((bounds_div.height * 5 / 100))*(-1) + ")");
+			.attr("height", height_svg).attr("transform", "translate(" + 0 + ", " + ((bounds_div.height * 15 / 100)/2) + ")");
 
 		comunas_svg = svg.select('#Layer_2').select('#Layer_1-2');
 		data.forEach(element => {
 			comunas_svg.select('#' + element.id).transition().duration(200).style("fill", d => {
-				if(element != undefined){
+				if (element != undefined) {
 					return "rgb(255,255,255)"
 				}
 				return "rgb(255,255,255)";
 			}).transition().delay(500).duration(1000).style("fill", d => {
-				if(element != undefined){
+				if (element != undefined) {
 					return ods[element["first"]] != undefined ? ods[element.first].color : "rgb(255,255,255)"
 				}
 				return "rgb(255,255,255)";
@@ -61,13 +61,18 @@
 		function over() {
 			d3.select(this).style("opacity", 0.8)
 		}
-		
+
 		function leave() {
 			d3.select(this).style("opacity", 1)
 		}
 
 		function clickeado() {
-			console.log(this)
+			act_sect++;
+			$('#sect' + (act_sect)).css('visibility', 'visible');
+			$('html, body').animate({
+				scrollTop: $("#sect" + act_sect).offset().top - 60
+			}, 500);
+			$('#sect' + (act_sect - 1)).css('visibility', 'hidden');
 		}
 
 		svg.selectAll('path').on("mouseover", over).on("mouseout", leave).on("click", clickeado)

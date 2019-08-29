@@ -92,7 +92,7 @@ postData('http://echoun.herokuapp.com/odsComuna', req)
 function dibujar_mapita(data){
 	datos_comuna_para_per_comuna = data;
 	var sampleData = [];
-	sel_map(0)	/* Sample random data. */
+	final_resolve(0)	/* Sample random data. */
 		comunas_ordenadas.forEach(function (dd) {
 			var d = data.find(function (ele) {
 				return ele.id == dd;

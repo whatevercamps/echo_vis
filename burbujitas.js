@@ -20,7 +20,9 @@ function dibujar_burbujas(res_hist, res_ods) {
     var div_burb = d3.select("#burbujas");
     const bounds_div_burb = div_burb.node().getBoundingClientRect();
     const width_col_burb = bounds_div_burb.width;
-    const height_col_burb = bounds_div_burb.height;
+    const height_col_burb = bounds_div_burb.height/2;
+    const body_width = d3.select('#sect2').node().getBoundingClientRect().width;
+    const body_height = d3.select('#sect2').node().getBoundingClientRect().height;
     const radio_calc = d3.scalePow().exponent(0.75).domain([0, d3.max(histograma, d => d.count)]).range([10, height_col_burb / 6]);
     color = d3.scaleOrdinal()
         .domain(dataset)
@@ -28,12 +30,12 @@ function dibujar_burbujas(res_hist, res_ods) {
     iwidth = width_col_burb / 2 - margin.left - margin.right;
     iheight = height_col_burb - margin.top - margin.bottom;
     div_burb.select("svg").remove();
-    var xx = div_burb.append("svg").attr("width", width_col_burb).attr("height", height_col_burb).attr("id", "burbujas_svg");
+    var xx = div_burb.append("svg").attr("width", width_col_burb).attr("width", body_width).attr("height", body_height).attr("id", "burbujas_svg");
     //xx.attr("transform", "translate(" + (div_width_bar / 2 * (-1)) + ", " + 0 + ")");
-    xx.attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);;
+    xx.attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
     var svg = xx
-        .attr("width", width_col_burb)
-        .attr("height", height_col_burb);
+        .attr("width", body_width)
+        .attr("height", body_height).attr("transform", "translate(-" + Math.abs(width_col_burb-body_width) + ", " + 0 + ")");
 
     var data = d3.range(17).map(d => {
         const ods = histograma.find(x => x.text == `ods_${d + 1}`);
@@ -119,6 +121,7 @@ function dibujar_burbujas(res_hist, res_ods) {
         return force;
     }
     const main_g = svg.append("g");
+    main_g.attr("transform", "translate(" + Math.abs(body_width - width_col_burb) + ", " + 0 + ")")
     const node = main_g
         .selectAll(".node")
         .data(data)
