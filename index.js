@@ -148,6 +148,3 @@ function dibujar_mapita(data){
 		//fin historias
 	}, 0);
 }
-
-$(function () {
-});
