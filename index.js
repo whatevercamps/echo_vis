@@ -1,3 +1,4 @@
+
 var comunas_ordenadas = ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "CO1", "CO2", "CO3", "CO4", "CO5"];
 var datos_comuna_para_per_comuna;
 var ods = {
@@ -147,3 +148,6 @@ function dibujar_mapita(data){
 		//fin historias
 	}, 0);
 }
+
+$(function () {
+});

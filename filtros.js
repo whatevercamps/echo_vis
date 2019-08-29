@@ -69,6 +69,40 @@ function postData(url = '', data) {
 
 }
 
+$("#filtra").click(function(){
+
+    var sexos = $('#pickerSexo').val()
+    var edades = $('#pickerEdad').val()
+
+    req = { sexos: sexos, edades: edades, corregimientos: corregimientos, respuesta: respuesta, numero: numero };
+    
+    respuesta = [0];
+    numero = 40;
+    corregimientos = ["Corregimientos", "4) Aranjuez", "16) Belén", "15) Guayabal", "NaN", "11) Laureles-Estadio", "12) La América", "5) Castilla", "7) Robledo", "6) Doce de Octubre", "13) San Javier", "1) Popular", "9) Buenos Aires", "3) Manrique", "2) Santa Cruz", "8) Villa Hermosa", "10) La Candelaria", "14) El Poblado", "otros"];
+    req = { sexos: sexos, edades: edades, corregimientos: corregimientos, respuesta: respuesta, numero: numero };
+    console.log(req);
+    postData('https://echoun.herokuapp.com/histograma_ods', req).then(data => {
+        console.log(data);
+        dibujar_burbujas(data, odss_res);
+    });
+
+    postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
+        dibujar_barritas(data);
+    });
+
+    postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
+        dibujar_barritas(data);
+    });
+    req2 = req;
+    req2.numero = 3;
+    postData('https://echoun.herokuapp.com/odsComuna', req2).then(data => {
+        dibujar_mapita(data);
+    });
+    
+})
+
+
+
 function filtrar() {
     console.log([male, female, edge, vibe, one])
     sexos = [];
