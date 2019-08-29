@@ -82,7 +82,7 @@ function tooltipHtml(n, d) {	/* function to create html content string in toolti
 
 
 req.numero = 3;
-postData('http://echoun.herokuapp.com/odsComuna', req)
+postData('https://echoun.herokuapp.com/odsComuna', req)
 	.then(function (data) {
 		dibujar_mapita(data)
 	})
