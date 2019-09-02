@@ -17,8 +17,7 @@ d3.json("https://raw.githubusercontent.com/whatevercamps/graph_jsons_tw_unfpa/ma
 function dibujar_sunburst(data) {
 
     grupito = d3.select('#grupo_sunburst');
-    console.log(grupito);
-    grupito.transition().duration(1000).style("opacity");
+    grupito.transition().duration(1000).attr("opacity", 0);
 
     var sunburst_col = d3.select("#sunburst_col");
     var sunburst_row = d3.select("#sect0");
@@ -67,11 +66,15 @@ function dibujar_sunburst(data) {
         .attr("viewBox", [0, 0, width_sunburst, width_sunburst])
         .style("font", "10px sans-serif");
 
-    
+    var prev_g = svg.select("#grupo_sunburst");
+    if(prev_g._groups[0][0] != undefined){
+        prev_g.transition().duration(1000).attr("opacity", 0).transition().delay(1000).remove()
+    }
 
     const g = svg.append("g")
         .attr("transform", `translate(${width_sunburst / 2},${width_sunburst / 2})`).attr("id", "grupo_sunburst");
 
+    g.attr("opacity", 0).transition().duration(1000).attr("opacity", 1);
     const path = g.append("g")
         .selectAll("path")
         .data(root.descendants().slice(1))
