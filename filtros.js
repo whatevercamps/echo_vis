@@ -92,12 +92,15 @@ $("#filtra").click(function(){
 
     postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
         dibujar_barritas(data);
+        dibujar_sunburst(data);
     });
     req2 = req;
     req2.numero = 3;
     postData('https://echoun.herokuapp.com/odsComuna', req2).then(data => {
         dibujar_mapita(data);
     });
+
+
     
 })
 
