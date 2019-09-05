@@ -1,5 +1,5 @@
 $('html, body').animate({
-    scrollTop: $("#sect" + 0).offset().top
+    scrollTop: $("#sect" + 0).offset().top - 60
 }, 1000);
 var act_sect = 0;
 var max_sect = 2;

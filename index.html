@@ -29,15 +29,15 @@
             <select id="pickerSexo" style="padding-bottom: 0px !important; padding-top: 0px !important;" multiple
                 title="Escoge sexo" data-actions-box="true" data-style="bg-white rounded-pill shadow-sm"
                 class="selectpicker">
-                <option value="Hombre">Hombre</option>
-                <option value="Mujer">Mujer</option>
+                <option value="Hombre" selected>Hombre</option>
+                <option value="Mujer" selected>Mujer</option>
             </select><!-- End -->
             <select id="pickerEdad" style="padding-bottom: 0px !important; padding-top: 0px !important;" multiple
                 title="Escoge rango edad" data-actions-box="true" data-style="bg-white rounded-pill shadow-sm"
                 class="selectpicker">
-                <option value="jovenes">Joven</option>
-                <option value="adultos">Adulto</option>
-                <option value="mayores">Adulto Mayor</option>
+                <option value="jovenes" selected>Joven</option>
+                <option value="adultos" selected>Adulto</option>
+                <option value="mayores" selected>Adulto Mayor</option>
             </select><!-- End -->
             <button id="filtra" type="button" class="btn btn-light">Filtra</button>
         </div>
@@ -48,19 +48,40 @@
 
 
         <div id='sect0' class="row section" data-title="¿Cuál es el principal problema de Medellín?">
-            <!-- 
-            <div class="tooltips">
-                <h1>Bienvenido al sistema de visualizaciones ECHO.</h1>
-                <hr>
-                <p>Desliza hacia abajo para continuar...</p>
-            </div> -->
-            <div class="col-lg-12" style="padding: 0" id="sunburst_col">
-                <svg id="svg_sunburst"></svg>
+            <div class="col-5">
+                <div class="row">
+                    <div class="col-12" style="padding: 0" id="sunburst_col">
+                        <svg id="svg_sunburst"></svg>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="row vh-30">
+
+                </div>
+                <div class="row vh-30">
+                    <div class="col-6">
+                        <img src="https://i0.wp.com/www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2016/01/S_SDG_Icons-01-11.jpg" id="imagen_ods_sun">
+                    </div>
+                    <div class="col-6">
+
+                    </div>
+                </div>
+                <div class="row vh-30">
+
+                </div>
+
+            </div>
+            <div class="col-2">
+                <h1>Ranking</h1>
+                <div class="row">
+
+                </div>
             </div>
         </div>
         <div id='sect1' class="row section" data-title="¿Cuál es el problema principal de su comuna?">
 
-            <div id="mapa" class="col-lg-8 d-flex flex-row-reverse">
+            <div id="mapa" class="col-8 d-flex flex-row-reverse">
                 <svg xmlns="http://www.w3.org/2000/svg" id="mapa_svg" viewBox="0 0 1106.55 942.52" visibility="hidden">
                     <title>mapa_final</title>
                     <g id="Layer_2" data-name="Layer 2">
@@ -135,19 +156,19 @@
                     </g>
                 </svg>
             </div>
-            <div class="roja col-lg-4" id="burbujas">
+            <div class="roja col-4" id="burbujas">
             </div>
         </div>
 
         <div id='sect2' class="row section" data-title="¿Cuál es el problema secundario de su comuna?">
-            <div class="barrita col-lg-4" id="bar"></div>
-            <div class="col-lg-8">
+            <div class="barrita col-4" id="bar"></div>
+            <div class="col-8">
                 <div class="row row_30vh">
-                    <div class="testimonios col-lg-12">
+                    <div class="testimonios col-12">
                         <div class="content">
                             <div class="container">
                                 <div class="row">
-                                    <div class="offset-md-2 col-lg-11">
+                                    <div class="offset-md-2 col-11">
                                         <div class="carousel slide" data-ride="carousel" id="quote-carousel">
                                             <div class="carousel-inner">
                                                 <div class="item active carousel-item">
@@ -197,7 +218,7 @@
                     </div>
                 </div>
                 <div class="row row_30vh" id="comunas_ind_row">
-                    <div class="col-lg-6" id="comunas_ind_col">
+                    <div class="col-6" id="comunas_ind_col">
                         <svg id="comunas_ind" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 225.75 88.46">
                             <title>svg_main</title>
                             <g id="todo_comunas_ind">

@@ -1,3 +1,5 @@
+const sdg_img_repo = "https://i0.wp.com/www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2016/01/S_SDG_Icons-01-";
+act_sdg = 0;
 
 
 
@@ -5,12 +7,10 @@
 
 
 
-d3.json("https://raw.githubusercontent.com/whatevercamps/graph_jsons_tw_unfpa/master/sunburst.json").then(response => {
-
-
-    dibujar_sunburst(response)
-
-})
+    postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
+        data.name = "ODS";
+        dibujar_sunburst(data);
+    });
 
 
 
@@ -27,13 +27,13 @@ function dibujar_sunburst(data) {
 
     margin_sunburst = { top: 30, right: 0, bottom: 30, left: 70 }
 
-    var width_sunburst_col = bounds_sunburst_col.width ;
-    var height_sunburst_col = bounds_sunburst_row.height ;
+    var width_sunburst_col = bounds_sunburst_col.width + (bounds_sunburst_col.width/100)*10;
+    var height_sunburst_col = bounds_sunburst_row.height + (bounds_sunburst_col.height/100)*10;
 
 
 
     width_sunburst = width_sunburst_col
-    radius_sunburst = Math.min(height_sunburst_col, width_sunburst_col)  / 3
+    radius_sunburst = Math.min(height_sunburst_col, width_sunburst_col)  / 5;
 
     format = d3.format(",d")
 
@@ -66,9 +66,9 @@ function dibujar_sunburst(data) {
         .attr("viewBox", [0, 0, width_sunburst, width_sunburst])
         .style("font", "10px sans-serif");
 
-    var prev_g = svg.select("#grupo_sunburst");
+    var prev_g = svg.selectAll("#grupo_sunburst");
     if(prev_g._groups[0][0] != undefined){
-        prev_g.transition().duration(1000).attr("opacity", 0).transition().delay(1000).remove()
+        prev_g.transition().duration(1000).attr("opacity", 0).transition().delay(1000).remove();
     }
 
     const g = svg.append("g")
@@ -81,10 +81,12 @@ function dibujar_sunburst(data) {
         .join("path")
         .attr("fill", d => { return ods[d.data.name] != undefined ? ods[d.data.name].color : ods[d.parent.data.name] != undefined ? ods[d.parent.data.name].color : "#ff"})
         .attr("fill-opacity", d => arcVisible(d.current) ? 1 : 0)
+        .attr("id", d=> `${d.ancestors().map(d => d.data.name).reverse().join("/")}`)
         .attr("d", d => arc(d.current));
 
     path.filter(d => d.children)
         .style("cursor", "pointer")
+        .on("mouseover", mouseover_sunburst)
         .on("click", clicked);
 
     path.append("title")
@@ -109,8 +111,17 @@ function dibujar_sunburst(data) {
         .attr("r", radius_sunburst)
         .attr("fill", "none")
         .attr("pointer-events", "all")
+
         .on("click", clicked);
 
+    function mouseover_sunburst(){
+        sdg_bur_id = `${this.id.toString()}`.split(/\//g)[1].split("_")[1];
+        if(sdg_bur_id.length < 2)
+            sdg_bur_id = "0" + sdg_bur_id
+        if(act_sdg != sdg_bur_id)
+            act_sdg = sdg_bur_id;
+            d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + act_sdg + ".jpg")
+    }
     function clicked(p) {
         parent.datum(p.parent || root);
 

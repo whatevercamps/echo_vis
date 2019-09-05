@@ -12,20 +12,35 @@ const iwidth_comunas_ind = 225.75 * scale_comunas_ind;
 
 var sel_map_index = 0;
 
+
+
 svg_comunas_ind = d3.select('#comunas_ind');
 svg_comunas_ind.attr('height', iheight_comunas_ind).attr('width', iwidth_comunas_ind);
 itrans_comunas_ind = -Math.abs(iwidth_comunas_ind - width_col_comunas_ind) / 2
 
 svg_comunas_ind.attr("transform", "translate(" + itrans_comunas_ind + ", " + 0 + ")")
 grupo_comunas_ind = svg_comunas_ind.select('#todo_comunas_ind').select('#mapa_comunas_ind');
+
+//console.log("main", svg_comunas_ind.node().getBoundingClientRect())
+comunas_ordenadas.forEach(element => {
+    path_para_scale = grupo_comunas_ind.select("#" + element);
+    h_p_grupito = path_para_scale.node().getBoundingClientRect().height;
+    scale_h_p = iheight_comunas_ind/h_p_grupito;
+
+   // console.log(element, grupo_comunas_ind.node().getBBox())
+    trans_h_p = (path_para_scale.node().getBoundingClientRect().width * scale_h_p)/2;
+    //jeje_h_p= -path_para_scale.node().getBBox().left;
+    path_para_scale.attr("transform", "translate(" + 0 + ", " + 0 + ") scale(" + scale_h_p + ")")
+});
+
 comunas_paths = grupo_comunas_ind.selectAll('path');
-comunas_paths.attr('height', iheight_comunas_ind).style('opacity', 0);
+
+comunas_paths.style('opacity', 0).attr('visibility', 'hidden');
 
 grupo_comunas_ind.attr("transform", "translate(" + 70 + ", " + 0 + ")");
 
 
 function arrow_mouse_over() {
-
     d3.select(this).transition().duration(200).style("fill", "#b1b1b1")
 }
 function arrow_mouse_leave() {
@@ -54,12 +69,13 @@ function final_resolve(){
 }
 
 function sel_map(nn) {
+ 
     grupo_comunas_ind.select('#' + comunas_ordenadas[sel_map_index]).transition().duration(1000).style("opacity", 0)
     grupo_comunas_ind.select('#' + comunas_ordenadas[nn]).style("fill", d => {
         // console.log("asdad", datos_comuna_para_per_comuna);
         // console.log(datos_comuna_para_per_comuna.find(x => x.id == comunas_ordenadas[nn]).datos[0].name)
         return ods[datos_comuna_para_per_comuna.find(x => x.id == comunas_ordenadas[nn]).datos[0].name] != undefined ? ods[datos_comuna_para_per_comuna.find(x => x.id == comunas_ordenadas[nn]).datos[0].name].color : "rgb(255,255,255)"
-    }).transition().duration(1000).style("opacity", 1)
+    }).transition().duration(1000).attr("visibility", "visible").style("opacity", 1);
     sel_map_index = nn
 }
 

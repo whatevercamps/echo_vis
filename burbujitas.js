@@ -23,7 +23,7 @@ function dibujar_burbujas(res_hist, res_ods) {
     const height_col_burb = bounds_div_burb.height/2;
     const body_width = d3.select('#sect2').node().getBoundingClientRect().width;
     const body_height = d3.select('#sect2').node().getBoundingClientRect().height;
-    const radio_calc = d3.scalePow().exponent(0.75).domain([0, d3.max(histograma, d => d.count)]).range([10, height_col_burb / 6]);
+    const radio_calc = d3.scalePow().exponent(0.5).domain([0, d3.max(histograma, d => d.count)]).range([10, height_col_burb / 6]);
     color = d3.scaleOrdinal()
         .domain(dataset)
         .range(['#F1892D', '#0EAC51', '#0077C0', '#7E349D', '#DA3C78', '#E74C3C']);

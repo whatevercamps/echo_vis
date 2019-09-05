@@ -1,4 +1,3 @@
-console.clear();
 
 ScrollIndicator = (function () {
 

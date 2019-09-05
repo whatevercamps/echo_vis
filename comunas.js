@@ -67,12 +67,9 @@
 		}
 
 		function clickeado() {
-			act_sect++;
-			$('#sect' + (act_sect)).css('visibility', 'visible');
-			$('html, body').animate({
-				scrollTop: $("#sect" + act_sect).offset().top - 60
-			}, 500);
-			$('#sect' + (act_sect - 1)).css('visibility', 'hidden');
+			bajar_scroll();
+			console.log(this.id);
+			sel_map(comunas_ordenadas.indexOf(this.id));
 		}
 
 		svg.selectAll('path').on("mouseover", over).on("mouseout", leave).on("click", clickeado)
