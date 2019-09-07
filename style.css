@@ -519,3 +519,11 @@ h1 {
     max-width:100%;
 max-height:100%;
 }
+
+.pr-30{
+    height: 30%;
+}
+
+#percent_ods{
+    font-size: 12vh;
+}

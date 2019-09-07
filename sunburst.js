@@ -2,15 +2,10 @@ const sdg_img_repo = "https://i0.wp.com/www.un.org/sustainabledevelopment/es/wp-
 act_sdg = 0;
 
 
-
-
-
-
-
-    postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
-        data.name = "ODS";
-        dibujar_sunburst(data);
-    });
+postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
+    data.name = "ODS";
+    dibujar_sunburst(data);
+});
 
 
 
@@ -27,13 +22,13 @@ function dibujar_sunburst(data) {
 
     margin_sunburst = { top: 30, right: 0, bottom: 30, left: 70 }
 
-    var width_sunburst_col = bounds_sunburst_col.width + (bounds_sunburst_col.width/100)*10;
-    var height_sunburst_col = bounds_sunburst_row.height + (bounds_sunburst_col.height/100)*10;
+    var width_sunburst_col = bounds_sunburst_col.width + (bounds_sunburst_col.width / 100) * 10;
+    var height_sunburst_col = bounds_sunburst_row.height + (bounds_sunburst_col.height / 100) * 10;
 
 
 
     width_sunburst = width_sunburst_col
-    radius_sunburst = Math.min(height_sunburst_col, width_sunburst_col)  / 5;
+    radius_sunburst = Math.min(height_sunburst_col, width_sunburst_col) / 5;
 
     format = d3.format(",d")
 
@@ -67,7 +62,7 @@ function dibujar_sunburst(data) {
         .style("font", "10px sans-serif");
 
     var prev_g = svg.selectAll("#grupo_sunburst");
-    if(prev_g._groups[0][0] != undefined){
+    if (prev_g._groups[0][0] != undefined) {
         prev_g.transition().duration(1000).attr("opacity", 0).transition().delay(1000).remove();
     }
 
@@ -79,10 +74,15 @@ function dibujar_sunburst(data) {
         .selectAll("path")
         .data(root.descendants().slice(1))
         .join("path")
-        .attr("fill", d => { return ods[d.data.name] != undefined ? ods[d.data.name].color : ods[d.parent.data.name] != undefined ? ods[d.parent.data.name].color : "#ff"})
+        .attr("fill", d => { return ods[d.data.name] != undefined ? ods[d.data.name].color : ods[d.parent.data.name] != undefined ? ods[d.parent.data.name].color : "#ff" })
         .attr("fill-opacity", d => arcVisible(d.current) ? 1 : 0)
-        .attr("id", d=> `${d.ancestors().map(d => d.data.name).reverse().join("/")}`)
-        .attr("d", d => arc(d.current));
+        .attr("id", d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}`)
+        .attr("d", d => {
+            return arc(d.current)
+        })
+        .attr("percentaje", d => {
+            return ((100/root.value)*d.value).toPrecision(3);
+        });
 
     path.filter(d => d.children)
         .style("cursor", "pointer")
@@ -102,7 +102,7 @@ function dibujar_sunburst(data) {
         .attr("dy", "0.35em")
         .attr('font-size', '1.5vw')
         .style("fill", "rgb(255,255,255)")
-        .attr("fill-opacity", d => d.children? 0:+labelVisible(d.current))
+        .attr("fill-opacity", d => d.children ? 0 : +labelVisible(d.current))
         .attr("transform", d => labelTransform(d.current))
         .text(d => d.data.name);
 
@@ -114,14 +114,20 @@ function dibujar_sunburst(data) {
 
         .on("click", clicked);
 
-    function mouseover_sunburst(){
+    function mouseover_sunburst() {
         sdg_bur_id = `${this.id.toString()}`.split(/\//g)[1].split("_")[1];
-        if(sdg_bur_id.length < 2)
+        if (sdg_bur_id.length < 2)
             sdg_bur_id = "0" + sdg_bur_id
-        if(act_sdg != sdg_bur_id)
+        if (act_sdg != sdg_bur_id) {
             act_sdg = sdg_bur_id;
-            d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + act_sdg + ".jpg")
+            d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + act_sdg + ".jpg");
+            var per = d3.select(this)._groups[0][0].__data__.value;
+            perc = (100/root.value)*per;
+            val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
+            d3.select('#percent_ods').text(`${val_to_show}%`)
+        }
     }
+
     function clicked(p) {
         parent.datum(p.parent || root);
 
@@ -145,7 +151,7 @@ function dibujar_sunburst(data) {
             .filter(function (d) {
                 return +this.getAttribute("fill-opacity") || arcVisible(d.target);
             })
-            .attr("fill-opacity", d => arcVisible(d.target) ?1 : 0)
+            .attr("fill-opacity", d => arcVisible(d.target) ? 1 : 0)
             .attrTween("d", d => () => arc(d.current));
 
         label.filter(function (d) {
