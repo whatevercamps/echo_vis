@@ -132,7 +132,7 @@ function dibujar_sunburst(data) {
                 max_meta = element
         });
         
-        d3.select('#imagen_meta_sun').attr('src', targest_img_repo + max_meta.data.name.split("_")[1] + "." + max_meta.data.name.split("_")[2] + ".png");
+        d3.select('#imagen_meta_sun').attr('src', targest_img_repo + `${max_meta.data.name.split("_")[1]}`.toUpperCase() + "." + `${max_meta.data.name.split("_")[2]}`.toUpperCase() + ".png");
         d3.select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
         per = max_meta.data.value;
         perc = (100 / root.value) * per;
@@ -161,7 +161,7 @@ function dibujar_sunburst(data) {
                     max_meta = element
             });
 
-            d3.select('#imagen_meta_sun').attr('src', targest_img_repo + max_meta.data.name.split("_")[1] + "." + max_meta.data.name.split("_")[2] + ".png");
+            d3.select('#imagen_meta_sun').attr('src', targest_img_repo + `${max_meta.data.name.split("_")[1]}`.toUpperCase() + "." + `${max_meta.data.name.split("_")[2]}`.toUpperCase() + ".png");
             d3.select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
             per = max_meta.data.value;
             perc = (100 / root.value) * per;
