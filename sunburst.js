@@ -1,6 +1,6 @@
 const sdg_img_repo = "https://i0.wp.com/www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2016/01/S_SDG_Icons-01-";
 act_sdg = 0;
-
+targest_img_repo = "assets/global-goals-media-cards/MC_Target_";
 
 postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
     data.name = "ODS";
@@ -124,6 +124,21 @@ function dibujar_sunburst(data) {
         perc = (100 / root.value) * per;
         val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
         d3.select('#percent_ods').text(`${val_to_show}%`).attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
+
+
+        max_meta =  max_ods_sun.children[0];
+        max_ods_sun.children.forEach(element => {
+            if(max_meta.data.value < element.data.value)
+                max_meta = element
+        });
+        
+        d3.select('#imagen_meta_sun').attr('src', targest_img_repo + max_meta.data.name.split("_")[1] + "." + max_meta.data.name.split("_")[2] + ".png");
+        d3.select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
+        per = max_meta.data.value;
+        perc = (100 / root.value) * per;
+        val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
+        d3.select('#percent_meta').text(`${val_to_show}%`)
+
     })();
 
     function mouseover_sunburst() {
@@ -138,7 +153,7 @@ function dibujar_sunburst(data) {
             val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
             d3.select('#percent_ods').text(`${val_to_show}%`)
 
-            d3.select('#imagen_meta_sun').attr('src', sdg_img_repo + act_sdg + ".jpg");
+            
 
             max_meta =  d3.select(this)._groups[0][0].__data__.children[0];
             d3.select(this)._groups[0][0].__data__.children.forEach(element => {
@@ -146,6 +161,7 @@ function dibujar_sunburst(data) {
                     max_meta = element
             });
 
+            d3.select('#imagen_meta_sun').attr('src', targest_img_repo + max_meta.data.name.split("_")[1] + "." + max_meta.data.name.split("_")[2] + ".png");
             d3.select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
             per = max_meta.data.value;
             perc = (100 / root.value) * per;
