@@ -1,6 +1,6 @@
 const sdg_img_repo = "https://i0.wp.com/www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2016/01/S_SDG_Icons-01-";
 act_sdg = 0;
-targest_img_repo = "assets/global-goals-media-cards/MC_Target_";
+targest_img_repo = "https://raw.githubusercontent.com/whatevercamps/echo_vis/master/assets/global-goals-media-cards/MC_Target_";
 
 postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
     data.name = "ODS";
