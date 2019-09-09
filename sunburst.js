@@ -79,9 +79,6 @@ function dibujar_sunburst(data) {
         .attr("id", d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}`)
         .attr("d", d => {
             return arc(d.current)
-        })
-        .attr("percentaje", d => {
-            return ((100/root.value)*d.value).toPrecision(3);
         });
 
     path.filter(d => d.children)
@@ -114,6 +111,21 @@ function dibujar_sunburst(data) {
 
         .on("click", clicked);
 
+    (_ => {
+        max_ods_sun = root.children[0];
+        root.children.forEach(element => {
+            if (element.value > max_ods_sun.value)
+                max_ods_sun = element
+        });
+
+        sdg_bur_id = max_ods_sun.data.name.split("_")[1];
+        d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + sdg_bur_id + ".jpg").attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
+        per = max_ods_sun.value;
+        perc = (100 / root.value) * per;
+        val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
+        d3.select('#percent_ods').text(`${val_to_show}%`).attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
+    })();
+
     function mouseover_sunburst() {
         sdg_bur_id = `${this.id.toString()}`.split(/\//g)[1].split("_")[1];
         if (sdg_bur_id.length < 2)
@@ -121,10 +133,24 @@ function dibujar_sunburst(data) {
         if (act_sdg != sdg_bur_id) {
             act_sdg = sdg_bur_id;
             d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + act_sdg + ".jpg");
-            var per = d3.select(this)._groups[0][0].__data__.value;
-            perc = (100/root.value)*per;
+            per = d3.select(this)._groups[0][0].__data__.value;
+            perc = (100 / root.value) * per;
             val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
             d3.select('#percent_ods').text(`${val_to_show}%`)
+
+            d3.select('#imagen_meta_sun').attr('src', sdg_img_repo + act_sdg + ".jpg");
+
+            max_meta =  d3.select(this)._groups[0][0].__data__.children[0];
+            d3.select(this)._groups[0][0].__data__.children.forEach(element => {
+                if(max_meta.data.value < element.data.value)
+                    max_meta = element
+            });
+
+            d3.select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
+            per = max_meta.data.value;
+            perc = (100 / root.value) * per;
+            val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
+            d3.select('#percent_meta').text(`${val_to_show}%`)
         }
     }
 
