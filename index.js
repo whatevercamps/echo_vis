@@ -91,6 +91,7 @@ postData('https://echoun.herokuapp.com/odsComuna', req)
 
 
 function dibujar_mapita(data){
+	console.log(data);
 	datos_comuna_para_per_comuna = data;
 	var sampleData = [];
 	final_resolve(0)	/* Sample random data. */
@@ -139,11 +140,11 @@ function dibujar_mapita(data){
 										
 										*/
 
-		fetch('https://echoun.herokuapp.com/historias/4').then(data => data.json())
-			.then(res => {
-				var div = document.getElementById('historiajeje');
+		// fetch('https://echoun.herokuapp.com/historias/4').then(data => data.json())
+		// 	.then(res => {
+		// 		var div = document.getElementById('historiajeje');
 
-			})
+		// 	})
 
 		//fin historias
 	}, 0);

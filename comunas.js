@@ -26,6 +26,7 @@
 	var uStates = {};
 	var random_value = false;
 	uStates.draw = function (id, data, toolTip) {
+	
 		//console.log(data);
 		function mouseOver(dt) {
 			//console.log(dt)
@@ -82,7 +83,7 @@
 			.on("mouseover", mouseOver).on("mouseout", mouseOut);
 */
 		svg.attr("visibility", "visible");
-		svg.select('#CO1').style("fill", "#dedede")
+		//svg.select('#CO1').style("fill", "#dedede")
 	}
 	//d3.selectAll("#mapa_svg").attr("transform", d3.transform().scale(d => height_svg/900)); 
 	this.uStates = uStates;

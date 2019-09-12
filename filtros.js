@@ -13,10 +13,9 @@ edge ? edades.push('jovenes') : '';
 vibe ? edades.push('adultos') : '';
 one ? edades.push('mayores') : '';
 
-var respuesta = [0];
+var respuesta = [2];
 var numero = 40;
-var corregimientos = ["Corregimientos", "4) Aranjuez", "16) Belén", "15) Guayabal", "NaN", "11) Laureles-Estadio", "12) La América", "5) Castilla", "7) Robledo", "6) Doce de Octubre", "13) San Javier", "1) Popular", "9) Buenos Aires", "3) Manrique", "2) Santa Cruz", "8) Villa Hermosa", "10) La Candelaria", "14) El Poblado", "otros"];
-var req = { sexos: sexos, edades: edades, corregimientos: corregimientos, respuesta: respuesta, numero: numero };
+var req = { sexos: sexos, edades: edades, respuesta: respuesta, numero: numero };
 
 $("#male").click(d => {
     male = !male;
@@ -80,9 +79,9 @@ $("#filtra").click(function(){
     numero = 40;
     corregimientos = ["Corregimientos", "4) Aranjuez", "16) Belén", "15) Guayabal", "NaN", "11) Laureles-Estadio", "12) La América", "5) Castilla", "7) Robledo", "6) Doce de Octubre", "13) San Javier", "1) Popular", "9) Buenos Aires", "3) Manrique", "2) Santa Cruz", "8) Villa Hermosa", "10) La Candelaria", "14) El Poblado", "otros"];
     req = { sexos: sexos, edades: edades, corregimientos: corregimientos, respuesta: respuesta, numero: numero };
-    console.log(req);
+
     postData('https://echoun.herokuapp.com/histograma_ods', req).then(data => {
-        console.log(data);
+
         dibujar_burbujas(data, odss_res);
     });
 
@@ -91,7 +90,7 @@ $("#filtra").click(function(){
     });
 
     postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
-        dibujar_barritas(data);
+        data.name = "ODS";
         dibujar_sunburst(data);
     });
     req2 = req;
