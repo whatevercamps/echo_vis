@@ -4,9 +4,8 @@ var nivel_profundidad = 1;
 targest_img_repo = "assets/global-goals-media-cards/MC_Target_";
 var col_5_ods = null;
 var req_sun_inic = { ...req };
-req.numero = 1023;
-
-postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
+req_sun_inic.numero = 1023;
+postData('https://echoun.herokuapp.com/sunburst', req_sun_inic).then(data => {
     data.name = "ODS";
     dibujar_sunburst(data);
 });
@@ -63,6 +62,8 @@ function dibujar_sunburst(data) {
     root = partition(data);
 
     root.each(d => d.current = d);
+
+    console.log(root);
 
     const svg = d3.select('#svg_sunburst')
         .attr("width", width_sunburst)
@@ -133,6 +134,8 @@ function dibujar_sunburst(data) {
 
 
         sdg_bur_id = max_ods_sun.data.name.split("_")[1];
+        if (sdg_bur_id.length < 2)
+            sdg_bur_id = "0" + sdg_bur_id
         d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + sdg_bur_id + ".jpg").attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
         per = max_ods_sun.value;
         perc = (100 / root.value) * per;
@@ -163,7 +166,7 @@ function dibujar_sunburst(data) {
 
         path.attr("fill-opacity", d => {
             if (arcVisible(d.current)) {
-                return d.data.name == sdg_bur_id ? 1 : 0.7;
+                return d.data.name == sdg_bur_id ? 0.7 : 1;
             } else
                 return 0
         });
@@ -180,7 +183,7 @@ function dibujar_sunburst(data) {
 
         path.attr("fill-opacity", d => {
             if (arcVisible(d.current)) {
-                return d.data.name.split("ods_")[1] == sdg_bur_id ? 1 : 0.7;
+                return d.data.name.split("ods_")[1] == sdg_bur_id ? 0.7 : 1;
             } else
                 return 0
         });

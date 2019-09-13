@@ -525,7 +525,14 @@ max-height:100%;
 }
 
 #percent_ods{
-    font-size: 12vh;
+    font-size: 7vh;
+    margin-top: 5vh;
+    font-weight: bold;
+}
+
+#nombre_comuna{
+    font-size: 250%;
+    font-weight: bold;
 }
 
 .pr-70 {
@@ -556,6 +563,11 @@ max-height:100%;
 .vh-70 {
     height: 70vh;
 }
+
+.vh-60 {
+    height: 60vh;
+}
+
 
 .vh-10 {
     height: 10vh;
