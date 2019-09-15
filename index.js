@@ -91,10 +91,10 @@ postData('https://echoun.herokuapp.com/odsComuna', req)
 
 
 function dibujar_mapita(data){
-	console.log(data);
+	console.log("data_deback", data);
 	datos_comuna_para_per_comuna = data;
 	var sampleData = [];
-	final_resolve(0)	/* Sample random data. */
+
 		comunas_ordenadas.forEach(function (dd) {
 			var d = data.find(function (ele) {
 				return ele.id == dd;
@@ -103,12 +103,14 @@ function dibujar_mapita(data){
 				var first = d.datos[0] != undefined ? d.datos[0].name : "",
 					second =  d.datos[1] != undefined ? d.datos[1].name: "",
 					third = d.datos[2] != undefined ? d.datos[2].name: "",
-					id = d.id;
+					id = d.id,
+					name = d.comuna;
 				sampleData.push( {
 					first: first,
 					second: second,
 					third: third,
-					id: id
+					id: id,
+					name: name
 				});
 			} else {
 				sampleData.push( {
@@ -123,29 +125,12 @@ function dibujar_mapita(data){
 		});
 	//console.log(sampleData);
 	uStates.draw("#statesvg", sampleData, tooltipHtml);
+	uStates.draw_segundo("", sampleData, tooltipHtml);
 	// d3.select(self.frameElement).style("height", "600px");
 	//mapa.attr('transform', 'rotate(-90 0 0)');
 
 
-	setTimeout(function () {
-
-		//historias
-
-		/* 
-
-<h1>John Doe</h1>
-									<h3>Swift developer</h3>
-									<p class="bio">Lived all my life on the top of mount Fuji, learning the way to
-										be a Ninja Dev.</p>
-										
-										*/
-
-		// fetch('https://echoun.herokuapp.com/historias/4').then(data => data.json())
-		// 	.then(res => {
-		// 		var div = document.getElementById('historiajeje');
-
-		// 	})
-
-		//fin historias
-	}, 0);
+	avisar();
+	sel_map(0);
 }
+

@@ -1,10 +1,10 @@
 var row_comunas_ind = d3.select("#comunas_ind_row");
 var col_comunas_ind = d3.select("#comunas_ind_col");
-const bounds_row_comunas_ind = row_comunas_ind.node().getBoundingClientRect();
-const bounds_col_comunas_ind = col_comunas_ind.node().getBoundingClientRect();
+const bounds_row_comunas_ind = 0//row_comunas_ind.node().getBoundingClientRect();
+const bounds_col_comunas_ind = 0//col_comunas_ind.node().getBoundingClientRect();
 // console.log(bounds_col_comunas_ind)
-const width_col_comunas_ind = bounds_col_comunas_ind.width;
-const height_row_comunas_ind = bounds_row_comunas_ind.height;
+const width_col_comunas_ind = 0//bounds_col_comunas_ind.width;
+const height_row_comunas_ind = 0//bounds_row_comunas_ind.height;
 
 const iheight_comunas_ind = bounds_row_comunas_ind.height;
 var scale_comunas_ind = height_row_comunas_ind / 88.46;
@@ -21,23 +21,23 @@ itrans_comunas_ind = -Math.abs(iwidth_comunas_ind - width_col_comunas_ind) / 2
 svg_comunas_ind.attr("transform", "translate(" + itrans_comunas_ind + ", " + 0 + ")")
 grupo_comunas_ind = svg_comunas_ind.select('#todo_comunas_ind').select('#mapa_comunas_ind');
 
-//console.log("main", svg_comunas_ind.node().getBoundingClientRect())
-comunas_ordenadas.forEach(element => {
-    path_para_scale = grupo_comunas_ind.select("#" + element);
-    h_p_grupito = path_para_scale.node().getBoundingClientRect().height;
-    scale_h_p = iheight_comunas_ind/h_p_grupito;
+// //console.log("main", svg_comunas_ind.node().getBoundingClientRect())
+// comunas_ordenadas.forEach(element => {
+//     path_para_scale = grupo_comunas_ind.select("#" + element);
+//     h_p_grupito = path_para_scale.node().getBoundingClientRect().height;
+//     scale_h_p = iheight_comunas_ind/h_p_grupito;
 
-   // console.log(element, grupo_comunas_ind.node().getBBox())
-    trans_h_p = (path_para_scale.node().getBoundingClientRect().width * scale_h_p)/2;
-    //jeje_h_p= -path_para_scale.node().getBBox().left;
-    path_para_scale.attr("transform", "translate(" + 0 + ", " + 0 + ") scale(" + scale_h_p + ")")
-});
+//    // console.log(element, grupo_comunas_ind.node().getBBox())
+//     trans_h_p = (path_para_scale.node().getBoundingClientRect().width * scale_h_p)/2;
+//     //jeje_h_p= -path_para_scale.node().getBBox().left;
+//     path_para_scale.attr("transform", "translate(" + 0 + ", " + 0 + ") scale(" + scale_h_p + ")")
+// });
 
-comunas_paths = grupo_comunas_ind.selectAll('path');
+// comunas_paths = grupo_comunas_ind.selectAll('path');
 
-comunas_paths.style('opacity', 0).attr('visibility', 'hidden');
+// comunas_paths.style('opacity', 0).attr('visibility', 'hidden');
 
-grupo_comunas_ind.attr("transform", "translate(" + 70 + ", " + 0 + ")");
+// grupo_comunas_ind.attr("transform", "translate(" + 70 + ", " + 0 + ")");
 
 
 function arrow_mouse_over() {
@@ -59,14 +59,7 @@ function click_arrow() {
 
 var arrows = svg_comunas_ind.select('#arrows_comunas_ind').selectAll("path").on('mouseover', arrow_mouse_over).on("mouseout", arrow_mouse_leave).on("click", click_arrow)
 
-function final_resolve(){
-    setTimeout(function () {
-        sel_map(0);
-        document.getElementById('nav').style.visibility = "visible";
-    
-        document.getElementById('loading').style.visibility = "hidden";
-    }, 300);
-}
+
 
 function sel_map(nn) {
  

@@ -1,45 +1,45 @@
-const sdg_img_repo = "https://i0.wp.com/www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2016/01/S_SDG_Icons-01-";
-act_sdg = 0;
-var nivel_profundidad = 1;
-targest_img_repo = "assets/global-goals-media-cards/MC_Target_";
-var col_5_ods = null;
-var req_sun_inic = { ...req };
-req_sun_inic.numero = 1023;
-postData('https://echoun.herokuapp.com/sunburst', req_sun_inic).then(data => {
+
+
+
+var req_sun_inic_dos = { ...req };
+req_sun_inic_dos.numero = 1023;
+postData('https://echoun.herokuapp.com/sunburst', req_sun_inic_dos).then(data => {
+    log("req_popular", req_sun_inic_dos)
+    console.log("popular", data)
     data.name = "ODS";
-    console.log("medellin", data)
-    log("req_medellin", req_sun_inic)
-    dibujar_sunburst(data);
+    dibujar_sunburst_comuna(data);
     avisar();
 });
 
 
 
-function dibujar_sunburst(data) {
-    var removes = d3.select("#quitame");
+function dibujar_sunburst_comuna(data) {
+    var col_5_ods = null;
+    var act_sdg = 0;
+    var removes = d3.select("#comuna_aislada").select("#quitame");
     removes.remove();
-    nivel_profundidad = 1;
-    $("#sera_que_es_este").append(profundidad_1);
+    var nivel_profundidad = 1;
+    //$("#mapas_juntos").append(profundidad_1);
 
 
-    grupito = d3.select('#grupo_sunburst');
+    grupito = d3.select("#mapas_juntos").select('#grupo_sunburst');
     //grupito.transition().duration(1000).attr("opacity", 0);
 
-    var sunburst_col = d3.select("#sunburst_col");
-    var sunburst_row = d3.select("#sect0");
+    var sunburst_col = d3.select("#sunburst_col_intr");
+    var sunburst_row = d3.select("#sunburst_row_intr");
 
     var bounds_sunburst_col = sunburst_col.node().getBoundingClientRect();
     var bounds_sunburst_row = sunburst_row.node().getBoundingClientRect();
 
-    margin_sunburst = { top: 30, right: 0, bottom: 30, left: 70 }
+    margin_sunburst = { top: 0, right: 0, bottom: 0, left: 0 }
 
     var width_sunburst_col = bounds_sunburst_col.width + (bounds_sunburst_col.width / 100) * 10;
     var height_sunburst_col = bounds_sunburst_row.height + (bounds_sunburst_col.height / 100) * 10;
 
 
 
-    width_sunburst = width_sunburst_col
-    radius_sunburst = Math.min(height_sunburst_col, width_sunburst_col) / 5;
+    width_sunburst = width_sunburst_col;
+    radius_sunburst = Math.min(height_sunburst_col, width_sunburst_col) / 4;
 
     format = d3.format(",d")
 
@@ -66,10 +66,10 @@ function dibujar_sunburst(data) {
 
     root.each(d => d.current = d);
 
-    console.log("root en medellin", root);
+    console.log("root en comuna", root);
 
-    const svg = d3.select('#svg_sunburst')
-        .attr("width", width_sunburst)
+    const svg = d3.select('#svg_sunburst_refer')
+        .attr("width", width_sunburst - (width_sunburst / 100) * 35)
         .attr("height", height_sunburst_col)
         .attr("viewBox", [0, 0, width_sunburst, width_sunburst])
         .style("font", "10px sans-serif");
@@ -128,7 +128,7 @@ function dibujar_sunburst(data) {
 
 
     (_ => {
-        //$("#sera_que_es_este").append(profundidad_1);
+        $("#comuna_aislada").append(profundidad_1);
         max_ods_sun = root.children[0];
         root.children.forEach(element => {
             if (element.value > max_ods_sun.value)
@@ -139,11 +139,11 @@ function dibujar_sunburst(data) {
         sdg_bur_id = max_ods_sun.data.name.split("_")[1];
         if (sdg_bur_id.length < 2)
             sdg_bur_id = "0" + sdg_bur_id
-        d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + sdg_bur_id + ".jpg").attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
+        d3.select('#comuna_aislada').select('#imagen_ods_sun').attr('src', sdg_img_repo + sdg_bur_id + ".jpg").attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
         per = max_ods_sun.value;
         perc = (100 / root.value) * per;
         val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
-        d3.select('#percent_ods').text(`${val_to_show}%`).attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
+        d3.select('#comuna_aislada').select('#percent_ods').text(`${val_to_show}%`).attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
 
         path.attr("fill-opacity", d => { return arcVisible(d.current) ? d.data.name.split("ods_")[1] == sdg_bur_id ? 1 : 0.7 : 0 });
         //path.select(`#ODS/ods_${sdg_bur_id}`).transition().duration(1000).attr("fill-opacity", d => arcVisible(d.current) ? 1 : 0);
@@ -154,12 +154,12 @@ function dibujar_sunburst(data) {
                 max_meta = element
         });
 
-        d3.select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
-        d3.select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
+        d3.select('#comuna_aislada').select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
+        d3.select('#comuna_aislada').select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
         per = max_meta.data.value;
         perc = (100 / root.value) * per;
         val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
-        d3.select('#percent_meta').text(`${val_to_show}%`)
+        d3.select('#comuna_aislada').select('#percent_meta').text(`${val_to_show}%`)
 
     })();
 
@@ -195,11 +195,11 @@ function dibujar_sunburst(data) {
             sdg_bur_id = "0" + sdg_bur_id
         if (act_sdg != sdg_bur_id) {
             act_sdg = sdg_bur_id;
-            d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + act_sdg + ".jpg");
+            d3.select('#comuna_aislada').select('#imagen_ods_sun').attr('src', sdg_img_repo + act_sdg + ".jpg");
             per = d3.select(this)._groups[0][0].__data__.value;
             perc = (100 / root.value) * per;
             val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
-            d3.select('#percent_ods').text(`${val_to_show}%`)
+            d3.select('#comuna_aislada').select('#percent_ods').text(`${val_to_show}%`)
 
 
             max_meta = d3.select(this)._groups[0][0].__data__.children[0];
@@ -208,19 +208,19 @@ function dibujar_sunburst(data) {
                     max_meta = element
             });
 
-            d3.select('#desc_meta_sun').text("\"" + descripciones_metas["meta_" + max_meta.data.name.split("meta_")[1].toUpperCase()] + "\"")
-            d3.select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
-            d3.select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
+            d3.select('#comuna_aislada').select('#desc_meta_sun').text("\"" + descripciones_metas["meta_" + max_meta.data.name.split("meta_")[1].toUpperCase()] + "\"")
+            d3.select('#comuna_aislada').select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
+            d3.select('#comuna_aislada').select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
             per = max_meta.data.value;
             perc = (100 / root.value) * per;
             val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
-            d3.select('#percent_meta').text(`${val_to_show}%`)
+            d3.select('#comuna_aislada').select('#percent_meta').text(`${val_to_show}%`)
         }
     }
 
     function clicked(p) {
 
-        console.log(p)
+        console.log("p en click comuna", p)
 
         parent.datum(p.parent || root);
 
@@ -258,20 +258,18 @@ function dibujar_sunburst(data) {
             console.log("es entrar")
             nivel_profundidad = 2;
 
-            col_5_ods = d3.select("#quitame");
+            var col_5_ods = d3.select('#comuna_aislada').select("#quitame");
             col_5_ods.remove();
 
 
-            $("#sera_que_es_este").append(profundidad_2);
-            d3.selectAll('#imagen_3meta_sun').data(p.children).join().attr('src', d => {
-                console.log(d);
-
+            $("#comuna_aislada").append(profundidad_2);
+            d3.select('#comuna_aislada').selectAll('#imagen_3meta_sun').data(p.children).join().attr('src', d => {
                 return "assets/Metas%20ODS/ODS%20" + d.parent.data.name.split("_")[1] + "/" + d.data.name.split("meta_")[1].replace("_", ".") + ".png"
             });
 
-            d3.selectAll('.desc_meta_sun_int').data(p.children).join().text(d => descripciones_metas["meta_" + d.data.name.split("meta_")[1].toUpperCase()]);
+            d3.select('#comuna_aislada').selectAll('.desc_meta_sun_int').data(p.children).join().text(d => descripciones_metas["meta_" + d.data.name.split("meta_")[1].toUpperCase()]);
 
-            const sunburst_barrita_col = d3.select("#prueba_barrita");
+            const sunburst_barrita_col = d3.select('#comuna_aislada').select("#prueba_barrita");
 
             const bounds_sunburst_barrita_col = sunburst_barrita_col.node().getBoundingClientRect();
 
@@ -291,7 +289,7 @@ function dibujar_sunburst(data) {
             var scale_per_barrita_sun = d3.scaleLinear()
                 .domain([0, max_meta.value]).range([0, width_percent_sunb_col - (width_percent_sunb_col / 100) * 20])
 
-            barritas_meta = d3.selectAll('.perc_barras_metas_sun').data(p.children).join().append("svg")
+            barritas_meta = d3.select('#comuna_aislada').selectAll('.perc_barras_metas_sun').data(p.children).join().append("svg")
                 .attr("viewBox", [0, 0, width_percent_sunb_col, height_percent_sunb_col])
                 .append("g")
                 .attr("fill", ods[p.data.name].color)
@@ -341,7 +339,7 @@ function dibujar_sunburst(data) {
             pata.metas = [max_meta.data.name];
 
             postData('https://echoun.herokuapp.com/historias/1', pata).then(testimonio => {
-                d3.select('#testimonio_sun').text(testimonio[0] != undefined ? testimonio[0].respuesta + "." : "")
+                d3.select('#comuna_aislada').select('#testimonio_sun').text(testimonio[0] != undefined ? testimonio[0].respuesta + "." : "")
             });
         }
 
@@ -349,10 +347,10 @@ function dibujar_sunburst(data) {
             console.log("es salir")
             nivel_profundidad = 1;
 
-            col_5_ods = d3.select("#quitame");
+            col_5_ods = d3.select('#comuna_aislada').select("#quitame");
             col_5_ods.remove();
 
-            $("#sera_que_es_este").append(profundidad_1);
+            $("#comuna_aislada").append(profundidad_1);
 
             (_ => {
                 max_ods_sun = root.children[0];
@@ -361,13 +359,16 @@ function dibujar_sunburst(data) {
                         max_ods_sun = element
                 });
 
-
                 sdg_bur_id = max_ods_sun.data.name.split("_")[1];
-                d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + sdg_bur_id + ".jpg").attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
+
+                if (sdg_bur_id.length < 2)
+                    sdg_bur_id = "0" + sdg_bur_id;
+
+                d3.select('#comuna_aislada').select('#imagen_ods_sun').attr('src', sdg_img_repo + sdg_bur_id + ".jpg").attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
                 per = max_ods_sun.value;
                 perc = (100 / root.value) * per;
                 val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
-                d3.select('#percent_ods').text(`${val_to_show}%`).attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
+                d3.select('#comuna_aislada').select('#percent_ods').text(`${val_to_show}%`).attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
 
                 path.attr("fill-opacity", d => { return arcVisible(d.current) ? d.data.name.split("ods_")[1] == sdg_bur_id ? 1 : 0.7 : 0 });
                 //path.select(`#ODS/ods_${sdg_bur_id}`).transition().duration(1000).attr("fill-opacity", d => arcVisible(d.current) ? 1 : 0);
@@ -378,12 +379,12 @@ function dibujar_sunburst(data) {
                         max_meta = element
                 });
 
-                d3.select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
-                d3.select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
+                d3.select('#comuna_aislada').select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
+                d3.select('#comuna_aislada').select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
                 per = max_meta.data.value;
                 perc = (100 / root.value) * per;
                 val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
-                d3.select('#percent_meta').text(`${val_to_show}%`)
+                d3.select('#comuna_aislada').select('#percent_meta').text(`${val_to_show}%`)
 
             })();
         }
