@@ -1,9 +1,12 @@
 var data_para_el_cambio;
+var height_svg_mapa1;
+var comuna_act = "C1";
 function cambiar_de_comuna(id_comuna) {
 	id_comuna = id_comuna || "C1";
+	comuna_act = id_comuna;
 	var svg = d3.select("#mapa_svg_dos");
 	var comunas_svg = svg.select('#Layer_2_dos').select('#Layer_1-2_dos');
-	comunas_svg.selectAll("path").transition().duration(1000).style("fill", "black");
+	comunas_svg.selectAll("path").transition().duration(1000).style("fill", "white");
 
 	comunas_svg.select("#" + id_comuna).transition().duration(1000).style("fill", x => {
 		var sel = data_para_el_cambio.filter(d => d.id == id_comuna)[0];
@@ -95,11 +98,12 @@ function cambiar_de_comuna(id_comuna) {
 		}
 		var col = d3.select("#mapa");
 		var bounds_div = col.node().getBoundingClientRect();
-		var height_svg = bounds_div.height - bounds_div.height * 15 / 100;
-		var scale = height_svg / 942.52;
+		height_svg_mapa1 = height_svg_mapa1 || bounds_div.height - bounds_div.height * 15 / 100;
+		console.log("height svg", height_svg_mapa1)
+		var scale = height_svg_mapa1 / 942.52;
 		var svg = d3.select("#mapa_svg")
 			.attr("width", 1106.55 * scale)
-			.attr("height", height_svg).attr("transform", "translate(" + 0 + ", " + ((bounds_div.height * 15 / 100) / 2) + ")");
+			.attr("height", height_svg_mapa1).attr("transform", "translate(" + 0 + ", " + 0 + ")");
 
 		var comunas_svg = svg.select('#Layer_2').select('#Layer_1-2');
 		data.forEach(element => {
@@ -108,7 +112,7 @@ function cambiar_de_comuna(id_comuna) {
 					return "rgb(255,255,255)"
 				}
 				return "rgb(255,255,255)";
-			}).transition().delay(500).duration(1000).attr("stroke-width", 1).attr("stroke", "white").style("fill", d => {
+			}).transition().delay(500).duration(1000).attr("stroke-width", 1).attr("stroke", "black").style("fill", d => {
 				if (element != undefined) {
 					return ods[element["first"]] != undefined ? ods[element.first].color : "rgb(255,255,255)"
 				}
@@ -117,10 +121,20 @@ function cambiar_de_comuna(id_comuna) {
 
 		});
 
-		function over() {
+		function over(d) {
 			svg.selectAll('path').style("opacity", 0.9);
 			d3.select(this).style("opacity", 1);
 			cambiar_ods_comuna(this);
+
+			exis_tooltip = d3.select("#tooltip")
+			console.log("mouse event", d3.event);
+			exis_tooltip.transition().duration(200).style("opacity", .9);
+			console.log("comuna", this)
+			d3.select("#tooltip").html(toolTip(comunitas.filter(d => d.id == this.id)))
+				.style("left", d3.event.layerX + "px")
+				.style("top", d3.event.layerY + "px")
+				.style("z-index", "1000");
+
 		}
 
 		function leave() {
@@ -134,7 +148,8 @@ function cambiar_de_comuna(id_comuna) {
 			sel_map(comunas_ordenadas.indexOf(this.id));
 		}
 
-		svg.selectAll('path').style("opacity", 0.9).on("mouseover", over).on("mouseout", leave).on("click", clickeado);
+		svg.selectAll('path').on("mouseover", over).on("mouseout", leave).on("click", clickeado);
+		svg.selectAll('path').style("opacity", 0.9);
 		svg.select("#C1").style("opacity", 1)
 		/*.selectAll("path").data(data, function(u,j) {return u != undefined? u.id : u}).enter().append("path");
 		//console.log(comunas_svg);
@@ -199,21 +214,29 @@ function cambiar_de_comuna(id_comuna) {
 		}
 		var col = d3.select("#mapa_refer_container_row");
 		var bounds_div = col.node().getBoundingClientRect();
-		var height_svg = bounds_div.height - bounds_div.height * 20 / 100;
-		var scale = height_svg / 942.52;
+		var height_svg_mapa1 = bounds_div.height - bounds_div.height * 20 / 100;
+		var scale = height_svg_mapa1 / 942.52;
 		var svg = d3.select("#mapa_svg_dos")
 			.attr("width", 1106.55 * scale)
-			.attr("height", height_svg).attr("transform", "translate(" + 1106.55 * scale / 10 + ", " + 0 + ")");
+			.attr("height", height_svg_mapa1).attr("transform", "translate(" + 1106.55 * scale / 10 + ", " + 0 + ")");
 
 		var comunas_svg = svg.select('#Layer_2_dos').select('#Layer_1-2_dos');
 
 		data.forEach(element => {
-			comunas_svg.select('#' + element.id).transition().duration(200).attr("stroke-width", 2).attr("stroke", "white").style("fill", "black");
+			comunas_svg.select('#' + element.id).transition().duration(200).attr("stroke-width", 2).attr("stroke", "black").style("fill", "white");
 		});
 
 		function over() {
 			svg.selectAll('path').style("opacity", 0.9);
 			d3.select(this).style("opacity", 1);
+
+			console.log("mouse event", d3.event);
+			d3.select("#tooltip").transition().duration(200).style("opacity", .9);
+			console.log("comuna", this)
+			d3.select("#tooltip").html(toolTip(comunitas.filter(d => d.id == this.id)))
+				.style("left", d3.event.layerX + "px")
+				.style("top", d3.event.layerY + "px")
+				.style("z-index", "1000");
 		}
 
 		function leave() {
@@ -246,7 +269,7 @@ function cambiar_de_comuna(id_comuna) {
 
 
 
-	//d3.selectAll("#mapa_svg").attr("transform", d3.transform().scale(d => height_svg/900)); 
+	//d3.selectAll("#mapa_svg").attr("transform", d3.transform().scale(d => height_svg_mapa1/900)); 
 	this.uStates = uStates;
 })();
 

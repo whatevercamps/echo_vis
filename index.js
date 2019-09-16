@@ -73,11 +73,10 @@ this.mapaCalor = function (item) {
 };
 
 
-function tooltipHtml(n, d) {	/* function to create html content string in tooltip div. */
-	return "<h4>" + 'Comuna ' + n.split(')')[0] + ': ' + n.split(')')[1] + "</h4><table>" +
-		"<tr><td>1. </td><td>" + (ods[d.first].name) + "</td></tr>" +
-		"<tr><td>2. </td><td>" + (ods[d.second].name) + "</td></tr>" +
-		"<tr><td>3. </td><td>" + (ods[d.third].name) + "</td></tr>" +
+function tooltipHtml(n) {	/* function to create html content string in tooltip div. */
+	console.log("n que llega", n)
+	return "<table>" +
+		"<tr><td>Comuna:</td><td>" +  n[0].n + "</td></tr>" +
 		"</table>";
 }
 

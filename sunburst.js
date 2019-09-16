@@ -5,6 +5,8 @@ targest_img_repo = "assets/global-goals-media-cards/MC_Target_";
 var col_5_ods = null;
 var req_sun_inic = { ...req };
 req_sun_inic.numero = 1023;
+var width_sunburst_col_pregunta1;
+var height_sunburst_col_pregunta1;
 postData('https://echoun.herokuapp.com/sunburst', req_sun_inic).then(data => {
     data.name = "ODS";
     console.log("medellin", data)
@@ -33,13 +35,13 @@ function dibujar_sunburst(data) {
 
     margin_sunburst = { top: 30, right: 0, bottom: 30, left: 70 }
 
-    var width_sunburst_col = bounds_sunburst_col.width + (bounds_sunburst_col.width / 100) * 10;
-    var height_sunburst_col = bounds_sunburst_row.height + (bounds_sunburst_col.height / 100) * 10;
+    width_sunburst_col_pregunta1 = width_sunburst_col_pregunta1 || bounds_sunburst_col.width + (bounds_sunburst_col.width / 100) * 10;
+    height_sunburst_col_pregunta1 =height_sunburst_col_pregunta1 || bounds_sunburst_row.height + (bounds_sunburst_col.height / 100) * 10;
+    console.log("height sunb", height_sunburst_col_pregunta1)
 
 
-
-    width_sunburst = width_sunburst_col
-    radius_sunburst = Math.min(height_sunburst_col, width_sunburst_col) / 5;
+    width_sunburst = width_sunburst_col_pregunta1
+    radius_sunburst = Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1) / 5;
 
     format = d3.format(",d")
 
@@ -53,7 +55,9 @@ function dibujar_sunburst(data) {
         .outerRadius(d => Math.max(d.y0 * radius_sunburst, d.y1 * radius_sunburst - 1))
 
     partition = data => {
+        //const escala = d3.scalePow().exponent(0.5);
         const root = d3.hierarchy(data)
+            //.sum(d => escala(d.value))
             .sum(d => d.value)
             .sort((a, b) => b.value - a.value);
         return d3.partition()
@@ -61,16 +65,26 @@ function dibujar_sunburst(data) {
             (root);
     }
 
+    // partition2 = data => {
+    //     const root = d3.hierarchy(data)
+    //         .sum(d => d.value)
+    //         .sort((a, b) => b.value - a.value);
+    //     return d3.partition()
+    //         .size([2 * Math.PI, root.height + 1])
+    //         (root);
+    // }
+
     color_sunburst = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1))
     var root = partition(data);
-
+    //var root = partition2(data);
     root.each(d => d.current = d);
+    //root.each(d => d.current = d);
 
     console.log("root en medellin", root);
 
     const svg = d3.select('#svg_sunburst')
         .attr("width", width_sunburst)
-        .attr("height", height_sunburst_col)
+        .attr("height", height_sunburst_col_pregunta1)
         .attr("viewBox", [0, 0, width_sunburst, width_sunburst])
         .style("font", "10px sans-serif");
 
@@ -155,7 +169,7 @@ function dibujar_sunburst(data) {
         });
 
         d3.select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
-        d3.select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
+        d3.select('#nombre_meta').text(`${max_meta.data.name}`.toUpperCase().replace("_", " ").replace("_", "."));
         per = max_meta.data.value;
         perc = (100 / root.value) * per;
         val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
@@ -196,7 +210,16 @@ function dibujar_sunburst(data) {
         if (act_sdg != sdg_bur_id) {
             act_sdg = sdg_bur_id;
             d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + act_sdg + ".jpg");
-            per = d3.select(this)._groups[0][0].__data__.value;
+            var per = d3.select(this)._groups[0][0].__data__.value;
+            // root.each(d => {
+
+            //     if (d.current.name == per)
+            //         per = d.current.value;
+            // })
+
+            console.log("porcentaje arreglado", per);
+            console.log("porcentaje escalado", d3.select(this)._groups[0][0].__data__.value);
+       
             perc = (100 / root.value) * per;
             val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
             d3.select('#percent_ods').text(`${val_to_show}%`)
@@ -208,9 +231,9 @@ function dibujar_sunburst(data) {
                     max_meta = element
             });
 
-            d3.select('#desc_meta_sun').text("\"" + descripciones_metas["meta_" + max_meta.data.name.split("meta_")[1].toUpperCase()] + "\"")
+            d3.select('#desc_meta_sun').text("" + descripciones_metas["meta_" + max_meta.data.name.split("meta_")[1].toUpperCase()] + ".")
             d3.select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
-            d3.select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
+            d3.select('#nombre_meta').text(`${max_meta.data.name}`.toUpperCase().replace("_", " ").replace("_", "."));
             per = max_meta.data.value;
             perc = (100 / root.value) * per;
             val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);

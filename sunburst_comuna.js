@@ -1,6 +1,7 @@
 
 
-
+var width_sunburst_col_pregunta2;
+var height_sunburst_col_pregunta2;
 var req_sun_inic_dos = { ...req };
 req_sun_inic_dos.numero = 1023;
 postData('https://echoun.herokuapp.com/sunburst', req_sun_inic_dos).then(data => {
@@ -33,13 +34,13 @@ function dibujar_sunburst_comuna(data) {
 
     margin_sunburst = { top: 0, right: 0, bottom: 0, left: 0 }
 
-    var width_sunburst_col = bounds_sunburst_col.width + (bounds_sunburst_col.width / 100) * 10;
-    var height_sunburst_col = bounds_sunburst_row.height + (bounds_sunburst_col.height / 100) * 10;
+    width_sunburst_col_pregunta2 = width_sunburst_col_pregunta2 || bounds_sunburst_col.width + (bounds_sunburst_col.width / 100) * 10;
+    height_sunburst_col_pregunta2 = height_sunburst_col_pregunta2 || bounds_sunburst_row.height + (bounds_sunburst_col.height / 100) * 10;
+    
 
 
-
-    width_sunburst = width_sunburst_col;
-    radius_sunburst = Math.min(height_sunburst_col, width_sunburst_col) / 4;
+    width_sunburst = width_sunburst_col_pregunta2;
+    radius_sunburst = Math.min(height_sunburst_col_pregunta2, width_sunburst_col_pregunta2) / 4;
 
     format = d3.format(",d")
 
@@ -70,7 +71,7 @@ function dibujar_sunburst_comuna(data) {
 
     const svg = d3.select('#svg_sunburst_refer')
         .attr("width", width_sunburst - (width_sunburst / 100) * 35)
-        .attr("height", height_sunburst_col)
+        .attr("height", height_sunburst_col_pregunta2)
         .attr("viewBox", [0, 0, width_sunburst, width_sunburst])
         .style("font", "10px sans-serif");
 

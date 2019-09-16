@@ -19,7 +19,7 @@ var profundidad_1 = `
         <div class="row vh-30">
             <div class="col-12" style="height: 100%">
                 <img src="" id="imagen_ods_sun"
-                    style="border:3.75px solid white; width: 100%;height: 100%;">
+                    style="border:0px solid black; width: 100%;height: 100%;">
             </div>
             <div class="col-6">
 
@@ -54,7 +54,7 @@ var profundidad_1 = `
                 </div>
                 <div class="row pr-70">
                     <div class="col-12" style="max-height: 100%">
-                        <img src="" id="imagen_meta_sun" style="max-height: 100%; height: 100%; border:3.75px solid white;">
+                        <img src="" id="imagen_meta_sun" style="max-height: 100%; height: 100%; border:0px solid black;">
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@ var profundidad_1 = `
     <div class="col-12">
         <h1 id="desc_meta_sun"
             style="text-align: right; font-size: 4vh!important; font-style: italic; margin-right: 4vw">
-            "Reducir el impacto ambiental de las ciudades."</h1>
+            Reducir el impacto ambiental de las ciudades.</h1>
     </div>
 </div>
 </div>
@@ -95,7 +95,7 @@ var profundidad_1_segunda_pregunta = `
             </div>
             <div class="row vh-30">
                 <div class="col-12" style="height: 100%">
-                    <img src="" id="imagen_ods_sun" style="border:3.75px solid white; width: 100%;height: 100%;">
+                    <img src="" id="imagen_ods_sun" style="border:0px solid black; width: 100%;height: 100%;">
                 </div>
                 <div class="col-6">
 
@@ -130,7 +130,7 @@ var profundidad_1_segunda_pregunta = `
                     <div class="row pr-70">
                         <div class="col-12" style="max-height: 100%">
                             <img src="" id="imagen_meta_sun"
-                                style="max-height: 100%; height: 100%; border:3.75px solid white;">
+                                style="max-height: 100%; height: 100%; border:0px solid black;">
                         </div>
                     </div>
                 </div>
@@ -418,7 +418,6 @@ var descripciones_metas = {
 
 var mapa_refer = `
 <svg xmlns="http://www.w3.org/2000/svg" id="mapa_svg" viewBox="0 0 1106.55 942.52" visibility="hidden">
-    <title>mapa_final</title>
     <g id="Layer_2" data-name="Layer 2">
         <g id="Layer_1-2" data-name="Layer 1">
             <path id="CO5"
