@@ -263,11 +263,11 @@ function dibujar_sunburst_comuna(data) {
 
 
             $("#comuna_aislada").append(profundidad_2);
-            d3.select('#comuna_aislada').selectAll('#imagen_3meta_sun').data(p.children).join().attr('src', d => {
+            d3.select('#comuna_aislada').selectAll('#imagen_3meta_sun').data(p.children.slice(0, 3)).join().attr('src', d => {
                 return "assets/Metas%20ODS/ODS%20" + d.parent.data.name.split("_")[1] + "/" + d.data.name.split("meta_")[1].replace("_", ".") + ".png"
             });
 
-            d3.select('#comuna_aislada').selectAll('.desc_meta_sun_int').data(p.children).join().text(d => descripciones_metas["meta_" + d.data.name.split("meta_")[1].toUpperCase()]);
+            d3.select('#comuna_aislada').selectAll('.desc_meta_sun_int').data(p.children.slice(0, 3)).join().text(d => descripciones_metas["meta_" + d.data.name.split("meta_")[1].toUpperCase()]);
 
             const sunburst_barrita_col = d3.select('#comuna_aislada').select("#prueba_barrita");
 
@@ -280,16 +280,15 @@ function dibujar_sunburst_comuna(data) {
 
 
             //console.log(p);
-            max_meta = p.children[0];
-            p.children.forEach(element => {
+            max_meta = p.children.slice(0, 3)[0];
+            p.children.slice(0, 3).forEach(element => {
                 if (max_meta.data.value < element.data.value)
                     max_meta = element;
             });
 
             var scale_per_barrita_sun = d3.scaleLinear()
                 .domain([0, max_meta.value]).range([0, width_percent_sunb_col - (width_percent_sunb_col / 100) * 20])
-
-            barritas_meta = d3.select('#comuna_aislada').selectAll('.perc_barras_metas_sun').data(p.children).join().append("svg")
+            barritas_meta = d3.select('#comuna_aislada').selectAll('.perc_barras_metas_sun').data(p.children.slice(0, 3)).join().append("svg")
                 .attr("viewBox", [0, 0, width_percent_sunb_col, height_percent_sunb_col])
                 .append("g")
                 .attr("fill", ods[p.data.name].color)
@@ -344,7 +343,7 @@ function dibujar_sunburst_comuna(data) {
         }
 
         if (p.data.name == "ODS" && nivel_profundidad == 2) {
-            console.log("es salir")
+            console.log("es salir 2")
             nivel_profundidad = 1;
 
             col_5_ods = d3.select('#comuna_aislada').select("#quitame");

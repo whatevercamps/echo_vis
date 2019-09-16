@@ -263,13 +263,13 @@ function dibujar_sunburst(data) {
 
 
             $("#sera_que_es_este").append(profundidad_2);
-            d3.selectAll('#imagen_3meta_sun').data(p.children).join().attr('src', d => {
+            d3.selectAll('#imagen_3meta_sun').data(p.children.slice(0, 3)).join().attr('src', d => {
                 console.log(d);
 
                 return "assets/Metas%20ODS/ODS%20" + d.parent.data.name.split("_")[1] + "/" + d.data.name.split("meta_")[1].replace("_", ".") + ".png"
             });
 
-            d3.selectAll('.desc_meta_sun_int').data(p.children).join().text(d => descripciones_metas["meta_" + d.data.name.split("meta_")[1].toUpperCase()]);
+            d3.selectAll('.desc_meta_sun_int').data(p.children.slice(0, 3)).join().text(d => descripciones_metas["meta_" + d.data.name.split("meta_")[1].toUpperCase()]);
 
             const sunburst_barrita_col = d3.select("#prueba_barrita");
 
@@ -282,8 +282,8 @@ function dibujar_sunburst(data) {
 
 
             //console.log(p);
-            max_meta = p.children[0];
-            p.children.forEach(element => {
+            max_meta = p.children.slice(0, 3)[0];
+            p.children.slice(0, 3).forEach(element => {
                 if (max_meta.data.value < element.data.value)
                     max_meta = element;
             });
@@ -291,7 +291,7 @@ function dibujar_sunburst(data) {
             var scale_per_barrita_sun = d3.scaleLinear()
                 .domain([0, max_meta.value]).range([0, width_percent_sunb_col - (width_percent_sunb_col / 100) * 20])
 
-            barritas_meta = d3.selectAll('.perc_barras_metas_sun').data(p.children).join().append("svg")
+            barritas_meta = d3.selectAll('.perc_barras_metas_sun').data(p.children.slice(0, 3)).join().append("svg")
                 .attr("viewBox", [0, 0, width_percent_sunb_col, height_percent_sunb_col])
                 .append("g")
                 .attr("fill", ods[p.data.name].color)
