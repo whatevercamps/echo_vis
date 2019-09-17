@@ -756,3 +756,10 @@ h1, p, h2, h3, h4 {
     right: 45px;
     z-index: 1000;
 }
+
+#loading_filter{
+    position: fixed;
+    top: 130px;
+    right: 45px;
+    z-index: 1001;
+}

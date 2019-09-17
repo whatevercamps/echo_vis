@@ -33,6 +33,8 @@ var numero = 40;
 var req = { sexos: sexos, edades: edades, respuesta: respuesta, numero: numero };
 
 function click_filtro() {
+
+
     var sexos = ["Hombre", "Mujer"];
     var edades = ["jovenes", "adultos", "mayores"];
 
@@ -122,6 +124,10 @@ function click_filtro() {
         d3.select("#" + this.id).style("fill-opacity", params[this.id] ? 1 : 0.7)
     }
 
+//todito_hide
+    document.getElementById('loading_filter').style.visibility = "visible";
+    document.getElementById('todito_para_hide').style.opacity = 0.1;
+
     sexos = [];
     edades = [];
     if (params["adulto_hombre"] || params["joven_hombre"] || params["adulto_mayor_hombre"]) {
@@ -159,24 +165,43 @@ function click_filtro() {
     numero = 40;
     corregimientos = ["Corregimientos", "4) Aranjuez", "16) Belén", "15) Guayabal", "NaN", "11) Laureles-Estadio", "12) La América", "5) Castilla", "7) Robledo", "6) Doce de Octubre", "13) San Javier", "1) Popular", "9) Buenos Aires", "3) Manrique", "2) Santa Cruz", "8) Villa Hermosa", "10) La Candelaria", "14) El Poblado", "otros"];
 
-    postData('https://echoun.herokuapp.com/histograma_ods', req).then(data => {
+    var terminadas = 0;
+    
+    // postData('https://echoun.herokuapp.com/histograma_ods', req).then(data => {
 
-        dibujar_burbujas(data, odss_res);
-    });
+    //     dibujar_burbujas(data, odss_res);
+    //     terminadas ++; 
+    //     if(terminadas == 3){
+    //         document.getElementById('loading_filter').style.visibility = "hidden";
+    //         d3.select("#todito_para_hide").style("fill-opacity", 1).style("cursor", "pointer");
+    //     }
+    // });
 
 
     postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
         data.name = "ODS";
         dibujar_sunburst(data);
         cambiar_de_comuna(comuna_act);
+        terminadas ++; 
+        if(terminadas == 2){
+            document.getElementById('loading_filter').style.visibility = "hidden";
+            document.getElementById('todito_para_hide').style.opacity = 1;
+        }
     });
     req2 = req;
     req2.numero = 3;
     postData('https://echoun.herokuapp.com/odsComuna', req2).then(data => {
         dibujar_mapita(data);
+        terminadas ++; 
+        if(terminadas == 2){
+            document.getElementById('loading_filter').style.visibility = "hidden";
+            document.getElementById('todito_para_hide').style.opacity = 1;
+        }
     });
 
 }
+
+
 
 d3.select("#adulto_mayor_hombre").on("click", click_filtro)        .style("cursor", "pointer")
 d3.select("#adulto_mayor_mujer").on("click", click_filtro)        .style("cursor", "pointer")
@@ -189,31 +214,6 @@ d3.select("#todo_mujeres").on("click", click_filtro)        .style("cursor", "po
 d3.select("#todo_adultos").on("click", click_filtro)        .style("cursor", "pointer")
 d3.select("#todo_mayores").on("click", click_filtro)        .style("cursor", "pointer")
 d3.select("#todo_jovenes").on("click", click_filtro)        .style("cursor", "pointer")
-
-$("#female").click(d => {
-    female = !female;
-    if (female) $("#female").addClass('btn-hot')
-    else $("#female").removeClass('btn-hot')
-});
-$("#edge").click(d => {
-    edge = !edge;
-    if (edge) $("#edge").addClass('btn-hot')
-    else $("#edge").removeClass('btn-hot')
-})
-
-$("#vibe").click(d => {
-    vibe = !vibe;
-    if (vibe) $("#vibe").addClass('btn-hot')
-    else $("#vibe").removeClass('btn-hot')
-});
-$("#one").click(d => {
-    one = !one;
-    if (one) $("#one").addClass('btn-hot')
-    else $("#one").removeClass('btn-hot')
-})
-
-
-// $("#apply").click(filtrar)
 
 
 function postData(url = '', data) {
@@ -231,40 +231,8 @@ function postData(url = '', data) {
         referrer: 'no-referrer', // no-referrer, *client
         body: JSON.stringify(data), // body data type must match "Content-Type" header
     })
-        .then(response => response.json());
+        .then(response => response.json()
+        );
 
 }
-
-$("#filtra").click(function () {
-
-    var sexos = $('#pickerSexo').val()
-    var edades = $('#pickerEdad').val()
-
-    req = { sexos: sexos, edades: edades, respuesta: respuesta, numero: numero };
-
-    //respuesta = [0];
-    numero = 40;
-    corregimientos = ["Corregimientos", "4) Aranjuez", "16) Belén", "15) Guayabal", "NaN", "11) Laureles-Estadio", "12) La América", "5) Castilla", "7) Robledo", "6) Doce de Octubre", "13) San Javier", "1) Popular", "9) Buenos Aires", "3) Manrique", "2) Santa Cruz", "8) Villa Hermosa", "10) La Candelaria", "14) El Poblado", "otros"];
-    req = { sexos: sexos, edades: edades, respuesta: respuesta, numero: numero };
-
-    // postData('https://echoun.herokuapp.com/histograma_ods', req).then(data => {
-
-    //     dibujar_burbujas(data, odss_res);
-    // });
-
-
-    postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
-        data.name = "ODS";
-        dibujar_sunburst(data);
-        cambiar_de_comuna(comuna_act);
-    });
-    req2 = req;
-    req2.numero = 3;
-    postData('https://echoun.herokuapp.com/odsComuna', req2).then(data => {
-        dibujar_mapita(data);
-    });
-
-
-
-})
 
