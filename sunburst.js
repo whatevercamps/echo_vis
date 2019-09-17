@@ -265,7 +265,7 @@ function dibujar_sunburst(data) {
 
                     d3.select('#desc_meta_sun_int_primera')
                         .transition().delay(300)
-                        .text(descripciones_metas["meta_" + selected_meta.data.name.split("meta_")[1].toUpperCase()])
+                        .text(descripciones_metas["meta_" + selected_meta.data.name.split("meta_")[1]])
                         .transition().duration(500)
                         .style("opacity", 1);
                 }
@@ -324,7 +324,7 @@ function dibujar_sunburst(data) {
                     max_meta = element
             });
 
-            d3.select('#desc_meta_sun').text("" + descripciones_metas["meta_" + max_meta.data.name.split("meta_")[1].toUpperCase()] + ".")
+            d3.select('#desc_meta_sun').text("" + descripciones_metas["meta_" + max_meta.data.name.split("meta_")[1]] + ".")
             d3.select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
             d3.select('#nombre_meta').text(`${max_meta.data.name}`.toUpperCase().replace("_", " ").replace("_", "."));
             per = max_meta.data.value;
@@ -431,7 +431,7 @@ function dibujar_sunburst(data) {
                 return "assets/Metas%20ODS/ODS%20" + d.parent.data.name.split("_")[1] + "/" + d.data.name.split("meta_")[1].replace("_", ".") + ".png"
             });
 
-            d3.selectAll('.desc_meta_sun_int').data(p.children.slice(0, 1)).join().text(d => descripciones_metas["meta_" + d.data.name.split("meta_")[1].toUpperCase()]);
+            d3.selectAll('.desc_meta_sun_int').data(p.children.slice(0, 1)).join().text(d => descripciones_metas["meta_" + d.data.name.split("meta_")[1]]);
 
             const sunburst_barrita_col = d3.select("#prueba_barrita");
 
