@@ -4,9 +4,12 @@ var nivel_profundidad = 1;
 targest_img_repo = "assets/global-goals-media-cards/MC_Target_";
 var col_5_ods = null;
 var req_sun_inic = { ...req };
-req_sun_inic.numero = 1023;
+req_sun_inic.numero = 2013;
+var scale_per_barrita_sun;
 var width_sunburst_col_pregunta1;
 var height_sunburst_col_pregunta1;
+var meta_seleccionada_primera = null;
+var escala; 
 postData('https://echoun.herokuapp.com/sunburst', req_sun_inic).then(data => {
     data.name = "ODS";
     console.log("medellin", data)
@@ -36,12 +39,12 @@ function dibujar_sunburst(data) {
     margin_sunburst = { top: 30, right: 0, bottom: 30, left: 70 }
 
     width_sunburst_col_pregunta1 = width_sunburst_col_pregunta1 || bounds_sunburst_col.width + (bounds_sunburst_col.width / 100) * 10;
-    height_sunburst_col_pregunta1 =height_sunburst_col_pregunta1 || bounds_sunburst_row.height + (bounds_sunburst_col.height / 100) * 10;
+    height_sunburst_col_pregunta1 = height_sunburst_col_pregunta1 || bounds_sunburst_row.height + (bounds_sunburst_col.height / 100) * 10;
     console.log("height sunb", height_sunburst_col_pregunta1)
 
 
     width_sunburst = width_sunburst_col_pregunta1
-    radius_sunburst = Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1) / 5;
+    radius_sunburst = Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1) / 7;
 
     format = d3.format(",d")
 
@@ -50,41 +53,43 @@ function dibujar_sunburst(data) {
         .startAngle(d => d.x0)
         .endAngle(d => d.x1)
         .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
-        .padRadius(radius_sunburst * 1.5)
+        .padRadius(radius_sunburst * 1.5 + 1000)
         .innerRadius(d => d.y0 * radius_sunburst)
         .outerRadius(d => Math.max(d.y0 * radius_sunburst, d.y1 * radius_sunburst - 1))
 
     partition = data => {
-        //const escala = d3.scalePow().exponent(0.5);
+        escala = d3.scalePow().exponent(0.5);
         const root = d3.hierarchy(data)
-            //.sum(d => escala(d.value))
-            .sum(d => d.value)
+            .sum(d => escala(d.value))
+            //.sum(d => d.value)
             .sort((a, b) => b.value - a.value);
         return d3.partition()
             .size([2 * Math.PI, root.height + 1])
             (root);
     }
 
-    // partition2 = data => {
-    //     const root = d3.hierarchy(data)
-    //         .sum(d => d.value)
-    //         .sort((a, b) => b.value - a.value);
-    //     return d3.partition()
-    //         .size([2 * Math.PI, root.height + 1])
-    //         (root);
-    // }
+    partition2 = data => {
+        //const escala = d3.scalePow().exponent(0.5);
+        const root2 = d3.hierarchy(data)
+            //.sum(d => escala(d.value))
+            .sum(d => d.value)
+            .sort((a, b) => b.value - a.value);
+        return d3.partition()
+            .size([2 * Math.PI, root2.height + 1])
+            (root2);
+    }
 
     color_sunburst = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1))
     var root = partition(data);
-    //var root = partition2(data);
+    root2 = partition2(data);
     root.each(d => d.current = d);
-    //root.each(d => d.current = d);
+    root2.each(d => d.current = d);
 
     console.log("root en medellin", root);
 
     const svg = d3.select('#svg_sunburst')
-        .attr("width", width_sunburst)
-        .attr("height", height_sunburst_col_pregunta1)
+        // .attr("width", width_sunburst)
+        // .attr("height", height_sunburst_col_pregunta1)
         .attr("viewBox", [0, 0, width_sunburst, width_sunburst])
         .style("font", "10px sans-serif");
 
@@ -112,7 +117,8 @@ function dibujar_sunburst(data) {
     path.filter(d => d.children)
         .style("cursor", "pointer")
         .on("mouseover", mouseover_sunburst)
-        .on("click", clicked);
+
+    path.filter(d => d.children).on("click", clicked);
 
     path.filter(d => !d.children).on("mouseover", meta_over)
     path.append("title")
@@ -127,7 +133,7 @@ function dibujar_sunburst(data) {
         .join("text")
         .attr("dy", "0.35em")
         .attr('font-size', '1.5vw')
-        .style("fill", "rgb(255,255,255)")
+        .style("fill", "#272838")
         .attr("fill-opacity", d => d.children ? 0 : 0)
         .attr("transform", d => labelTransform(d.current))
         .text(d => d.data.name);
@@ -137,14 +143,16 @@ function dibujar_sunburst(data) {
         .attr("r", radius_sunburst)
         .attr("fill", "none")
         .attr("pointer-events", "all")
-
         .on("click", clicked);
 
+        console.log("como es el cir", parent)
+
+    console.log("g_pre_click", g);
 
     (_ => {
         //$("#sera_que_es_este").append(profundidad_1);
-        max_ods_sun = root.children[0];
-        root.children.forEach(element => {
+        max_ods_sun = root2.children[0];
+        root2.children.forEach(element => {
             if (element.value > max_ods_sun.value)
                 max_ods_sun = element
         });
@@ -155,7 +163,7 @@ function dibujar_sunburst(data) {
             sdg_bur_id = "0" + sdg_bur_id
         d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + sdg_bur_id + ".jpg").attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
         per = max_ods_sun.value;
-        perc = (100 / root.value) * per;
+        perc = (100 / root2.value) * per;
         val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
         d3.select('#percent_ods').text(`${val_to_show}%`).attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
 
@@ -171,26 +179,108 @@ function dibujar_sunburst(data) {
         d3.select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
         d3.select('#nombre_meta').text(`${max_meta.data.name}`.toUpperCase().replace("_", " ").replace("_", "."));
         per = max_meta.data.value;
-        perc = (100 / root.value) * per;
+        perc = (100 / root2.value) * per;
         val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
         d3.select('#percent_meta').text(`${val_to_show}%`)
 
     })();
 
+
+
+
+
     function meta_over() {
 
         sdg_bur_id = this.id.toString().split(/\//g)[2];
 
+
+
         path.attr("fill-opacity", d => {
             if (arcVisible(d.current)) {
+                if (d.data.name == sdg_bur_id && sdg_bur_id != meta_seleccionada_primera) {
+                    meta_seleccionada_primera = sdg_bur_id;
+
+                    label.attr("fill-opacity", d => d.children ? 0 : 0)
+                        .filter(d => d.data.name == sdg_bur_id)
+                        .attr("fill-opacity", d => d.children ? 0 : +labelVisible(d.current))
+                        .text(d => d.data.name.split("meta_")[1].replace("_", "."));
+
+                    d3.selectAll('#imagen_3meta_sun').attr('src', d => {
+                        return "assets/Metas%20ODS/ODS%20" + d.parent.data.name.split("_")[1] + "/" + sdg_bur_id.split("meta_")[1].replace("_", ".") + ".png"
+
+                    });
+
+                    var selected_meta = null;
+                    root2.each(d => { if (d.data.name == sdg_bur_id) selected_meta = d });
+                    log("selected_meta", selected_meta);
+
+
+                    max_meta = selected_meta.parent.children.slice(0, 1)[0];
+                    selected_meta.parent.children.slice(0, 1).forEach(element => {
+                        if (max_meta.data.value < element.data.value)
+                            max_meta = element;
+                    });
+
+                    barritas_meta.selectAll("rect")
+                        .transition().duration(500)
+                        .attr("width", d => scale_per_barrita_sun(selected_meta.value))
+                        .attr("height", 40);
+
+
+                    barritas_meta.selectAll("#nombre_meta_en_barra")
+                        .transition().duration(300)
+                        .attr("opacity", 0)
+
+
+                    barritas_meta.select("#nombre_meta_en_barra")
+                        .transition().delay(300)
+                        .text(selected_meta.data.name.replace("_", " ").replace("_", "."))
+                        .attr("x", d => scale_per_barrita_sun(selected_meta.value) - 100)
+                        .transition().duration(500)
+                        .attr("opacity", 1);
+
+
+                    barritas_meta.select('#porcentaje_meta_en_barra')
+                        .transition().duration(300)
+                        .attr("opacity", 0);
+
+
+                    barritas_meta.select('#porcentaje_meta_en_barra')
+                        .transition().delay(300)
+                        .text(d => {
+                            per = selected_meta.data.value;
+                            perc = (100 / selected_meta.parent.value) * per;
+                            val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
+                            return val_to_show + "%"
+                        })
+                        .attr("x", d => scale_per_barrita_sun(selected_meta.data.value) + 5)
+                        .transition().duration(500)
+                        .attr("opacity", 1);
+
+
+                    d3
+                        .select('#desc_meta_sun_int_primera')
+                        .transition().duration(300)
+                        .style("opacity", 0);
+
+                    d3.select('#desc_meta_sun_int_primera')
+                        .transition().delay(300)
+                        .text(descripciones_metas["meta_" + selected_meta.data.name.split("meta_")[1].toUpperCase()])
+                        .transition().duration(500)
+                        .style("opacity", 1);
+                }
                 return d.data.name == sdg_bur_id ? 0.7 : 1;
             } else
                 return 0
         });
-        label.attr("fill-opacity", d => d.children ? 0 : 0)
-            .filter(d => d.data.name == sdg_bur_id)
-            .attr("fill-opacity", d => d.children ? 0 : +labelVisible(d.current))
-            .text(d => d.data.name.split("meta_")[1].replace("_", "."));
+        // console.log("meta_seleccionada", sdg_bur_id)
+        // console.log("this", d3.select('#sect0').select("#" + this.sdg_bur_id))
+
+
+        //volver
+
+
+
     }
 
     function mouseover_sunburst() {
@@ -210,17 +300,20 @@ function dibujar_sunburst(data) {
         if (act_sdg != sdg_bur_id) {
             act_sdg = sdg_bur_id;
             d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + act_sdg + ".jpg");
-            var per = d3.select(this)._groups[0][0].__data__.value;
-            // root.each(d => {
+            var per = d3.select(this)._groups[0][0].__data__.data.name;
+            console.log("filtro",per)
+            root2.each(d => {
+                if (d.data.name == per){
+                    console.log("encontrado",d)
+                    per = d.value;
+                }
 
-            //     if (d.current.name == per)
-            //         per = d.current.value;
-            // })
+            })
 
             console.log("porcentaje arreglado", per);
             console.log("porcentaje escalado", d3.select(this)._groups[0][0].__data__.value);
-       
-            perc = (100 / root.value) * per;
+
+            perc = (100 / root2.value) * per;
             val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
             d3.select('#percent_ods').text(`${val_to_show}%`)
 
@@ -235,15 +328,57 @@ function dibujar_sunburst(data) {
             d3.select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
             d3.select('#nombre_meta').text(`${max_meta.data.name}`.toUpperCase().replace("_", " ").replace("_", "."));
             per = max_meta.data.value;
-            perc = (100 / root.value) * per;
+            perc = (100 / root2.value) * per;
             val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
             d3.select('#percent_meta').text(`${val_to_show}%`)
         }
     }
 
-    function clicked(p) {
+    function loaded(p) {
 
-        console.log(p)
+        console.log("p_loaded", p);
+        if (p.data.name == "ODS" && p.parent == null) {
+            parent.datum(p.parent || root);
+
+            root.each(d => d.target = {
+                x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+                x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+                y0: Math.max(0, d.y0 - p.depth),
+                y1: Math.max(0, d.y1 - p.depth)
+            });
+
+
+
+            const t = g.transition().duration(750);
+
+            // Transition the data on all arcs, even the ones that aren’t visible,
+            // so that if this transition is interrupted, entering arcs will start
+            // the next transition from the desired position.
+            path.transition(t)
+                .tween("data", d => {
+                    const i = d3.interpolate(d.current, d.target);
+                    return t => d.current = i(t);
+                })
+                .filter(function (d) {
+                    return +this.getAttribute("fill-opacity") || arcVisible(d.target);
+                })
+                .attr("fill-opacity", d => arcVisible(d.target) ? 1 : 0)
+                .attrTween("d", d => () => arc(d.current));
+
+            label.filter(function (d) {
+                return +this.getAttribute("fill-opacity") || labelVisible(d.target);
+            }).transition(t)
+                .attr("fill-opacity", d => d.children ? 0 : 0)
+                .attrTween("transform", d => () => labelTransform(d.current));
+
+            console.log("g_afer_click", g);
+        }
+
+        return true;
+    }
+
+    function clicked(p) {
+        console.log("p", p);
 
         parent.datum(p.parent || root);
 
@@ -253,6 +388,8 @@ function dibujar_sunburst(data) {
             y0: Math.max(0, d.y0 - p.depth),
             y1: Math.max(0, d.y1 - p.depth)
         });
+
+
 
         const t = g.transition().duration(750);
 
@@ -284,15 +421,17 @@ function dibujar_sunburst(data) {
             col_5_ods = d3.select("#quitame");
             col_5_ods.remove();
 
+            root2.each(d => { if (d.data.name == p.data.name) {p = d; return true; }});
+
 
             $("#sera_que_es_este").append(profundidad_2);
-            d3.selectAll('#imagen_3meta_sun').data(p.children.slice(0, 3)).join().attr('src', d => {
+            d3.selectAll('#imagen_3meta_sun').data(p.children.slice(0, 1)).join().attr('src', d => {
                 console.log(d);
 
                 return "assets/Metas%20ODS/ODS%20" + d.parent.data.name.split("_")[1] + "/" + d.data.name.split("meta_")[1].replace("_", ".") + ".png"
             });
 
-            d3.selectAll('.desc_meta_sun_int').data(p.children.slice(0, 3)).join().text(d => descripciones_metas["meta_" + d.data.name.split("meta_")[1].toUpperCase()]);
+            d3.selectAll('.desc_meta_sun_int').data(p.children.slice(0, 1)).join().text(d => descripciones_metas["meta_" + d.data.name.split("meta_")[1].toUpperCase()]);
 
             const sunburst_barrita_col = d3.select("#prueba_barrita");
 
@@ -305,16 +444,17 @@ function dibujar_sunburst(data) {
 
 
             //console.log(p);
-            max_meta = p.children.slice(0, 3)[0];
-            p.children.slice(0, 3).forEach(element => {
+            max_meta = p.children.slice(0, 1)[0];
+            p.children.slice(0, 1).forEach(element => {
                 if (max_meta.data.value < element.data.value)
                     max_meta = element;
             });
 
-            var scale_per_barrita_sun = d3.scaleLinear()
+            scale_per_barrita_sun = d3.scaleLinear()
                 .domain([0, max_meta.value]).range([0, width_percent_sunb_col - (width_percent_sunb_col / 100) * 20])
 
-            barritas_meta = d3.selectAll('.perc_barras_metas_sun').data(p.children.slice(0, 3)).join().append("svg")
+            meta_seleccionada_primera = max_meta.data.name
+            barritas_meta = d3.selectAll('.perc_barras_metas_sun').data(p.children.slice(0, 1)).join().append("svg")
                 .attr("viewBox", [0, 0, width_percent_sunb_col, height_percent_sunb_col])
                 .append("g")
                 .attr("fill", ods[p.data.name].color)
@@ -328,7 +468,9 @@ function dibujar_sunburst(data) {
                 .attr("width", d => scale_per_barrita_sun(d.value))
                 .attr("height", 40);
 
+            //volver
             barritas_meta.append("text")
+                .attr("id", "nombre_meta_en_barra")
                 .attr("x", d => scale_per_barrita_sun(d.value) - 100)
                 .attr("y", height_percent_sunb_col / 2)
                 .text(d => d.data.name.replace("_", " ").replace("_", "."))
@@ -341,6 +483,7 @@ function dibujar_sunburst(data) {
                 .attr("fill", "white");
 
             barritas_meta.append("text")
+                .attr("id", "porcentaje_meta_en_barra")
                 .attr("x", d => scale_per_barrita_sun(d.value) + 5)
                 .attr("y", height_percent_sunb_col / 2 + 10)
                 .text(d => {
@@ -356,7 +499,7 @@ function dibujar_sunburst(data) {
                 .attr("font-weight", "bold")
                 .attr("font-family", "Arial")
                 .attr("font-size", "3vh")
-                .attr("fill", "white");
+                .attr("fill", "#272838");
             ;
 
 
@@ -378,17 +521,17 @@ function dibujar_sunburst(data) {
             $("#sera_que_es_este").append(profundidad_1);
 
             (_ => {
-                max_ods_sun = root.children[0];
-                root.children.forEach(element => {
+                max_ods_sun = root2.children[0];
+                root2.children.forEach(element => {
                     if (element.value > max_ods_sun.value)
                         max_ods_sun = element
                 });
 
 
                 sdg_bur_id = max_ods_sun.data.name.split("_")[1];
-                d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + sdg_bur_id + ".jpg").attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
+                d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + sdg_bur_id + (sdg_bur_id == 10 ? "-1" : "") + ".jpg").attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
                 per = max_ods_sun.value;
-                perc = (100 / root.value) * per;
+                perc = (100 / root2.value) * per;
                 val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
                 d3.select('#percent_ods').text(`${val_to_show}%`).attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
 
@@ -404,13 +547,16 @@ function dibujar_sunburst(data) {
                 d3.select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
                 d3.select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
                 per = max_meta.data.value;
-                perc = (100 / root.value) * per;
+                perc = (100 / root2.value) * per;
                 val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
                 d3.select('#percent_meta').text(`${val_to_show}%`)
 
             })();
         }
+
+        console.log("g_afer_click", g);
     }
+
 
     function arcVisible(d) {
         return d.y1 <= 2 && d.y0 >= 1 && d.x1 > d.x0;
@@ -425,4 +571,6 @@ function dibujar_sunburst(data) {
         const y = (d.y0 + d.y1) / 2 * radius_sunburst;
         return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
     }
+
+
 }

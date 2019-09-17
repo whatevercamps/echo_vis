@@ -1,73 +1,44 @@
 var profundidad_1 = `
-<div id="quitame">
-<div class="row vh-70">
-    <div class="col-6">
-        <div class="row vh-30">
-            <div class="col-12">
-                <div class="row pr-30">
-
-                </div>
-                <div class="row pr-30">
-                </div>
-                <div class="row pr-30">
-                    <div class="col-12">
-                        <h1 id="percent_ods"></h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row vh-30">
-            <div class="col-12" style="height: 100%">
-                <img src="" id="imagen_ods_sun"
-                    style="border:0px solid black; width: 100%;height: 100%;">
-            </div>
-            <div class="col-6">
-
-            </div>
-        </div>
-        <div class="row vh-30">
-
-        </div>
+<div id="quitame" style="height: 100%; width: 100%">
+    <div id="2r" class="row" style="height: 26%; ">
+        <img src="assets/pregunta-medellin.svg" style="border:0px solid black; margin: auto auto 0 0">
     </div>
-    <div class="col-6">
-        <div class="row vh-30">
-            <div class="col-12">
-                <div class="row pr-30">
-
-                </div>
-                <div class="row pr-30">
-                </div>
-                <div class="row pr-30">
-                    <div class="col-12">
-
+    <div id="3r" class="row" style="height: 15%"></div>
+    <div id="4_y_5r" class="row" style="height: 41%">
+        <div class="col-6" style="height: 100%">
+            <div id="4r" class="row" style="height: 30%; ">
+                <div class="col-12" style="overflow: hidden; max-height: 100%; height: 100%; text-align: center">
+                    <div style="display: flex; margin: auto; height:100%">
+                        <h1 id="percent_ods" style="margin: auto auto 0 auto"></h1>
                     </div>
                 </div>
+
+            </div>
+            <div id="5r" class="row" style="height: 70%; ">
+                <img src="" id="imagen_ods_sun" class="imagen_sun" style="border:0px solid black; margin: 0 auto">
             </div>
         </div>
-        <div class="row vh-30">
-            <div class="col-12" style="max-height: 100%">
-                <div class="row pr-30">
-                    <div class="col-12" style="max-height: 100%">
-                        <h1 style="color: white; LINE-HEIGHT:4vh" id="percent_meta">100%</h1>
-                        <h2 style="color: white; LINE-HEIGHT:4vh" id="nombre_meta">Meta 11.3</h2>
-                    </div>
-                </div>
-                <div class="row pr-70">
-                    <div class="col-12" style="max-height: 100%">
-                        <img src="" id="imagen_meta_sun" style="max-height: 100%; height: 100%; border:0px solid black;">
-                    </div>
+        <div class="col-6" style="height: 100%">
+            <div id="5_0r" class="row" style="height: 20%; "></div>
+            <div id="5_1r" class="row" style="height: 20%; ">
+                <h1 style="color: white; font-size: 200%; line-height: 1.5" id="percent_meta">100%</h1>
+            </div>
+            <div id="5_2r" class="row" style="height: 10%; ">
+                <h2 style="color: white; line-height:4vh; font-size: 150%" id="nombre_meta">Meta 11.3</h2>
+            </div>
+            <div id="5_3r" class="row" style="height: 50%; ">
+                <div class="col-12" style="height: 100%; padding-left: 0">
+                    <img src="" id="imagen_meta_sun" class="imagen_sun" style="max-height: 100%; border:0px solid black;">
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row vh-30">
-    <div class="col-12">
-        <h1 id="desc_meta_sun"
-            style="text-align: right; font-size: 4vh!important; font-style: italic; margin-right: 4vw">
-            Reducir el impacto ambiental de las ciudades.</h1>
+    <div id="6r" class="row" style="height: 19%">
+        <div class="col-12" style="height: 100%">
+            <h1 id="desc_meta_sun" style="text-align: right; font-size: 120%; margin-top: 3%">
+            </h1>
+        </div>
     </div>
-</div>
 </div>
 `;
 
@@ -150,87 +121,51 @@ var profundidad_1_segunda_pregunta = `
 
 var profundidad_2 = `
 <div id="quitame">
-    <div class="row vh-10"></div>
-    <div class="row vh-15">
-        <div class="col-3">
-            <img src="" id="imagen_3meta_sun" align="right" style="width: 90%; height: 90%;">
+        <div class="row vh-10"></div>
+        <div class="row vh-15">
+            <div class="col-3">
+                <img src="" id="imagen_3meta_sun" align="right" style="width: 90%; height: 90%;">
+            </div>
+            <div class="col-9">
+                <div class="barras_metas_sun row pr-25">
+                    <div id="prueba_barrita" class="perc_barras_metas_sun col-12" style="height: 100%; padding: 0">
+    
+                    </div>
+                </div>
+                <div class="row pr-75">
+                    <div class="col-12">
+                            <h1 id="desc_meta_sun_int_primera" class="desc_meta_sun_int"
+                            style="text-align: right; font-size: 2.5vh!important; margin-top: 3%; font-style: italic; margin-right: 4vw">
+                            "Reducir el impacto ambiental de las ciudades."</h1>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-9">
-            <div class="barras_metas_sun row pr-25">
-                <div id="prueba_barrita" class="perc_barras_metas_sun col-12" style="height: 100%; padding: 0">
 
-                </div>
-            </div>
-            <div class="row pr-75">
-                <div class="col-12">
-                        <h1 class="desc_meta_sun_int"
-                        style="text-align: right; font-size: 2.5vh!important; margin-top: 3%; font-style: italic; margin-right: 4vw">
-                        "Reducir el impacto ambiental de las ciudades."</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row vh-15">
-        <div class="col-3">
-            <img src="" id="imagen_3meta_sun" align="right" style="width: 90%; height: 90%;">
-        </div>
-        <div class="col-9">
-            <div class="barras_metas_sun row pr-25">
-                <div class="perc_barras_metas_sun col-12" style="height: 100%; padding: 0">
-
-                </div>
-            </div>
-            <div class="row pr-75">
-                <div class="col-12">
-                        <h1 class="desc_meta_sun_int"
-                        style="text-align: right; font-size: 2.5vh!important; margin-top: 3%; font-style: italic; margin-right: 4vw">
-                        "Reducir el impacto ambiental de las ciudades."</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row vh-15">
-        <div class="col-3">
-            <img src="" id="imagen_3meta_sun" align="right" style="width: 90%; height: 90%;">
-        </div>
-        <div class="col-9">
-            <div class="barras_metas_sun row pr-25">
-                <div class="perc_barras_metas_sun col-12" style="height: 100%; padding: 0">
-
-                </div>
-            </div>
-            <div class="row pr-75">
-                <div class="col-12">
-                        <h1 class="desc_meta_sun_int"
-                        style="text-align: right; font-size: 2.5vh!important; margin-top: 3%; font-style: italic; margin-right: 4vw">
-                        "Reducir el impacto ambiental de las ciudades."</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row vh-10"></div>
-    <div class="row vh-15">
-        <div class="testimonios col-12">
-            <div class="content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="carousel slide" data-ride="carousel" id="quote-carousel">
-                                <div class="carousel-inner">
-                                    <div class="item active carousel-item">
-                                        <blockquote>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <p id="testimonio_sun" style="color:whitesmoke; font-size: 24px">
-                                                        Neque porro quisquam est
-                                                        qui dolorem ipsum quia dolor
-                                                        sit amet, consectetur,
-                                                        adipisci velit!</p> <small style="color:whitesmoke">Juan
-                                                        Esteban, 19
-                                                        años</small>
+        <div class="row vh-10"></div>
+        <div class="row vh-15">
+            <div class="testimonios col-12">
+                <div class="content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+                                    <div class="carousel-inner">
+                                        <div class="item active carousel-item">
+                                            <blockquote>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <p id="testimonio_sun" style="color:whitesmoke; font-size: 24px">
+                                                            Neque porro quisquam est
+                                                            qui dolorem ipsum quia dolor
+                                                            sit amet, consectetur,
+                                                            adipisci velit!</p> <small style="color:whitesmoke">Juan
+                                                            Esteban, 19
+                                                            años</small>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </blockquote>
+                                            </blockquote>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -239,9 +174,8 @@ var profundidad_2 = `
                 </div>
             </div>
         </div>
+        <div class="row vh-20"></div>
     </div>
-    <div class="row vh-20"></div>
-</div>
 `;
 
 
@@ -496,13 +430,13 @@ const log = console.log;
 var vises = 0
 function avisar() {
     vises++;
-    if(vises == 3){
+    if (vises == 3) {
 
-            setTimeout(function () {
-                // sel_map(0);
-                document.getElementById('nav').style.visibility = "visible";
-                cambiar_de_comuna("C1");
-                document.getElementById('loading').style.visibility = "hidden";
-            }, 300);
+        setTimeout(function () {
+            // sel_map(0);
+            document.getElementById('nav').style.visibility = "visible";
+            cambiar_de_comuna("C1");
+            document.getElementById('loading').style.visibility = "hidden";
+        }, 300);
     }
 } 

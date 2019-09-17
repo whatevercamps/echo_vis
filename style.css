@@ -85,15 +85,12 @@
 }
 
 .navbar {
+    height: 85px;
     background-color: #F7F8F9;
 }
 
 .navbarmargin {
-    height: 60px;
-}
-
-body {
-    background-color: #ffffff;
+    height: 85px;
 }
 
 .axis line {
@@ -400,14 +397,28 @@ ul#menu li {
     display: inline;
 }
 
+#mapas_juntos {
+    height: 100%
+}
+
 .section {
+    height: 81vh;
+}
+
+#div_fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1000;
     height: 100vh;
+    width: 100vw;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 1) 70%, rgba(202, 225, 231, 1) 100%);
 }
 
 #sunburst_row {
     height: 100vh;
 }
-
 
 #tooltip {
     position: absolute;
@@ -427,27 +438,30 @@ ul#menu li {
 }
 
 #tooltip {
-    background: rgba(0, 0, 0, 0.9);
-    border: 1px solid grey;
+    background: #272838;
+    border: 1px solid #070707;
     border-radius: 5px;
     font-size: 12px;
-    width: auto;
+    width: 12vw;
     padding: 4px;
     color: white;
     opacity: 0;
+    height: 6vh;
 }
 
 #tooltip table {
     table-layout: fixed;
+    width: 100%;
 }
 
 #tooltip tr td {
     padding: 0;
     margin: 0;
+    width: 100%;
 }
 
 #tooltip tr td:nth-child(1) {
-    width: 50px;
+    width: 100%;
 }
 
 .tooltips {
@@ -464,6 +478,51 @@ ul#menu li {
 .tooltips p {
     color: aliceblue;
     font-size: 2vh;
+}
+
+#tooltip2 {
+    position: absolute;
+    text-align: center;
+    padding: 20px;
+    margin: 10px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 1px;
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+#tooltip2 h4 {
+    margin: 0;
+    font-size: 14px;
+}
+
+#tooltip2 {
+    background: #272838;
+    border: 1px solid #070707;
+    border-radius: 5px;
+    font-size: 12px;
+    width: 12vw;
+    padding: 4px;
+    color: white;
+    opacity: 0;
+    height: 6vh;
+}
+
+#tooltip2 table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+#tooltip2 tr td {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+#tooltip2 tr td:nth-child(1) {
+    width: 50px;
+    width: 100%;
 }
 
 .active_boton {
@@ -567,11 +626,8 @@ svg {
 
 #myDiv {
     padding-left: 3vw;
-    margin-top: 60px;
-}
-
-h1 {
-    color: white
+    margin-top: 85px;
+    margin-bottom: 8vh;
 }
 
 .vh-70 {
@@ -587,13 +643,18 @@ h1 {
     max-height: 100%;
 }
 
+.imagen_sun {
+    -webkit-box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.75);
+}
+
 .pr-30 {
     height: 30%;
 }
 
 #percent_ods {
-    font-size: 7vh;
-    margin-top: 5vh;
+    font-size: 300%;
     font-weight: bold;
 }
 
@@ -686,4 +747,12 @@ h1 {
 h1, p, h2, h3, h4 {
     color: black !important;
     font-family: 'unfpa-bold';
+}
+
+
+#filtro{
+    position: fixed;
+    top: 130px;
+    right: 45px;
+    z-index: 1000;
 }

@@ -76,7 +76,8 @@ this.mapaCalor = function (item) {
 function tooltipHtml(n) {	/* function to create html content string in tooltip div. */
 	console.log("n que llega", n)
 	return "<table>" +
-		"<tr><td>Comuna:</td><td>" +  n[0].n + "</td></tr>" +
+		"<tr><td>Comuna " + (comunas_ordenadas.indexOf(n[0].id) + 1)*1+ " : </td></tr>" +
+		"<tr><td>" + n[0].n + "</td></tr>" +
 		"</table>";
 }
 

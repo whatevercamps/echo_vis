@@ -9,9 +9,11 @@ function cambiar_de_comuna(id_comuna) {
 	comunas_svg.selectAll("path").transition().duration(1000).style("fill", "white");
 
 	comunas_svg.select("#" + id_comuna).transition().duration(1000).style("fill", x => {
-		var sel = data_para_el_cambio.filter(d => d.id == id_comuna)[0];
+		//var sel = data_para_el_cambio.filter(d => d.id == id_comuna)[0];
 
-		return sel != undefined ? ods[sel.first] != undefined ? ods[sel.first].color : "rgb(255,255,255)" : "rgb(255,255,255)"
+		//return sel != undefined ? ods[sel.first] != undefined ? ods[sel.first].color : "rgb(255,255,255)" : "rgb(255,255,255)"
+
+		return "#272838"
 	});
 	var comuna_seleccionada = datos_comuna_para_per_comuna.filter(d => d.id == id_comuna)[0];
 	var req2 = { ...req };
@@ -98,7 +100,7 @@ function cambiar_de_comuna(id_comuna) {
 		}
 		var col = d3.select("#mapa");
 		var bounds_div = col.node().getBoundingClientRect();
-		height_svg_mapa1 = height_svg_mapa1 || bounds_div.height - bounds_div.height * 15 / 100;
+		height_svg_mapa1 = height_svg_mapa1 || bounds_div.height - bounds_div.height * 5 / 100;
 		console.log("height svg", height_svg_mapa1)
 		var scale = height_svg_mapa1 / 942.52;
 		var svg = d3.select("#mapa_svg")
@@ -214,7 +216,7 @@ function cambiar_de_comuna(id_comuna) {
 		}
 		var col = d3.select("#mapa_refer_container_row");
 		var bounds_div = col.node().getBoundingClientRect();
-		var height_svg_mapa1 = bounds_div.height - bounds_div.height * 20 / 100;
+		var height_svg_mapa1 = bounds_div.height - bounds_div.height * 5 / 100;
 		var scale = height_svg_mapa1 / 942.52;
 		var svg = d3.select("#mapa_svg_dos")
 			.attr("width", 1106.55 * scale)
@@ -231,9 +233,8 @@ function cambiar_de_comuna(id_comuna) {
 			d3.select(this).style("opacity", 1);
 
 			console.log("mouse event", d3.event);
-			d3.select("#tooltip").transition().duration(200).style("opacity", .9);
-			console.log("comuna", this)
-			d3.select("#tooltip").html(toolTip(comunitas.filter(d => d.id == this.id)))
+			d3.select("#tooltip2").transition().duration(200).style("opacity", .9);
+			d3.select("#tooltip2").html(toolTip(comunitas.filter(d => d.id == this.id)))
 				.style("left", d3.event.layerX + "px")
 				.style("top", d3.event.layerY + "px")
 				.style("z-index", "1000");
