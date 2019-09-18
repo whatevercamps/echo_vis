@@ -10,6 +10,7 @@ var width_sunburst_col_pregunta1;
 var height_sunburst_col_pregunta1;
 var meta_seleccionada_primera = null;
 var escala; 
+var radius_sunburst_medellin; 
 postData('https://echoun.herokuapp.com/sunburst', req_sun_inic).then(data => {
     data.name = "ODS";
     console.log("medellin", data)
@@ -49,7 +50,7 @@ function dibujar_sunburst(data) {
     .domain([100, 1000]).range([7, 4])
 
 
-    radius_sunburst = Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1) / escala_para_radio(Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1));
+    radius_sunburst_medellin = Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1) / escala_para_radio(Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1));
 
     format = d3.format(",d")
 
@@ -58,9 +59,9 @@ function dibujar_sunburst(data) {
         .startAngle(d => d.x0)
         .endAngle(d => d.x1)
         .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
-        .padRadius(radius_sunburst * 1.5 + 1000)
-        .innerRadius(d => d.y0 * radius_sunburst)
-        .outerRadius(d => Math.max(d.y0 * radius_sunburst, d.y1 * radius_sunburst - 1))
+        .padRadius(radius_sunburst_medellin * 1.5 + 1000)
+        .innerRadius(d => d.y0 * radius_sunburst_medellin)
+        .outerRadius(d => Math.max(d.y0 * radius_sunburst_medellin, d.y1 * radius_sunburst_medellin - 1))
 
     var partition = data => {
         escala = d3.scalePow().exponent(0.75);
@@ -145,7 +146,7 @@ function dibujar_sunburst(data) {
 
     const parent = g.append("circle")
         .datum(root)
-        .attr("r", radius_sunburst)
+        .attr("r", radius_sunburst_medellin)
         .attr("fill", "none")
         .attr("pointer-events", "all")
         .on("click", clicked);
@@ -572,7 +573,7 @@ function dibujar_sunburst(data) {
 
     function labelTransform(d) {
         const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
-        const y = (d.y0 + d.y1) / 2 * radius_sunburst;
+        const y = (d.y0 + d.y1) / 2 * radius_sunburst_medellin;
         return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
     }
 

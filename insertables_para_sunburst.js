@@ -436,6 +436,7 @@ function avisar() {
     vises++;
     if (vises == 3 && imwaitingforubaby) {
         setTimeout(function () {
+            cargado = true;
             $("#nav").removeClass("start_page").addClass('no_start_page');
             $("#logos_img").removeClass("logos_start_page").addClass('logos');
             $("#logos").removeClass("brand_start_page").addClass('brand_no_start_page');
@@ -452,11 +453,11 @@ function avisar() {
 
 $('#logos').click(d => {
     if (!cargado) {
-        cargado = true;
         document.getElementById('loading_img').style.visibility = "visible";
 
         if (vises == 3) {
             setTimeout(function () {
+                cargado = true;
                 $("#nav").removeClass("start_page").addClass('no_start_page');
                 $("#logos_img").removeClass("logos_start_page").addClass('logos');
                 $("#logos").removeClass("brand_start_page").addClass('brand_no_start_page');

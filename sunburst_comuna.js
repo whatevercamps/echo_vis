@@ -6,6 +6,7 @@ var req_sun_inic_dos = { ...req };
 req_sun_inic_dos.numero = 1023;
 var scale_per_barrita_sun_comuna;
 var meta_seleccionada_segunda;
+var radius_sunburst_comuna;
 postData('https://echoun.herokuapp.com/sunburst', req_sun_inic_dos).then(data => {
     log("req_popular", req_sun_inic_dos)
     console.log("popular", data)
@@ -45,8 +46,11 @@ function dibujar_sunburst_comuna(data) {
     const escala_para_radio = d3.scaleLinear()
     .domain([100, 1000]).range([7, 4])
 
+    console.log("height para radius", height_sunburst_col_pregunta2)
+    console.log("width para radius", width_sunburst_col_pregunta2)
+    console.log("escala para radius", escala_para_radio(Math.min(height_sunburst_col_pregunta2, width_sunburst_col_pregunta2)))
 
-    radius_sunburst = Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1) / escala_para_radio(Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1));
+    radius_sunburst_comuna = Math.min(height_sunburst_col_pregunta2, width_sunburst_col_pregunta2) / escala_para_radio(Math.min(height_sunburst_col_pregunta2, width_sunburst_col_pregunta2));
 
 
     var format = d3.format(",d")
@@ -56,12 +60,12 @@ function dibujar_sunburst_comuna(data) {
         .startAngle(d => d.x0)
         .endAngle(d => d.x1)
         .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
-        .padRadius(radius_sunburst * 1.5)
-        .innerRadius(d => d.y0 * radius_sunburst)
-        .outerRadius(d => Math.max(d.y0 * radius_sunburst, d.y1 * radius_sunburst - 1))
+        .padRadius(radius_sunburst_comuna * 1.5)
+        .innerRadius(d => d.y0 * radius_sunburst_comuna)
+        .outerRadius(d => Math.max(d.y0 * radius_sunburst_comuna, d.y1 * radius_sunburst_comuna - 1))
 
     var partition = data => {
-        escala = d3.scalePow().exponent(0.5);
+        escala = d3.scalePow().exponent(0.75);
         const root = d3.hierarchy(data)
             .sum(d => escala(d.value))
             //.sum(d => d.value)
@@ -142,7 +146,7 @@ function dibujar_sunburst_comuna(data) {
 
     const parent = g.append("circle")
         .datum(root)
-        .attr("r", radius_sunburst)
+        .attr("r", radius_sunburst_comuna)
         .attr("fill", "none")
         .attr("pointer-events", "all")
 
@@ -151,12 +155,14 @@ function dibujar_sunburst_comuna(data) {
 
     (_ => {
         $("#comuna_aislada").append(profundidad_1);
+
         max_ods_sun = root2.children[0];
         root2.children.forEach(element => {
             if (element.value > max_ods_sun.value)
                 max_ods_sun = element
         });
 
+        console.log("max encontrado", max_ods_sun)
 
         sdg_bur_id = max_ods_sun.data.name.split("_")[1];
         if (sdg_bur_id.length < 2)
@@ -292,8 +298,9 @@ function dibujar_sunburst_comuna(data) {
         if (act_sdg != sdg_bur_id) {
             act_sdg = sdg_bur_id;
             d3.select('#comuna_aislada').select('#imagen_ods_sun').attr('src', sdg_img_repo + act_sdg + ".jpg");
-            per = d3.select(this)._groups[0][0].__data__.value;
+            per = d3.select(this)._groups[0][0].__data__.data.name;
 
+            console.log("per sin arreglar", per)
 
             root2.each(d => {
                 if (d.data.name == per) {
@@ -302,6 +309,8 @@ function dibujar_sunburst_comuna(data) {
                 }
 
             })
+
+            console.log("per arreglado", per)
 
 
             perc = (100 / root2.value) * per;
@@ -387,11 +396,22 @@ function dibujar_sunburst_comuna(data) {
 
 
             //console.log(p);
-            max_meta = p.children.slice(0, 1)[0];
-            p.children.slice(0, 1).forEach(element => {
+            max_meta = p.children[0];
+
+            p.children.forEach(element => {
                 if (max_meta.data.value < element.data.value)
                     max_meta = element;
             });
+
+            console.log("max meta antes", max_meta)
+
+            root2.children.forEach(element => {
+                if (element.data.name == max_meta.data.name)
+                max_meta = element
+            });
+
+            console.log("max meta despues", max_meta)
+
 
             scale_per_barrita_sun_comuna = d3.scaleLinear()
                 .domain([0, max_meta.value]).range([0, width_percent_sunb_col - (width_percent_sunb_col / 100) * 20])
@@ -505,8 +525,10 @@ function dibujar_sunburst_comuna(data) {
     }
 
     function labelTransform(d) {
+        log("d como undefined",d)
+        log("radius como undefined",radius_sunburst_comuna)
         const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
-        const y = (d.y0 + d.y1) / 2 * radius_sunburst;
+        const y = (d.y0 + d.y1) / 2 * radius_sunburst_comuna;
         return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
     }
 }

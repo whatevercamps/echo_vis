@@ -128,7 +128,7 @@ function cambiar_de_comuna(id_comuna) {
 			if (this.id == "CA1")
 				return true
 			svg.selectAll('path').style("opacity", d => {
-				d3.select(this).style("opacity") - 0.1 
+				return d3.select(this).style("opacity") - 0.1
 			});
 			d3.select(this).style("opacity", 1);
 			cambiar_ods_comuna(this);
@@ -136,7 +136,7 @@ function cambiar_de_comuna(id_comuna) {
 			exis_tooltip = d3.select("#tooltip")
 
 			exis_tooltip.transition().duration(200).style("opacity", .9);
-			
+
 			d3.select("#tooltip").html(toolTip(comunitas.filter(d => d.id == this.id)))
 				.style("left", d3.event.layerX + "px")
 				.style("top", d3.event.layerY + "px")
