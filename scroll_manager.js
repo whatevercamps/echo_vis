@@ -60,3 +60,14 @@ $("#footer").click(d => {
     bajar_scroll()
 })
 
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+        case 38:
+            subir_scroll();
+            break;
+        case 40:
+            bajar_scroll();
+            break;
+    }
+};
