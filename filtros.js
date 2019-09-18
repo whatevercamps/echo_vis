@@ -8,12 +8,12 @@ var sexos = [];
 //nuevas variables
 
 var params = {
-    "adulto_mayor_hombre": true,
-    "adulto_mayor_mujer": true,
-    "adulto_hombre": true,
-    "adulto_mujer": true,
-    "joven_hombre": true,
-    "joven_mujer": true,
+    "adulto_mayor_hombre": false,
+    "adulto_mayor_mujer": false,
+    "adulto_hombre": false,
+    "adulto_mujer": false,
+    "joven_hombre": false,
+    "joven_mujer": false,
 }
 //fin nuevas variables
 
@@ -124,7 +124,7 @@ function click_filtro() {
         d3.select("#" + this.id).style("fill-opacity", params[this.id] ? 1 : 0.7)
     }
 
-//todito_hide
+    //todito_hide
     document.getElementById('loading_filter').style.visibility = "visible";
     document.getElementById('todito_para_hide').style.opacity = 0.1;
 
@@ -155,6 +155,14 @@ function click_filtro() {
         edades.push("mayores");
     }
 
+    if (!params["adulto_mayor_hombre"] && !params["adulto_mayor_mujer"] && !params["adulto_hombre"] && !params["adulto_mujer"] && !params["joven_hombre"] && !params["joven_mujer"]) {
+        edades.push("adultos");
+        edades.push("mayores");
+        edades.push("jovenes");
+        sexos.push("Mujer");
+        sexos.push("Hombre");
+    }
+
 
     let x = (arr) => arr.filter((v, i) => arr.indexOf(v) === i)
     console.log(sexos);
@@ -166,7 +174,7 @@ function click_filtro() {
     corregimientos = ["Corregimientos", "4) Aranjuez", "16) Belén", "15) Guayabal", "NaN", "11) Laureles-Estadio", "12) La América", "5) Castilla", "7) Robledo", "6) Doce de Octubre", "13) San Javier", "1) Popular", "9) Buenos Aires", "3) Manrique", "2) Santa Cruz", "8) Villa Hermosa", "10) La Candelaria", "14) El Poblado", "otros"];
 
     var terminadas = 0;
-    
+
     // postData('https://echoun.herokuapp.com/histograma_ods', req).then(data => {
 
     //     dibujar_burbujas(data, odss_res);
@@ -182,8 +190,8 @@ function click_filtro() {
         data.name = "ODS";
         dibujar_sunburst(data);
         cambiar_de_comuna(comuna_act);
-        terminadas ++; 
-        if(terminadas == 2){
+        terminadas++;
+        if (terminadas == 2) {
             document.getElementById('loading_filter').style.visibility = "hidden";
             document.getElementById('todito_para_hide').style.opacity = 1;
         }
@@ -192,8 +200,8 @@ function click_filtro() {
     req2.numero = 3;
     postData('https://echoun.herokuapp.com/odsComuna', req2).then(data => {
         dibujar_mapita(data);
-        terminadas ++; 
-        if(terminadas == 2){
+        terminadas++;
+        if (terminadas == 2) {
             document.getElementById('loading_filter').style.visibility = "hidden";
             document.getElementById('todito_para_hide').style.opacity = 1;
         }
@@ -203,17 +211,17 @@ function click_filtro() {
 
 
 
-d3.select("#adulto_mayor_hombre").on("click", click_filtro)        .style("cursor", "pointer")
-d3.select("#adulto_mayor_mujer").on("click", click_filtro)        .style("cursor", "pointer")
-d3.select("#adulto_hombre").on("click", click_filtro)        .style("cursor", "pointer")
-d3.select("#adulto_mujer").on("click", click_filtro)        .style("cursor", "pointer")
-d3.select("#joven_hombre").on("click", click_filtro)        .style("cursor", "pointer")
-d3.select("#joven_mujer").on("click", click_filtro)        .style("cursor", "pointer")
-d3.select("#todo_hombres").on("click", click_filtro)        .style("cursor", "pointer")
-d3.select("#todo_mujeres").on("click", click_filtro)        .style("cursor", "pointer")
-d3.select("#todo_adultos").on("click", click_filtro)        .style("cursor", "pointer")
-d3.select("#todo_mayores").on("click", click_filtro)        .style("cursor", "pointer")
-d3.select("#todo_jovenes").on("click", click_filtro)        .style("cursor", "pointer")
+d3.select("#adulto_mayor_hombre").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
+d3.select("#adulto_mayor_mujer").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
+d3.select("#adulto_hombre").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
+d3.select("#adulto_mujer").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
+d3.select("#joven_hombre").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
+d3.select("#joven_mujer").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
+d3.select("#todo_hombres").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
+d3.select("#todo_mujeres").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
+d3.select("#todo_adultos").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
+d3.select("#todo_mayores").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
+d3.select("#todo_jovenes").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
 
 
 function postData(url = '', data) {

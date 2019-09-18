@@ -429,17 +429,34 @@ var mapa_refer = `
 `
 
 const log = console.log;
-
+var imwaitingforubaby = false;
 var vises = 0
 function avisar() {
     vises++;
-    if (vises == 3) {
-
+    if (vises == 3 && imwaitingforubaby) {
         setTimeout(function () {
-            // sel_map(0);
-            document.getElementById('nav').style.visibility = "visible";
-            cambiar_de_comuna("C1");
-            document.getElementById('loading').style.visibility = "hidden";
-        }, 300);
+            $("#nav").removeClass("start_page").addClass('no_start_page');
+            $("#logos_img").removeClass("logo_start_page").addClass('logos');
+            $("#logos").removeClass("brand_start_page").addClass('brand_no_start_page');
+            document.getElementById('loading_img').style.visibility = "hidden";
+        }, 500);
     }
-} 
+}
+
+
+$('#logos').click(d => {
+    document.getElementById('loading_img').style.visibility = "visible";
+
+    if (vises == 3) {
+        setTimeout(function () {
+            $("#nav").removeClass("start_page").addClass('no_start_page');
+            $("#logos_img").removeClass("logo_start_page").addClass('logos');
+            $("#logos").removeClass("brand_start_page").addClass('brand_no_start_page');
+            
+            document.getElementById('loading_img').style.visibility = "hidden";
+        }, 500);
+    }
+    else {
+        imwaitingforubaby = true;
+    }
+})

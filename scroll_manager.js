@@ -1,9 +1,11 @@
 $('html, body').animate({
-    scrollTop: $("#sect" + 0).offset().top - 60
+    scrollTop: $("#sect" + 0).offset().top -85
 }, 1000);
 var act_sect = 0;
 var max_sect = 2;
 var wait_im_scrolling = false;
+$('#sect' + (act_sect + 1)).css('visibility', 'hidden');
+$('#sect' + (act_sect + 2)).css('visibility', 'hidden');
 
 function cambiar_pos_directamente(targetId){
     intTarget = parseInt(targetId.split("sect")[1]);
@@ -22,7 +24,7 @@ function subir_scroll() {
     act_sect--;
     $('#sect' + (act_sect)).css('visibility', 'visible');
     $('html, body').animate({
-        scrollTop: $("#sect" + act_sect).offset().top - 60
+        scrollTop: $("#sect" + act_sect).offset().top -85
     }, 500);
     $('#sect' + (act_sect + 1)).css('visibility', 'hidden');
     //console.log('bajandooo');
@@ -34,7 +36,7 @@ function bajar_scroll() {
     act_sect++;
     $('#sect' + (act_sect)).css('visibility', 'visible');
     $('html, body').animate({
-        scrollTop: $("#sect" + act_sect).offset().top - 60
+        scrollTop: $("#sect" + act_sect).offset().top -85
     }, 500);
     $('#sect' + (act_sect - 1)).css('visibility', 'hidden');
     //console.log('subiendooo');

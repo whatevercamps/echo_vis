@@ -35,7 +35,7 @@ function dibujar_burbujas(res_hist, res_ods) {
     xx.attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
     var svg = xx
         .attr("width", body_width)
-        .attr("height", body_height).attr("transform", "translate(-" + Math.abs(width_col_burb-body_width) + ", " + 0 + ")");
+        .attr("height", body_height).attr("transform", "translate(-" + Math.abs(width_col_burb) + ", " + 0 + ")");
 
     var data = d3.range(17).map(d => {
         const ods = histograma.find(x => x.text == `ods_${d + 1}`);
@@ -121,7 +121,7 @@ function dibujar_burbujas(res_hist, res_ods) {
         return force;
     }
     const main_g = svg.append("g");
-    main_g.attr("transform", "translate(" + Math.abs(body_width - width_col_burb) + ", " + 0 + ")")
+    main_g.attr("transform", "translate(" + Math.abs(body_width - width_col_burb) + ", " + body_height/2 + ")")
     const node = main_g
         .selectAll(".node")
         .data(data)
@@ -139,13 +139,13 @@ function dibujar_burbujas(res_hist, res_ods) {
     const circle_is = circle.append('circle').classed('inside', true).attr('r', 5)
         .attr("fill", d => '#ddd');
 
-    node.append("text")
-        .attr("class", "text_node")
-        .text(function (d, i) {
-            return d.value;
-        })
-        .style('fill', '#000')
-        .style('font-size', '12px')
+    // node.append("text")
+    //     .attr("class", "text_node")
+    //     .text(function (d, i) {
+    //         return d.value;
+    //     })
+    //     .style('fill', '#000')
+    //     .style('font-size', '12px')
 
     force.nodes(data)
         .alpha(1)

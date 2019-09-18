@@ -5,7 +5,7 @@ var height_sunburst_col_pregunta2;
 var req_sun_inic_dos = { ...req };
 req_sun_inic_dos.numero = 1023;
 var scale_per_barrita_sun_comuna;
-var meta_seleccionada_segunda
+var meta_seleccionada_segunda;
 postData('https://echoun.herokuapp.com/sunburst', req_sun_inic_dos).then(data => {
     log("req_popular", req_sun_inic_dos)
     console.log("popular", data)
@@ -25,7 +25,7 @@ function dibujar_sunburst_comuna(data) {
     //$("#mapas_juntos").append(profundidad_1);
 
 
-    grupito = d3.select("#mapas_juntos").select('#grupo_sunburst');
+    var grupito = d3.select("#mapas_juntos").select('#grupo_sunburst');
     //grupito.transition().duration(1000).attr("opacity", 0);
 
     var sunburst_col = d3.select("#sunburst_col_intr");
@@ -34,20 +34,20 @@ function dibujar_sunburst_comuna(data) {
     var bounds_sunburst_col = sunburst_col.node().getBoundingClientRect();
     var bounds_sunburst_row = sunburst_row.node().getBoundingClientRect();
 
-    margin_sunburst = { top: 0, right: 0, bottom: 0, left: 0 }
+    var margin_sunburst = { top: 0, right: 0, bottom: 0, left: 0 }
 
     width_sunburst_col_pregunta2 = width_sunburst_col_pregunta2 || bounds_sunburst_col.width + (bounds_sunburst_col.width / 100) * 10;
     height_sunburst_col_pregunta2 = height_sunburst_col_pregunta2 || bounds_sunburst_row.height + (bounds_sunburst_col.height / 100) * 10;
 
 
 
-    width_sunburst = width_sunburst_col_pregunta2;
-    radius_sunburst = Math.min(height_sunburst_col_pregunta2, width_sunburst_col_pregunta2) / 3;
+    var width_sunburst = width_sunburst_col_pregunta2;
+    var radius_sunburst = Math.min(height_sunburst_col_pregunta2, width_sunburst_col_pregunta2) / 3;
 
-    format = d3.format(",d")
+    var format = d3.format(",d")
 
 
-    arc = d3.arc()
+    var arc = d3.arc()
         .startAngle(d => d.x0)
         .endAngle(d => d.x1)
         .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
@@ -55,19 +55,33 @@ function dibujar_sunburst_comuna(data) {
         .innerRadius(d => d.y0 * radius_sunburst)
         .outerRadius(d => Math.max(d.y0 * radius_sunburst, d.y1 * radius_sunburst - 1))
 
-    partition = data => {
+    var partition = data => {
+        escala = d3.scalePow().exponent(0.5);
         const root = d3.hierarchy(data)
-            .sum(d => d.value)
+            .sum(d => escala(d.value))
+            //.sum(d => d.value)
             .sort((a, b) => b.value - a.value);
         return d3.partition()
             .size([2 * Math.PI, root.height + 1])
             (root);
     }
 
+    var partition2 = data => {
+        //const escala = d3.scalePow().exponent(0.5);
+        const root2 = d3.hierarchy(data)
+            //.sum(d => escala(d.value))
+            .sum(d => d.value)
+            .sort((a, b) => b.value - a.value);
+        return d3.partition()
+            .size([2 * Math.PI, root2.height + 1])
+            (root2);
+    }
+
     color_sunburst = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1))
     var root = partition(data);
-
+    var root2 = partition2(data);
     root.each(d => d.current = d);
+    root2.each(d => d.current = d);
 
     console.log("root en comuna", root);
 
@@ -132,8 +146,8 @@ function dibujar_sunburst_comuna(data) {
 
     (_ => {
         $("#comuna_aislada").append(profundidad_1);
-        max_ods_sun = root.children[0];
-        root.children.forEach(element => {
+        max_ods_sun = root2.children[0];
+        root2.children.forEach(element => {
             if (element.value > max_ods_sun.value)
                 max_ods_sun = element
         });
@@ -144,7 +158,7 @@ function dibujar_sunburst_comuna(data) {
             sdg_bur_id = "0" + sdg_bur_id
         d3.select('#comuna_aislada').select('#imagen_ods_sun').attr('src', sdg_img_repo + sdg_bur_id + ".jpg").attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
         per = max_ods_sun.value;
-        perc = (100 / root.value) * per;
+        perc = (100 / root2.value) * per;
         val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
         d3.select('#comuna_aislada').select('#percent_ods').text(`${val_to_show}%`).attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
 
@@ -160,7 +174,7 @@ function dibujar_sunburst_comuna(data) {
         d3.select('#comuna_aislada').select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
         d3.select('#comuna_aislada').select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
         per = max_meta.data.value;
-        perc = (100 / root.value) * per;
+        perc = (100 / root2.value) * per;
         val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
         d3.select('#comuna_aislada').select('#percent_meta').text(`${val_to_show}%`)
 
@@ -187,7 +201,7 @@ function dibujar_sunburst_comuna(data) {
                     });
 
                     var selected_meta = null;
-                    root.each(d => { if (d.data.name == sdg_bur_id) selected_meta = d });
+                    root2.each(d => { if (d.data.name == sdg_bur_id) selected_meta = d });
                     log("selected_meta", selected_meta);
 
 
@@ -274,7 +288,18 @@ function dibujar_sunburst_comuna(data) {
             act_sdg = sdg_bur_id;
             d3.select('#comuna_aislada').select('#imagen_ods_sun').attr('src', sdg_img_repo + act_sdg + ".jpg");
             per = d3.select(this)._groups[0][0].__data__.value;
-            perc = (100 / root.value) * per;
+
+
+            root2.each(d => {
+                if (d.data.name == per) {
+                    console.log("encontrado", d)
+                    per = d.value;
+                }
+
+            })
+
+
+            perc = (100 / root2.value) * per;
             val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
             d3.select('#comuna_aislada').select('#percent_ods').text(`${val_to_show}%`)
 
@@ -289,7 +314,7 @@ function dibujar_sunburst_comuna(data) {
             d3.select('#comuna_aislada').select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
             d3.select('#comuna_aislada').select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
             per = max_meta.data.value;
-            perc = (100 / root.value) * per;
+            perc = (100 / root2.value) * per;
             val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
             d3.select('#comuna_aislada').select('#percent_meta').text(`${val_to_show}%`)
         }
@@ -429,8 +454,8 @@ function dibujar_sunburst_comuna(data) {
             $("#comuna_aislada").append(profundidad_1);
 
             (_ => {
-                max_ods_sun = root.children[0];
-                root.children.forEach(element => {
+                max_ods_sun = root2.children[0];
+                root2.children.forEach(element => {
                     if (element.value > max_ods_sun.value)
                         max_ods_sun = element
                 });
@@ -442,7 +467,7 @@ function dibujar_sunburst_comuna(data) {
 
                 d3.select('#comuna_aislada').select('#imagen_ods_sun').attr('src', sdg_img_repo + sdg_bur_id + ".jpg").attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
                 per = max_ods_sun.value;
-                perc = (100 / root.value) * per;
+                perc = (100 / root2.value) * per;
                 val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
                 d3.select('#comuna_aislada').select('#percent_ods').text(`${val_to_show}%`).attr("opacity", 0).transition().delay(1000).duration(1000).attr("opacity", 1);
 
@@ -458,7 +483,7 @@ function dibujar_sunburst_comuna(data) {
                 d3.select('#comuna_aislada').select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
                 d3.select('#comuna_aislada').select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
                 per = max_meta.data.value;
-                perc = (100 / root.value) * per;
+                perc = (100 / root2.value) * per;
                 val_to_show = perc < 1 ? perc.toPrecision(1) : perc < 10 ? perc.toPrecision(2) : perc.toFixed(0);
                 d3.select('#comuna_aislada').select('#percent_meta').text(`${val_to_show}%`)
 

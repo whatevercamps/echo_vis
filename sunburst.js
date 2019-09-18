@@ -38,18 +38,23 @@ function dibujar_sunburst(data) {
 
     margin_sunburst = { top: 30, right: 0, bottom: 30, left: 70 }
 
-    width_sunburst_col_pregunta1 = width_sunburst_col_pregunta1 || bounds_sunburst_col.width + (bounds_sunburst_col.width / 100) * 10;
-    height_sunburst_col_pregunta1 = height_sunburst_col_pregunta1 || bounds_sunburst_row.height + (bounds_sunburst_col.height / 100) * 10;
+    width_sunburst_col_pregunta1 = width_sunburst_col_pregunta1 || bounds_sunburst_col.width - (bounds_sunburst_col.width / 100) * 10;
+    height_sunburst_col_pregunta1 = height_sunburst_col_pregunta1 || bounds_sunburst_row.height - (bounds_sunburst_col.height / 100) * 10;
     console.log("height sunb", height_sunburst_col_pregunta1)
 
 
-    width_sunburst = width_sunburst_col_pregunta1
-    radius_sunburst = Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1) / 7;
+    width_sunburst = width_sunburst_col_pregunta1;
+    
+    const escala_para_radio = d3.scaleLinear()
+    .domain([100, 1000]).range([7, 4])
+
+
+    radius_sunburst = Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1) / escala_para_radio(Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1));
 
     format = d3.format(",d")
 
 
-    arc = d3.arc()
+    var arc = d3.arc()
         .startAngle(d => d.x0)
         .endAngle(d => d.x1)
         .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
@@ -57,7 +62,7 @@ function dibujar_sunburst(data) {
         .innerRadius(d => d.y0 * radius_sunburst)
         .outerRadius(d => Math.max(d.y0 * radius_sunburst, d.y1 * radius_sunburst - 1))
 
-    partition = data => {
+    var partition = data => {
         escala = d3.scalePow().exponent(0.5);
         const root = d3.hierarchy(data)
             .sum(d => escala(d.value))
@@ -68,7 +73,7 @@ function dibujar_sunburst(data) {
             (root);
     }
 
-    partition2 = data => {
+    var partition2 = data => {
         //const escala = d3.scalePow().exponent(0.5);
         const root2 = d3.hierarchy(data)
             //.sum(d => escala(d.value))
@@ -378,7 +383,7 @@ function dibujar_sunburst(data) {
     }
 
     function clicked(p) {
-        console.log("p", p);
+        console.log("p en click comuna", p)
 
         parent.datum(p.parent || root);
 
@@ -388,8 +393,6 @@ function dibujar_sunburst(data) {
             y0: Math.max(0, d.y0 - p.depth),
             y1: Math.max(0, d.y1 - p.depth)
         });
-
-
 
         const t = g.transition().duration(750);
 
@@ -412,6 +415,7 @@ function dibujar_sunburst(data) {
         }).transition(t)
             .attr("fill-opacity", d => d.children ? 0 : 0)
             .attrTween("transform", d => () => labelTransform(d.current));
+
 
 
         if (p.parent != undefined && p.parent.data.name == "ODS" && nivel_profundidad == 1) {
