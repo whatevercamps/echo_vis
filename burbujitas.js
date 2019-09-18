@@ -21,22 +21,19 @@ function dibujar_burbujas(res_hist) {
     const height_col_burb = bounds_div_burb.height / 2;
     const body_width = d3.select('#sect2').node().getBoundingClientRect().width;
     const body_height = d3.select('#sect2').node().getBoundingClientRect().height;
-    const radio_calc = d3.scalePow().exponent(0.5).domain([0, d3.max(histograma, d => d.value)]).range([10, height_col_burb / 6]);
+    const radio_calc = d3.scalePow().exponent(0.8).domain([0, d3.max(histograma, d => d.value)]).range([10, height_col_burb / 6]);
     iwidth = width_col_burb / 2 - margin.left - margin.right;
     iheight = height_col_burb - margin.top - margin.bottom;
     // div_burb.select("svg").remove();
-log("histograma", histograma)
 
 
     if (xx_burb) {
         pie_st = [true, true];
         d3.selectAll('.node')
-            .transition().duration(1000)
+            .transition().duration(2000)
             .tween('radius', function (d) {
-                log("d_llegada", d)
                 var that = d3.select(this);
                 const ods = histograma.find(x => x.name == d.id);
-                log(`ods_${d + 1}`, ods)
                 var i = d3.interpolate(d.radius, radio_calc(parseInt((ods ? ods['value'] : 0) || 0)));
                 return function (t) {
                     d.radius = i(t);
@@ -253,7 +250,7 @@ log("histograma", histograma)
                             d.radius = i(t);
                             d.marked = true;
                             that.attr('r', function (d) {
-                                mapaCalor(d);
+                                mapaCalor(d); 
                                 var bar_svg_burbujas = d3.select('#bar_svg_burbujas');
                                 bar_svg_burbujas.selectAll('.enter')
                                     .selectAll("g")

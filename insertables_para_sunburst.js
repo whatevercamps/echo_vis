@@ -437,9 +437,14 @@ function avisar() {
     if (vises == 3 && imwaitingforubaby) {
         setTimeout(function () {
             $("#nav").removeClass("start_page").addClass('no_start_page');
-            $("#logos_img").removeClass("logo_start_page").addClass('logos');
+            $("#logos_img").removeClass("logos_start_page").addClass('logos');
             $("#logos").removeClass("brand_start_page").addClass('brand_no_start_page');
-            document.getElementById('loading_img').style.visibility = "hidden";
+            $("#nav").append(`<ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <img id="hablamed" class="logos" src="assets/hablamed.svg">
+            </li>
+        </ul>`);
+            document.getElementById('loading_img').remove();
         }, 500);
     }
 }
@@ -453,10 +458,14 @@ $('#logos').click(d => {
         if (vises == 3) {
             setTimeout(function () {
                 $("#nav").removeClass("start_page").addClass('no_start_page');
-                $("#logos_img").removeClass("logo_start_page").addClass('logos');
+                $("#logos_img").removeClass("logos_start_page").addClass('logos');
                 $("#logos").removeClass("brand_start_page").addClass('brand_no_start_page');
-
-                document.getElementById('loading_img').style.visibility = "hidden";
+                $("#nav").append(`<ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <img id="hablamed" class="logos" src="assets/hablamed.svg">
+                </li>
+            </ul>`);
+                document.getElementById('loading_img').remove();
             }, 500);
         }
         else {

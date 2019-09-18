@@ -42,7 +42,8 @@ var comunas = {
 
 this.ods = ods;
 
-this.mapaCalor = function (item) {
+function mapaCalor(item) {
+	console.log("entrada mapa calor", item)
 	fetch('https://raw.githubusercontent.com/whatevercamps/graph_jsons_tw_unfpa/master/todos_comunas_ods.json')
 		.then(function (res) {
 			return res.json();

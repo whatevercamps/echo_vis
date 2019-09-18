@@ -132,9 +132,9 @@ function cambiar_de_comuna(id_comuna) {
 			cambiar_ods_comuna(this);
 
 			exis_tooltip = d3.select("#tooltip")
-			console.log("mouse event", d3.event);
+
 			exis_tooltip.transition().duration(200).style("opacity", .9);
-			console.log("comuna", this)
+			
 			d3.select("#tooltip").html(toolTip(comunitas.filter(d => d.id == this.id)))
 				.style("left", d3.event.layerX + "px")
 				.style("top", d3.event.layerY + "px")
