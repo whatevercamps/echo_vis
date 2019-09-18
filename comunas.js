@@ -127,7 +127,9 @@ function cambiar_de_comuna(id_comuna) {
 		function over(d) {
 			if (this.id == "CA1")
 				return true
-			svg.selectAll('path').style("opacity", 0.9);
+			svg.selectAll('path').style("opacity", d => {
+				d3.select(this).style("opacity") - 0.1 
+			});
 			d3.select(this).style("opacity", 1);
 			cambiar_ods_comuna(this);
 

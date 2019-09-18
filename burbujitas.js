@@ -250,7 +250,6 @@ function dibujar_burbujas(res_hist) {
                             d.radius = i(t);
                             d.marked = true;
                             that.attr('r', function (d) {
-                                mapaCalor(d); 
                                 var bar_svg_burbujas = d3.select('#bar_svg_burbujas');
                                 bar_svg_burbujas.selectAll('.enter')
                                     .selectAll("g")
@@ -262,11 +261,13 @@ function dibujar_burbujas(res_hist) {
                         }
                     });
 
+                mapaCalor(index + 1);
                 force.alpha(1).restart();
 
 
                 //fin del if
             } else {
+                dibujar_mapita();
                 pie_st = [false, true];
                 d3.selectAll('.node')
                     .transition().duration(1000)

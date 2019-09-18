@@ -1,6 +1,7 @@
 
 var comunas_ordenadas = ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "CO1", "CO2", "CO3", "CO4", "CO5"];
 var datos_comuna_para_per_comuna;
+var sampleData;
 var ods = {
 	"ods_1": { "name": "Fin de la pobreza", "color": "rgb(231, 56, 65)" },
 	"ods_2": { "name": "Hambre cero", "color": "rgb(224, 164, 60)" },
@@ -44,33 +45,32 @@ this.ods = ods;
 
 function mapaCalor(item) {
 	console.log("entrada mapa calor", item)
-	fetch('https://raw.githubusercontent.com/whatevercamps/graph_jsons_tw_unfpa/master/todos_comunas_ods.json')
-		.then(function (res) {
-			return res.json();
-		}).then(function (data) {
-			var opcs = [];
-			var mayor = 0;
-			var opSc = d3.scaleLinear()
-				.domain([0, d3.max(data, x => x.datos[item.id])])
-				.range([0, 1]);
-			d3.select("#mapa_svg").selectAll(".state")
-				.style("fill", function (d) {
-					random_value = false;
-					var valor = data.find(x => x.id == d.id).datos[item.id];
-					var opacidad = opSc(valor);
-					return opacidad > 0.2 ? ods[item.id].color : "rgb(237,237,237)";
-				}).style('opacity', function (dd) {
-					var valor = data.find(x => x.id == dd.id).datos[item.id];
-					var opacidad = opSc(valor);
-					return opacidad > 0.2 ? opacidad : 0.2;
-				});
+	console.log("datos/comuna", datos_comuna_para_per_comuna)
 
-		}).then(function (opacidades) {
-
-
+	var opcs = [];
+	var mayor = d3.max(datos_comuna_para_per_comuna, x => {
+		var rr = x.datos.find(y => y.name == "ods_" + item) ? x.datos.find(y => y.name == "ods_" + item).value : 0;
+		console.log("rr", rr);
+		return rr;
+	});
+	console.log("mayor", mayor)
+	var opSc = d3.scaleLinear()
+		.domain([0, mayor])
+		.range([0, 1]);
+	d3.select("#mapa_svg").select('#Layer_2').select('#Layer_1-2').selectAll("path")
+		.style("fill", function () {
+			var valor = datos_comuna_para_per_comuna.find(x => x.id == this.id) ? datos_comuna_para_per_comuna.find(x => x.id == this.id).datos.find(x => x.name == "ods_" + item) ? datos_comuna_para_per_comuna.find(x => x.id == this.id).datos.find(x => x.name == "ods_" + item).value : 0 : 0;
+			console.log("valor obtenido a pintar", valor)
+			var opacidad = opSc(valor);
+			console.log("color", ods["ods_" + item].color)
+			return opacidad > 0.2 ? ods["ods_" + item].color : "rgb(237,237,237)";
+		}).style('opacity', function (dd) {
+			var valor = datos_comuna_para_per_comuna.find(x => x.id == this.id) ? datos_comuna_para_per_comuna.find(x => x.id == this.id).datos.find(x => x.name == "ods_" + item) ? datos_comuna_para_per_comuna.find(x => x.id == this.id).datos.find(x => x.name == "ods_" + item).value : 0 : 0;
+			console.log("valor obtenido a pintar", valor)
+			var opacidad = opSc(valor);
+			console.log("opacidad", opacidad)
+			return opacidad > 0.2 ? opacidad : 1;
 		});
-
-
 };
 
 
@@ -82,7 +82,7 @@ function tooltipHtml(n) {	/* function to create html content string in tooltip d
 		"</table>";
 }
 
-var req_mapa_inicial = {... req};
+var req_mapa_inicial = { ...req };
 req_mapa_inicial.numero = 400;
 postData('https://echoun.herokuapp.com/odsComuna', req_mapa_inicial)
 	.then(function (data) {
@@ -91,39 +91,48 @@ postData('https://echoun.herokuapp.com/odsComuna', req_mapa_inicial)
 
 
 
-function dibujar_mapita(data){
+function dibujar_mapita(data) {
+
+	if(!data && sampleData){
+		console.log("camino nuevo")
+		uStates.draw("#statesvg", sampleData, tooltipHtml);
+		return true;
+	}
+
+	console.log("camino viejo")
+
+	sampleData = [];
 	console.log("data_deback", data);
 	datos_comuna_para_per_comuna = data;
-	var sampleData = [];
 
-		comunas_ordenadas.forEach(function (dd) {
-			var d = data.find(function (ele) {
-				return ele.id == dd;
-			});
-			if (d != undefined && d.comuna != undefined && d.comuna != null && d.comuna != "") {
-				var first = d.datos[0] != undefined ? d.datos[0].name : "",
-					second =  d.datos[1] != undefined ? d.datos[1].name: "",
-					third = d.datos[2] != undefined ? d.datos[2].name: "",
-					id = d.id,
-					name = d.comuna;
-				sampleData.push( {
-					first: first,
-					second: second,
-					third: third,
-					id: id,
-					name: name
-				});
-			} else {
-				sampleData.push( {
-					first: null,
-					second: null,
-					third: null,
-					id: dd
-				});
-			}
-
-			comunas_ordenadas
+	comunas_ordenadas.forEach(function (dd) {
+		var d = data.find(function (ele) {
+			return ele.id == dd;
 		});
+		if (d != undefined && d.comuna != undefined && d.comuna != null && d.comuna != "") {
+			var first = d.datos[0] != undefined ? d.datos[0].name : "",
+				second = d.datos[1] != undefined ? d.datos[1].name : "",
+				third = d.datos[2] != undefined ? d.datos[2].name : "",
+				id = d.id,
+				name = d.comuna;
+			sampleData.push({
+				first: first,
+				second: second,
+				third: third,
+				id: id,
+				name: name
+			});
+		} else {
+			sampleData.push({
+				first: null,
+				second: null,
+				third: null,
+				id: dd
+			});
+		}
+
+		comunas_ordenadas
+	});
 	//console.log(sampleData);
 	uStates.draw("#statesvg", sampleData, tooltipHtml);
 	uStates.draw_segundo("", sampleData, tooltipHtml);

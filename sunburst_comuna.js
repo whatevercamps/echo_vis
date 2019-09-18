@@ -42,7 +42,12 @@ function dibujar_sunburst_comuna(data) {
 
 
     var width_sunburst = width_sunburst_col_pregunta2;
-    var radius_sunburst = Math.min(height_sunburst_col_pregunta2, width_sunburst_col_pregunta2) / 3;
+    const escala_para_radio = d3.scaleLinear()
+    .domain([100, 1000]).range([7, 4])
+
+
+    radius_sunburst = Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1) / escala_para_radio(Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1));
+
 
     var format = d3.format(",d")
 
