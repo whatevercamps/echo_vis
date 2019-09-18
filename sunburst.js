@@ -63,7 +63,7 @@ function dibujar_sunburst(data) {
         .outerRadius(d => Math.max(d.y0 * radius_sunburst, d.y1 * radius_sunburst - 1))
 
     var partition = data => {
-        escala = d3.scalePow().exponent(0.7);
+        escala = d3.scalePow().exponent(0.75);
         const root = d3.hierarchy(data)
             .sum(d => escala(d.value))
             //.sum(d => d.value)

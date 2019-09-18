@@ -88,6 +88,7 @@
 
 .navbar {
     background-color: #F7F8F9;
+    padding-top:0 !important;
 }
 
 .navbarmargin {
@@ -800,6 +801,7 @@ h1, p, h2, h3, h4 {
     margin-left: -25px;
     top: 80%;
     margin-top: -25px;
+    visibility: hidden;
 }
 
 .logos_start_page {

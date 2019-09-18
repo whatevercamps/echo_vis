@@ -76,14 +76,14 @@ this.mapaCalor = function (item) {
 function tooltipHtml(n) {	/* function to create html content string in tooltip div. */
 	console.log("n que llega", n)
 	return "<table>" +
-		"<tr><td>Comuna " + (comunas_ordenadas.indexOf(n[0].id) + 1)*1+ " : </td></tr>" +
+		"<tr><td>" + (comunas_ordenadas.indexOf(n[0].id) > 15 ? "Corregimiento " : "Comuna ") + "</td></tr>" +
 		"<tr><td>" + n[0].n + "</td></tr>" +
 		"</table>";
 }
 
-
-req.numero = 3;
-postData('https://echoun.herokuapp.com/odsComuna', req)
+var req_mapa_inicial = {... req};
+req_mapa_inicial.numero = 400;
+postData('https://echoun.herokuapp.com/odsComuna', req_mapa_inicial)
 	.then(function (data) {
 		dibujar_mapita(data)
 	})

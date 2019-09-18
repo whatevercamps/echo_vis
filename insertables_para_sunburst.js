@@ -430,7 +430,8 @@ var mapa_refer = `
 
 const log = console.log;
 var imwaitingforubaby = false;
-var vises = 0
+var vises = 0;
+var cargado = false;
 function avisar() {
     vises++;
     if (vises == 3 && imwaitingforubaby) {
@@ -445,18 +446,24 @@ function avisar() {
 
 
 $('#logos').click(d => {
-    document.getElementById('loading_img').style.visibility = "visible";
+    if (!cargado) {
+        cargado = true;
+        document.getElementById('loading_img').style.visibility = "visible";
 
-    if (vises == 3) {
-        setTimeout(function () {
-            $("#nav").removeClass("start_page").addClass('no_start_page');
-            $("#logos_img").removeClass("logo_start_page").addClass('logos');
-            $("#logos").removeClass("brand_start_page").addClass('brand_no_start_page');
-            
-            document.getElementById('loading_img').style.visibility = "hidden";
-        }, 500);
+        if (vises == 3) {
+            setTimeout(function () {
+                $("#nav").removeClass("start_page").addClass('no_start_page');
+                $("#logos_img").removeClass("logo_start_page").addClass('logos');
+                $("#logos").removeClass("brand_start_page").addClass('brand_no_start_page');
+
+                document.getElementById('loading_img').style.visibility = "hidden";
+            }, 500);
+        }
+        else {
+            imwaitingforubaby = true;
+        }
+    } else {
+        click_filtro("restart");
+        cambiar_pos_directamente("sect0");
     }
-    else {
-        imwaitingforubaby = true;
-    }
-})
+});

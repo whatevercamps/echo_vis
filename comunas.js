@@ -12,7 +12,7 @@ function cambiar_de_comuna(id_comuna) {
 		//var sel = data_para_el_cambio.filter(d => d.id == id_comuna)[0];
 
 		//return sel != undefined ? ods[sel.first] != undefined ? ods[sel.first].color : "rgb(255,255,255)" : "rgb(255,255,255)"
-
+		log("comuna con id" + id_comuna + "cambiada de color")
 		return "#272838"
 	});
 	var comuna_seleccionada = datos_comuna_para_per_comuna.filter(d => d.id == id_comuna)[0];
@@ -62,13 +62,13 @@ function cambiar_de_comuna(id_comuna) {
 
 		$("#segunda_pregunta").append(profundidad_1_segunda_pregunta);
 
-		function cambiar_ods_comuna(comuna_seleccionada) {
-			comuna_seleccionada = comuna_seleccionada || { id: "C1" };
+		function cambiar_ods_comuna(comuna_param) {
+			comuna_seleccionada = comuna_param || { id: "C1" };
 			if (comuna_seleccionada.id == "CA1")
 				return true;
 
-
 			var ods_principal_de_comuna = datos_comuna_para_per_comuna.filter(d => d.id == comuna_seleccionada.id)[0];
+			log("ods_principal_de_comuna", ods_principal_de_comuna)
 			var id_ods_principal_de_comuna = ods_principal_de_comuna.datos[0].name.split("_")[1];
 
 			if (id_ods_principal_de_comuna.length < 2)
@@ -86,6 +86,7 @@ function cambiar_de_comuna(id_comuna) {
 			d3.select("#segunda_pregunta").select('#nombre_meta').text(`${max_meta_de_comuna.name}`.replace("_", " ").replace("_", "."));
 			d3.select("#segunda_pregunta").select('#percent_meta').text(`${(max_meta_de_comuna.porcentaje * 100).toFixed(2)}%`)
 
+			dibujar_burbujas(ods_principal_de_comuna.datos)
 		};
 
 		cambiar_ods_comuna();
@@ -124,6 +125,8 @@ function cambiar_de_comuna(id_comuna) {
 		});
 
 		function over(d) {
+			if (this.id == "CA1")
+				return true
 			svg.selectAll('path').style("opacity", 0.9);
 			d3.select(this).style("opacity", 1);
 			cambiar_ods_comuna(this);
@@ -136,6 +139,7 @@ function cambiar_de_comuna(id_comuna) {
 				.style("left", d3.event.layerX + "px")
 				.style("top", d3.event.layerY + "px")
 				.style("z-index", "1000");
+
 
 		}
 
@@ -161,10 +165,11 @@ function cambiar_de_comuna(id_comuna) {
 			})
 			.on("mouseover", mouseOver).on("mouseout", mouseOut);
 */
-		svg.attr("visibility", "visible");
+		//svg.attr("visibility", "visible");
 		//svg.select('#CO1').style("fill", "#dedede")
 
 	}
+
 
 
 
@@ -229,6 +234,8 @@ function cambiar_de_comuna(id_comuna) {
 		});
 
 		function over() {
+			if (this.id == "CA1")
+				return true
 			svg.selectAll('path').style("opacity", 0.9);
 			d3.select(this).style("opacity", 1);
 
@@ -260,7 +267,7 @@ function cambiar_de_comuna(id_comuna) {
 			})
 			.on("mouseover", mouseOver).on("mouseout", mouseOut);
 */
-		svg.attr("visibility", "visible");
+		//svg.attr("visibility", "visible");
 		//svg.select('#CO1').style("fill", "#dedede")
 	}
 

@@ -119,7 +119,23 @@ function click_filtro() {
             d3.select("#adulto_mayor_hombre").style("fill-opacity", 1)
             d3.select("#adulto_mayor_mujer").style("fill-opacity", 1)
         }
-    } else {
+    } else if (this == "restart") {
+        log("si reinicia");
+        params.fill(false);
+        d3.select("#adulto_mayor_hombre").style("fill-opacity", 0.7)
+        d3.select("#adulto_mayor_mujer").style("fill-opacity", 0.7)
+        d3.select("#adulto_hombre").style("fill-opacity", 0.7)
+        d3.select("#adulto_mujer").style("fill-opacity", 0.7)
+        d3.select("#joven_hombre").style("fill-opacity", 0.7)
+        d3.select("#joven_mujer").style("fill-opacity", 0.7)
+        d3.select("#todo_hombres").style("fill-opacity", 0.7)
+        d3.select("#todo_mujeres").style("fill-opacity", 0.7)
+        d3.select("#todo_adultos").style("fill-opacity", 0.7)
+        d3.select("#todo_mayores").style("fill-opacity", 0.7)
+        d3.select("#todo_jovenes").style("fill-opacity", 0.7)
+    }
+
+    else {
         params[this.id] = !params[this.id];
         d3.select("#" + this.id).style("fill-opacity", params[this.id] ? 1 : 0.7)
     }
@@ -189,17 +205,18 @@ function click_filtro() {
     postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
         data.name = "ODS";
         dibujar_sunburst(data);
-        cambiar_de_comuna(comuna_act);
         terminadas++;
         if (terminadas == 2) {
             document.getElementById('loading_filter').style.visibility = "hidden";
             document.getElementById('todito_para_hide').style.opacity = 1;
         }
     });
-    req2 = req;
-    req2.numero = 3;
+    req2 = { ...req };
+    req2.numero = 400;
     postData('https://echoun.herokuapp.com/odsComuna', req2).then(data => {
         dibujar_mapita(data);
+        log("comuna actual a filtro", comuna_act)
+        cambiar_de_comuna(comuna_act);
         terminadas++;
         if (terminadas == 2) {
             document.getElementById('loading_filter').style.visibility = "hidden";
@@ -208,6 +225,8 @@ function click_filtro() {
     });
 
 }
+
+
 
 
 
