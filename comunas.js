@@ -19,6 +19,7 @@ function cambiar_de_comuna(id_comuna) {
 	var req2 = { ...req };
 	req2.comunas = [comuna_seleccionada.comuna];
 	req2.numero = 1023;
+	req2.respuesta[1];
 	log("req_click", req2)
 	postData('https://echoun.herokuapp.com/sunburst', req2).then(data => {
 		console.log("popular", data)
@@ -125,12 +126,13 @@ function cambiar_de_comuna(id_comuna) {
 		});
 
 		function over(d) {
+			console.log("this afuera", this)
 			if (this.id == "CA1")
 				return true
-			svg.selectAll('path').style("opacity", d => {
-				return d3.select(this).style("opacity") - 0.1
+
+			d3.select(this).style("opacity", d => {
+				return d3.select(this).style("opacity")*1 + 0.1
 			});
-			d3.select(this).style("opacity", 1);
 			cambiar_ods_comuna(this);
 
 			exis_tooltip = d3.select("#tooltip")
@@ -146,7 +148,9 @@ function cambiar_de_comuna(id_comuna) {
 		}
 
 		function leave() {
-			// d3.select(this).style("opacity", 0.7)
+			d3.select(this).style("opacity", d => {
+				return d3.select(this).style("opacity")*1 - 0.1
+			});
 		}
 
 		function clickeado() {

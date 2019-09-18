@@ -84,6 +84,7 @@ function tooltipHtml(n) {	/* function to create html content string in tooltip d
 
 var req_mapa_inicial = { ...req };
 req_mapa_inicial.numero = 400;
+req_mapa_inicial.respuesta = [1];
 postData('https://echoun.herokuapp.com/odsComuna', req_mapa_inicial)
 	.then(function (data) {
 		dibujar_mapita(data)

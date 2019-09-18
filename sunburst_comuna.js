@@ -3,6 +3,7 @@
 var width_sunburst_col_pregunta2;
 var height_sunburst_col_pregunta2;
 var req_sun_inic_dos = { ...req };
+req_sun_inic_dos.respuesta = [1];
 req_sun_inic_dos.numero = 1023;
 var scale_per_barrita_sun_comuna;
 var meta_seleccionada_segunda;
@@ -44,7 +45,7 @@ function dibujar_sunburst_comuna(data) {
 
     var width_sunburst = width_sunburst_col_pregunta2;
     const escala_para_radio = d3.scaleLinear()
-    .domain([100, 1000]).range([2, 4])
+        .domain([100, 1000]).range([2, 4])
 
     console.log("height para radius", height_sunburst_col_pregunta2)
     console.log("width para radius", width_sunburst_col_pregunta2)
@@ -65,10 +66,10 @@ function dibujar_sunburst_comuna(data) {
         .outerRadius(d => Math.max(d.y0 * radius_sunburst_comuna, d.y1 * radius_sunburst_comuna - 1))
 
     var partition = data => {
-        escala = d3.scalePow().exponent(0.75);
+        //escala = d3.scalePow().exponent(0.75);
         const root = d3.hierarchy(data)
-            .sum(d => escala(d.value))
-            //.sum(d => d.value)
+            //.sum(d => escala(d.value))
+            .sum(d => d.value)
             .sort((a, b) => b.value - a.value);
         return d3.partition()
             .size([2 * Math.PI, root.height + 1])
@@ -197,8 +198,8 @@ function dibujar_sunburst_comuna(data) {
 
         path.attr("fill-opacity", d => {
             if (arcVisible(d.current)) {
-
                 if (d.data.name == sdg_bur_id && sdg_bur_id != meta_seleccionada_segunda) {
+                    log("entra a acambiar meta")
                     meta_seleccionada_segunda = sdg_bur_id;
 
                     label.attr("fill-opacity", d => d.children ? 0 : 0)
@@ -217,7 +218,7 @@ function dibujar_sunburst_comuna(data) {
 
 
                     max_meta = selected_meta.parent.children.slice(0, 1)[0];
-                    selected_meta.parent.children.slice(0, 1).forEach(element => {
+                    selected_meta.parent.children.forEach(element => {
                         if (max_meta.data.value < element.data.value)
                             max_meta = element;
                     });
@@ -260,13 +261,16 @@ function dibujar_sunburst_comuna(data) {
 
 
                     d3
-                        .select('#desc_meta_sun_int_segunda')
+                    .select("#comuna_aislada")    
+                    .select('#desc_meta_sun_int_primera')
                         .transition().duration(300)
                         .style("opacity", 0);
 
-                    d3.select('#desc_meta_sun_int_segunda')
+                    d3
+                    .select("#comuna_aislada")
+                    .select('#desc_meta_sun_int_primera')
                         .transition().delay(300)
-                        .text(descripciones_metas["meta_" + selected_meta.data.name.split("meta_")[1].toUpperCase()])
+                        .text(descripciones_metas["meta_" + selected_meta.data.name.split("meta_")[1]])
                         .transition().duration(500)
                         .style("opacity", 1);
                 }
@@ -324,7 +328,7 @@ function dibujar_sunburst_comuna(data) {
                     max_meta = element
             });
 
-            d3.select('#comuna_aislada').select('#desc_meta_sun').text("\"" + descripciones_metas["meta_" + max_meta.data.name.split("meta_")[1].toUpperCase()] + "\"")
+            d3.select('#comuna_aislada').select('#desc_meta_sun').text("\"" + descripciones_metas["meta_" + max_meta.data.name.split("meta_")[1]] + "\"")
             d3.select('#comuna_aislada').select('#imagen_meta_sun').attr('src', "assets/Metas%20ODS/ODS%20" + max_meta.data.name.split("_")[1] + "/" + max_meta.data.name.split("meta_")[1].replace("_", ".") + ".png");
             d3.select('#comuna_aislada').select('#nombre_meta').text(`${max_meta.data.name}`.replace("_", " ").replace("_", "."));
             per = max_meta.data.value;
@@ -383,7 +387,7 @@ function dibujar_sunburst_comuna(data) {
                 return "assets/Metas%20ODS/ODS%20" + d.parent.data.name.split("_")[1] + "/" + d.data.name.split("meta_")[1].replace("_", ".") + ".png"
             });
 
-            d3.select('#comuna_aislada').selectAll('.desc_meta_sun_int').data(p.children.slice(0, 1)).join().text(d => descripciones_metas["meta_" + d.data.name.split("meta_")[1].toUpperCase()]);
+            d3.select('#comuna_aislada').selectAll('.desc_meta_sun_int').data(p.children.slice(0, 1)).join().text(d => descripciones_metas["meta_" + d.data.name.split("meta_")[1]]);
 
             const sunburst_barrita_col = d3.select('#comuna_aislada').select("#prueba_barrita");
 
@@ -407,7 +411,7 @@ function dibujar_sunburst_comuna(data) {
 
             root2.children.forEach(element => {
                 if (element.data.name == max_meta.data.name)
-                max_meta = element
+                    max_meta = element
             });
 
             console.log("max meta despues", max_meta)
@@ -415,6 +419,8 @@ function dibujar_sunburst_comuna(data) {
 
             scale_per_barrita_sun_comuna = d3.scaleLinear()
                 .domain([0, max_meta.value]).range([0, width_percent_sunb_col - (width_percent_sunb_col / 100) * 20])
+
+            meta_seleccionada_segunda = max_meta.data.name
             barritas_meta = d3.select('#comuna_aislada').selectAll('.perc_barras_metas_sun').data(p.children.slice(0, 1)).join().append("svg")
                 .attr("viewBox", [0, 0, width_percent_sunb_col, height_percent_sunb_col])
                 .append("g")
@@ -430,6 +436,7 @@ function dibujar_sunburst_comuna(data) {
                 .attr("height", 40);
 
             barritas_meta.append("text")
+            .attr("id", "nombre_meta_en_barra")
                 .attr("x", d => scale_per_barrita_sun_comuna(d.value) - 100)
                 .attr("y", height_percent_sunb_col / 2)
                 .text(d => d.data.name.replace("_", " ").replace("_", "."))
@@ -442,6 +449,7 @@ function dibujar_sunburst_comuna(data) {
                 .attr("fill", "#272838");
 
             barritas_meta.append("text")
+            .attr("id", "porcentaje_meta_en_barra")
                 .attr("x", d => scale_per_barrita_sun_comuna(d.value) + 5)
                 .attr("y", height_percent_sunb_col / 2 + 10)
                 .text(d => {
@@ -525,8 +533,8 @@ function dibujar_sunburst_comuna(data) {
     }
 
     function labelTransform(d) {
-        log("d como undefined",d)
-        log("radius como undefined",radius_sunburst_comuna)
+        log("d como undefined", d)
+        log("radius como undefined", radius_sunburst_comuna)
         const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
         const y = (d.y0 + d.y1) / 2 * radius_sunburst_comuna;
         return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;

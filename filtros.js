@@ -28,7 +28,7 @@ edge ? edades.push('jovenes') : '';
 vibe ? edades.push('adultos') : '';
 one ? edades.push('mayores') : '';
 
-var respuesta = [1];
+var respuesta = [0];
 var numero = 40;
 var req = { sexos: sexos, edades: edades, respuesta: respuesta, numero: numero };
 
@@ -200,8 +200,8 @@ function click_filtro() {
     //         d3.select("#todito_para_hide").style("fill-opacity", 1).style("cursor", "pointer");
     //     }
     // });
-
-
+    var req_sun_inic = {... req};
+    req_sun_inic.respuesta = [0];
     postData('https://echoun.herokuapp.com/sunburst', req).then(data => {
         data.name = "ODS";
         dibujar_sunburst(data);
@@ -211,9 +211,10 @@ function click_filtro() {
             document.getElementById('todito_para_hide').style.opacity = 1;
         }
     });
-    req2 = { ...req };
-    req2.numero = 400;
-    postData('https://echoun.herokuapp.com/odsComuna', req2).then(data => {
+    req_mapa = { ...req };
+    req_mapa.numero = 400;
+    req_mapa.respuesta = [1];
+    postData('https://echoun.herokuapp.com/odsComuna', req_mapa).then(data => {
         dibujar_mapita(data);
         log("comuna actual a filtro", comuna_act)
         cambiar_de_comuna(comuna_act);

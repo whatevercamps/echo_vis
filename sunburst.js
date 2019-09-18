@@ -5,6 +5,7 @@ targest_img_repo = "assets/global-goals-media-cards/MC_Target_";
 var col_5_ods = null;
 var req_sun_inic = { ...req };
 req_sun_inic.numero = 2013;
+req_sun_inic.respuesta = [0];
 var scale_per_barrita_sun;
 var width_sunburst_col_pregunta1;
 var height_sunburst_col_pregunta1;
@@ -222,7 +223,7 @@ function dibujar_sunburst(data) {
 
 
                     max_meta = selected_meta.parent.children.slice(0, 1)[0];
-                    selected_meta.parent.children.slice(0, 1).forEach(element => {
+                    selected_meta.parent.children.forEach(element => {
                         if (max_meta.data.value < element.data.value)
                             max_meta = element;
                     });
