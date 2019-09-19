@@ -2,6 +2,7 @@ var data_para_el_cambio;
 var height_svg_mapa1;
 var comuna_act = "C1";
 function cambiar_de_comuna(id_comuna) {
+	console.log()
 	id_comuna = id_comuna || "C1";
 	comuna_act = id_comuna;
 	var svg = d3.select("#mapa_svg_dos");
@@ -19,7 +20,7 @@ function cambiar_de_comuna(id_comuna) {
 	var req2 = { ...req };
 	req2.comunas = [comuna_seleccionada.comuna];
 	req2.numero = 1023;
-	req2.respuesta[1];
+	req2.respuesta= [1] ;
 	log("req_click", req2)
 	postData('https://echoun.herokuapp.com/sunburst', req2).then(data => {
 		console.log("popular", data)
