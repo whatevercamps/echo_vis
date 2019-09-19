@@ -9,8 +9,6 @@ var scale_per_barrita_sun_comuna;
 var meta_seleccionada_segunda;
 var radius_sunburst_comuna;
 postData('https://echoun.herokuapp.com/sunburst', req_sun_inic_dos).then(data => {
-    log("req_popular", req_sun_inic_dos)
-    console.log("popular", data)
     data.name = "ODS";
     dibujar_sunburst_comuna(data);
     avisar();
@@ -19,12 +17,37 @@ postData('https://echoun.herokuapp.com/sunburst', req_sun_inic_dos).then(data =>
 
 
 function dibujar_sunburst_comuna(data) {
+
+    	var comunitas = [
+		{ id: "C8", n: "Villa Hermosa" },
+		{ id: "C9", n: "Buenos Aires" },
+		{ id: "C10", n: "La Candelaria" },
+		{ id: "C4", n: "Aranjuez" },
+		{ id: "C2", n: "Santa Cruz" },
+		{ id: "C3", n: "Manrique" },
+		{ id: "C1", n: "Popular" },
+		{ id: "C14", n: "El Poblado" },
+		{ id: "C11", n: "Laureles-Estadio" },
+		{ id: "C12", n: "La América" },
+		{ id: "C13", n: "San Javier" },
+		{ id: "C15", n: "Guayabal" },
+		{ id: "C16", n: "Belén" },
+		{ id: "C7", n: "Robledo" },
+		{ id: "C5", n: "Castilla" },
+		{ id: "C6", n: "Doce de Octubre" },
+		{ id: "CO1", n: "Altavista" },
+		{ id: "CO2", n: "San Antonio de Prado" },
+		{ id: "CO3", n: "San Sebastián de Palmitas" },
+		{ id: "CO4", n: "San Cristóbal" },
+		{ id: "CO5", n: "Santa Elena" }
+	];
+
     var col_5_ods = null;
     var act_sdg = 0;
     var removes = d3.select("#comuna_aislada").select("#quitame");
     removes.remove();
     var nivel_profundidad = 1;
-    //$("#mapas_juntos").append(profundidad_1);
+    //$("#mapas_juntos").append(profundidad_1_tercer_slide);
 
 
     var grupito = d3.select("#mapas_juntos").select('#grupo_sunburst');
@@ -47,9 +70,6 @@ function dibujar_sunburst_comuna(data) {
     const escala_para_radio = d3.scaleLinear()
         .domain([100, 1000]).range([2, 4])
 
-    console.log("height para radius", height_sunburst_col_pregunta2)
-    console.log("width para radius", width_sunburst_col_pregunta2)
-    console.log("escala para radius", escala_para_radio(Math.min(height_sunburst_col_pregunta2, width_sunburst_col_pregunta2)))
 
     radius_sunburst_comuna = Math.min(height_sunburst_col_pregunta2, width_sunburst_col_pregunta2) / escala_para_radio(Math.min(height_sunburst_col_pregunta2, width_sunburst_col_pregunta2));
 
@@ -93,7 +113,6 @@ function dibujar_sunburst_comuna(data) {
     root.each(d => d.current = d);
     root2.each(d => d.current = d);
 
-    console.log("root en comuna", root);
 
     const svg = d3.select('#svg_sunburst_refer')
         .attr("width", width_sunburst - (width_sunburst / 100) * 35)
@@ -103,7 +122,6 @@ function dibujar_sunburst_comuna(data) {
 
     var prev_g = svg.selectAll("#grupo_sunburst");
     if (prev_g._groups[0][0] != undefined) {
-        console.log("borrado")
         prev_g.transition().duration(1000).attr("opacity", 0).transition().delay(1000).remove();
     }
 
@@ -155,7 +173,85 @@ function dibujar_sunburst_comuna(data) {
 
 
     (_ => {
-        $("#comuna_aislada").append(profundidad_1);
+
+
+        $("#comuna_aislada").append(profundidad_1_tercer_slide);
+
+
+        //pintar pregunta
+
+        $("#comuna_aislada #seleccionable_pregunta_2 #titulo_primera_pregunta").remove()
+
+        $("#comuna_aislada #seleccionable_pregunta_2 #titulo_svg_pregunta_2").remove();
+        if (
+            params["adulto_mayor_hombre"] &&
+            !params["adulto_mayor_mujer"] &&
+            params["adulto_hombre"] &&
+            !params["adulto_mujer"] &&
+            params["joven_hombre"] &&
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c)
+
+        else if (
+            !params["adulto_mayor_hombre"] &&
+            params["adulto_mayor_mujer"] &&
+            !params["adulto_hombre"] &&
+            params["adulto_mujer"] &&
+            !params["joven_hombre"] &&
+            params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c)
+
+        else if (
+            !params["adulto_mayor_hombre"] &&
+            !params["adulto_mayor_mujer"] &&
+            params["adulto_hombre"] &&
+            params["adulto_mujer"] &&
+            !params["joven_hombre"] &&
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c_h_m_a)
+        else if (
+            !params["adulto_mayor_hombre"] &&
+            params["adulto_mayor_mujer"] &&
+            !params["adulto_hombre"] &&
+            !params["adulto_mujer"] &&
+            !params["joven_hombre"] &&
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c_m_am)
+        else if (
+            !params["adulto_mayor_hombre"] &&
+            !params["adulto_mayor_mujer"] &&
+            params["adulto_hombre"] &&
+            !params["adulto_mujer"] &&
+            !params["joven_hombre"] &&
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c_h_a)
+
+        else if (
+            !params["adulto_mayor_hombre"] &&
+            !params["adulto_mayor_mujer"] &&
+            !params["adulto_hombre"] &&
+            params["adulto_mujer"] &&
+            !params["joven_hombre"] &&
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c_m_a)
+
+        else if (
+            params["adulto_mayor_hombre"] &&
+            params["adulto_mayor_mujer"] &&
+            !params["adulto_hombre"] &&
+            !params["adulto_mujer"] &&
+            !params["joven_hombre"] &&
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c_h_m_am)
+
+        else if (
+            params["adulto_mayor_hombre"] &&
+            !params["adulto_mayor_mujer"] &&
+            !params["adulto_hombre"] &&
+            !params["adulto_mujer"] &&
+            !params["joven_hombre"] &&
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c_h_am)
+        else {
+            $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c)
+        }
+
+        d3.select("#comuna_aislada #seleccionable_pregunta_2 #svg_nombre_comuna").text(comunitas.filter(d => d.id == comuna_act)[0] ? comunitas.filter(d => d.id == comuna_act)[0].n : "")
+
+
+        //fin pintar pregunta 
 
         max_ods_sun = root2.children[0];
         root2.children.forEach(element => {
@@ -163,7 +259,6 @@ function dibujar_sunburst_comuna(data) {
                 max_ods_sun = element
         });
 
-        console.log("max encontrado", max_ods_sun)
 
         sdg_bur_id = max_ods_sun.data.name.split("_")[1];
         if (sdg_bur_id.length < 2)
@@ -199,7 +294,6 @@ function dibujar_sunburst_comuna(data) {
         path.attr("fill-opacity", d => {
             if (arcVisible(d.current)) {
                 if (d.data.name == sdg_bur_id && sdg_bur_id != meta_seleccionada_segunda) {
-                    log("entra a acambiar meta")
                     meta_seleccionada_segunda = sdg_bur_id;
 
                     label.attr("fill-opacity", d => d.children ? 0 : 0)
@@ -214,7 +308,7 @@ function dibujar_sunburst_comuna(data) {
 
                     var selected_meta = null;
                     root2.each(d => { if (d.data.name == sdg_bur_id) selected_meta = d });
-                    log("selected_meta", selected_meta);
+
 
 
                     max_meta = selected_meta.parent.children.slice(0, 1)[0];
@@ -261,14 +355,14 @@ function dibujar_sunburst_comuna(data) {
 
 
                     d3
-                    .select("#comuna_aislada")    
-                    .select('#desc_meta_sun_int_primera')
+                        .select("#comuna_aislada")
+                        .select('#desc_meta_sun_int_primera')
                         .transition().duration(300)
                         .style("opacity", 0);
 
                     d3
-                    .select("#comuna_aislada")
-                    .select('#desc_meta_sun_int_primera')
+                        .select("#comuna_aislada")
+                        .select('#desc_meta_sun_int_primera')
                         .transition().delay(300)
                         .text(descripciones_metas["meta_" + selected_meta.data.name.split("meta_")[1]])
                         .transition().duration(500)
@@ -304,17 +398,14 @@ function dibujar_sunburst_comuna(data) {
             d3.select('#comuna_aislada').select('#imagen_ods_sun').attr('src', sdg_img_repo + act_sdg + ".jpg");
             per = d3.select(this)._groups[0][0].__data__.data.name;
 
-            console.log("per sin arreglar", per)
+
 
             root2.each(d => {
                 if (d.data.name == per) {
-                    console.log("encontrado", d)
                     per = d.value;
                 }
 
             })
-
-            console.log("per arreglado", per)
 
 
             perc = (100 / root2.value) * per;
@@ -346,7 +437,7 @@ function dibujar_sunburst_comuna(data) {
             d3.select('#atras').style("visibility", "hidden");
         });
 
-        console.log("p en click comuna", p)
+
 
         parent.datum(p.parent || root);
 
@@ -381,7 +472,7 @@ function dibujar_sunburst_comuna(data) {
 
 
         if (p.parent != undefined && p.parent.data.name == "ODS" && nivel_profundidad == 1) {
-            console.log("es entrar")
+
             nivel_profundidad = 2;
 
             var col_5_ods = d3.select('#comuna_aislada').select("#quitame");
@@ -402,10 +493,6 @@ function dibujar_sunburst_comuna(data) {
             const width_percent_sunb_col = bounds_sunburst_barrita_col.width;
             const height_percent_sunb_col = bounds_sunburst_barrita_col.height;
 
-            //console.log(bounds_sunburst_barrita_col)
-
-
-            //console.log(p);
             max_meta = p.children[0];
 
             p.children.forEach(element => {
@@ -413,14 +500,14 @@ function dibujar_sunburst_comuna(data) {
                     max_meta = element;
             });
 
-            console.log("max meta antes", max_meta)
+
 
             root2.children.forEach(element => {
                 if (element.data.name == max_meta.data.name)
                     max_meta = element
             });
 
-            console.log("max meta despues", max_meta)
+
 
 
             scale_per_barrita_sun_comuna = d3.scaleLinear()
@@ -442,7 +529,7 @@ function dibujar_sunburst_comuna(data) {
                 .attr("height", 40);
 
             barritas_meta.append("text")
-            .attr("id", "nombre_meta_en_barra")
+                .attr("id", "nombre_meta_en_barra")
                 .attr("x", d => scale_per_barrita_sun_comuna(d.value) - 100)
                 .attr("y", height_percent_sunb_col / 2)
                 .text(d => d.data.name.replace("_", " ").replace("_", "."))
@@ -455,7 +542,7 @@ function dibujar_sunburst_comuna(data) {
                 .attr("fill", "#272838");
 
             barritas_meta.append("text")
-            .attr("id", "porcentaje_meta_en_barra")
+                .attr("id", "porcentaje_meta_en_barra")
                 .attr("x", d => scale_per_barrita_sun_comuna(d.value) + 5)
                 .attr("y", height_percent_sunb_col / 2 + 10)
                 .text(d => {
@@ -476,7 +563,7 @@ function dibujar_sunburst_comuna(data) {
 
 
             const pata = { ...req };
-            pata.metas = [max_meta.data.name];
+            pata.ods = [max_meta.parent.data.name];
 
             postData('https://echoun.herokuapp.com/historias/1', pata).then(testimonio => {
                 d3.select('#comuna_aislada').select('#testimonio_sun').text(testimonio[0] != undefined ? testimonio[0].respuesta + "." : "")
@@ -484,13 +571,12 @@ function dibujar_sunburst_comuna(data) {
         }
 
         if (p.data.name == "ODS" && nivel_profundidad == 2) {
-            console.log("es salir 2")
             nivel_profundidad = 1;
 
             col_5_ods = d3.select('#comuna_aislada').select("#quitame");
             col_5_ods.remove();
 
-            $("#comuna_aislada").append(profundidad_1);
+            $("#comuna_aislada").append(profundidad_1_tercer_slide);
 
             (_ => {
                 max_ods_sun = root2.children[0];
@@ -539,8 +625,6 @@ function dibujar_sunburst_comuna(data) {
     }
 
     function labelTransform(d) {
-        log("d como undefined", d)
-        log("radius como undefined", radius_sunburst_comuna)
         const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
         const y = (d.y0 + d.y1) / 2 * radius_sunburst_comuna;
         return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;

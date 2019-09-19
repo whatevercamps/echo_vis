@@ -3,7 +3,8 @@ var female = true;
 var edge = true; //15 a 29
 var vibe = true; //30 a 
 var one = true;
-var sexos = [];
+var sexos = ["Hombre", "Mujer"];
+var edades = ["jovenes", "adultos", "mayores"];
 
 //nuevas variables
 
@@ -35,8 +36,7 @@ var req = { sexos: sexos, edades: edades, respuesta: respuesta, numero: numero }
 function click_filtro() {
 
 
-    var sexos = ["Hombre", "Mujer"];
-    var edades = ["jovenes", "adultos", "mayores"];
+
 
     if (this.id == "todo_hombres") {
         if (params["adulto_mayor_hombre"] && params["adulto_hombre"] && params["joven_hombre"]) {

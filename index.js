@@ -137,6 +137,7 @@ function dibujar_mapita(data) {
 	//console.log(sampleData);
 	uStates.draw("#statesvg", sampleData, tooltipHtml);
 	uStates.draw_segundo("", sampleData, tooltipHtml);
+	cambiar_de_comuna("C1");
 	// d3.select(self.frameElement).style("height", "600px");
 	//mapa.attr('transform', 'rotate(-90 0 0)');
 

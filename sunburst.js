@@ -10,8 +10,8 @@ var scale_per_barrita_sun;
 var width_sunburst_col_pregunta1;
 var height_sunburst_col_pregunta1;
 var meta_seleccionada_primera = null;
-var escala; 
-var radius_sunburst_medellin; 
+var escala;
+var radius_sunburst_medellin;
 postData('https://echoun.herokuapp.com/sunburst', req_sun_inic).then(data => {
     data.name = "ODS";
     console.log("medellin", data)
@@ -27,6 +27,70 @@ function dibujar_sunburst(data) {
     removes.remove();
     nivel_profundidad = 1;
     $("#sera_que_es_este").append(profundidad_1);
+
+    //def titulo
+    var titulo_src = "assets/pregunta-medellin.svg";
+
+    if (
+        params["adulto_mayor_hombre"] &&
+        !params["adulto_mayor_mujer"] &&
+        params["adulto_hombre"] &&
+        !params["adulto_mujer"] &&
+        params["joven_hombre"] &&
+        !params["joven_mujer"]) titulo_src = "assets/p1-h.svg"
+
+    else if (
+        !params["adulto_mayor_hombre"] &&
+        params["adulto_mayor_mujer"] &&
+        !params["adulto_hombre"] &&
+        params["adulto_mujer"] &&
+        !params["joven_hombre"] &&
+        params["joven_mujer"]) titulo_src = "assets/p1-m.svg"
+
+    else if (
+        !params["adulto_mayor_hombre"] &&
+        !params["adulto_mayor_mujer"] &&
+        params["adulto_hombre"] &&
+        params["adulto_mujer"] &&
+        !params["joven_hombre"] &&
+        !params["joven_mujer"]) titulo_src = "assets/p1-h-m-a.svg"
+
+    else if (
+        !params["adulto_mayor_hombre"] &&
+        !params["adulto_mayor_mujer"] &&
+        params["adulto_hombre"] &&
+        !params["adulto_mujer"] &&
+        !params["joven_hombre"] &&
+        !params["joven_mujer"]) titulo_src = "assets/p1-h-a.svg"
+
+    else if (
+        !params["adulto_mayor_hombre"] &&
+        !params["adulto_mayor_mujer"] &&
+        !params["adulto_hombre"] &&
+        params["adulto_mujer"] &&
+        !params["joven_hombre"] &&
+        !params["joven_mujer"]) titulo_src = "assets/p1-m-a.svg"
+
+    else if (
+        params["adulto_mayor_hombre"] &&
+        params["adulto_mayor_mujer"] &&
+        !params["adulto_hombre"] &&
+        !params["adulto_mujer"] &&
+        !params["joven_hombre"] &&
+        !params["joven_mujer"]) titulo_src = "assets/p1-h-m-am.svg"
+
+    else if (
+        params["adulto_mayor_hombre"] &&
+        !params["adulto_mayor_mujer"] &&
+        !params["adulto_hombre"] &&
+        !params["adulto_mujer"] &&
+        !params["joven_hombre"] &&
+        !params["joven_mujer"]) titulo_src = "assets/p1-h-am.svg"
+
+        
+
+    d3.select("#titulo_primera_pregunta").attr("src", titulo_src)
+    //fin def 
 
 
     grupito = d3.select('#grupo_sunburst');
@@ -46,9 +110,9 @@ function dibujar_sunburst(data) {
 
 
     width_sunburst = width_sunburst_col_pregunta1;
-    
+
     const escala_para_radio = d3.scaleLinear()
-    .domain([100, 1000]).range([7, 4])
+        .domain([100, 1000]).range([7, 4])
 
 
     radius_sunburst_medellin = Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1) / escala_para_radio(Math.min(height_sunburst_col_pregunta1, width_sunburst_col_pregunta1));
@@ -152,7 +216,7 @@ function dibujar_sunburst(data) {
         .attr("pointer-events", "all")
         .on("click", clicked);
 
-        console.log("como es el cir", parent)
+    console.log("como es el cir", parent)
 
     console.log("g_pre_click", g);
 
@@ -308,10 +372,10 @@ function dibujar_sunburst(data) {
             act_sdg = sdg_bur_id;
             d3.select('#imagen_ods_sun').attr('src', sdg_img_repo + act_sdg + ".jpg");
             var per = d3.select(this)._groups[0][0].__data__.data.name;
-            console.log("filtro",per)
+            console.log("filtro", per)
             root2.each(d => {
-                if (d.data.name == per){
-                    console.log("encontrado",d)
+                if (d.data.name == per) {
+                    console.log("encontrado", d)
                     per = d.value;
                 }
 
@@ -432,7 +496,7 @@ function dibujar_sunburst(data) {
             col_5_ods = d3.select("#quitame");
             col_5_ods.remove();
 
-            root2.each(d => { if (d.data.name == p.data.name) {p = d; return true; }});
+            root2.each(d => { if (d.data.name == p.data.name) { p = d; return true; } });
 
 
             $("#sera_que_es_este").append(profundidad_2);
@@ -515,7 +579,7 @@ function dibujar_sunburst(data) {
 
 
             const pata = { ...req };
-            pata.metas = [max_meta.data.name];
+            pata.ods = [max_meta.parent.data.name];
 
             postData('https://echoun.herokuapp.com/historias/1', pata).then(testimonio => {
                 d3.select('#testimonio_sun').text(testimonio[0] != undefined ? testimonio[0].respuesta + "." : "")

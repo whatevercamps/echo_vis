@@ -5,9 +5,11 @@ function cambiar_de_comuna(id_comuna) {
 	console.log()
 	id_comuna = id_comuna || "C1";
 	comuna_act = id_comuna;
+
+
 	var svg = d3.select("#mapa_svg_dos");
 	var comunas_svg = svg.select('#Layer_2_dos').select('#Layer_1-2_dos');
-	comunas_svg.selectAll("path").transition().duration(1000).style("fill", "white");
+	comunas_svg.selectAll("path").transition().duration(1000).attr("stroke-width", 1).attr("stroke", "black").style("fill", "white");
 
 	comunas_svg.select("#" + id_comuna).transition().duration(1000).style("fill", x => {
 		//var sel = data_para_el_cambio.filter(d => d.id == id_comuna)[0];
@@ -20,7 +22,7 @@ function cambiar_de_comuna(id_comuna) {
 	var req2 = { ...req };
 	req2.comunas = [comuna_seleccionada.comuna];
 	req2.numero = 1023;
-	req2.respuesta= [1] ;
+	req2.respuesta = [1];
 	log("req_click", req2)
 	postData('https://echoun.herokuapp.com/sunburst', req2).then(data => {
 		console.log("popular", data)
@@ -68,6 +70,85 @@ function cambiar_de_comuna(id_comuna) {
 			comuna_seleccionada = comuna_param || { id: "C1" };
 			if (comuna_seleccionada.id == "CA1")
 				return true;
+
+
+			//cambio de imagen
+
+
+
+			$("#titulo_svg_pregunta_2").remove();
+			$("#comuna_aislada #seleccionable_pregunta_2 #titulo_svg_pregunta_2").remove();
+			if (
+				params["adulto_mayor_hombre"] &&
+				!params["adulto_mayor_mujer"] &&
+				params["adulto_hombre"] &&
+				!params["adulto_mujer"] &&
+				params["joven_hombre"] &&
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c)
+
+
+
+			else if (
+				!params["adulto_mayor_hombre"] &&
+				params["adulto_mayor_mujer"] &&
+				!params["adulto_hombre"] &&
+				params["adulto_mujer"] &&
+				!params["joven_hombre"] &&
+				params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c)
+
+			else if (
+				!params["adulto_mayor_hombre"] &&
+				!params["adulto_mayor_mujer"] &&
+				params["adulto_hombre"] &&
+				params["adulto_mujer"] &&
+				!params["joven_hombre"] &&
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_h_m_a)
+			else if (
+				!params["adulto_mayor_hombre"] &&
+				params["adulto_mayor_mujer"] &&
+				!params["adulto_hombre"] &&
+				!params["adulto_mujer"] &&
+				!params["joven_hombre"] &&
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_m_am)
+			else if (
+				!params["adulto_mayor_hombre"] &&
+				!params["adulto_mayor_mujer"] &&
+				params["adulto_hombre"] &&
+				!params["adulto_mujer"] &&
+				!params["joven_hombre"] &&
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_h_a)
+
+			else if (
+				!params["adulto_mayor_hombre"] &&
+				!params["adulto_mayor_mujer"] &&
+				!params["adulto_hombre"] &&
+				params["adulto_mujer"] &&
+				!params["joven_hombre"] &&
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_m_a)
+
+			else if (
+				params["adulto_mayor_hombre"] &&
+				params["adulto_mayor_mujer"] &&
+				!params["adulto_hombre"] &&
+				!params["adulto_mujer"] &&
+				!params["joven_hombre"] &&
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_h_m_am)
+
+			else if (
+				params["adulto_mayor_hombre"] &&
+				!params["adulto_mayor_mujer"] &&
+				!params["adulto_hombre"] &&
+				!params["adulto_mujer"] &&
+				!params["joven_hombre"] &&
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_h_am)
+			else {
+				$("#titulo_svg_pregunta_2_div").append(p2_c)
+				$("#seleccionable_pregunta_2").append(p2_c)
+			}
+
+			d3.select("#svg_nombre_comuna").text(comunitas.filter(d => d.id == comuna_seleccionada.id)[0] ? comunitas.filter(d => d.id == comuna_seleccionada.id)[0].n : "")
+			//poner
+			// fin cambio de imagen 
 
 			var ods_principal_de_comuna = datos_comuna_para_per_comuna.filter(d => d.id == comuna_seleccionada.id)[0];
 			log("ods_principal_de_comuna", ods_principal_de_comuna)
@@ -134,12 +215,10 @@ function cambiar_de_comuna(id_comuna) {
 				return true
 
 			d3.select(this).style("opacity", d => {
-				return d3.select(this).style("opacity")*1 + 0.1
+				return d3.select(this).style("opacity") * 1 + 0.1
 			});
 			cambiar_ods_comuna(this);
 			log("com fil", comunitas.filter(d => d.id == this.id))
-			
-			d3.select("#nombre_comuna_titulo").text(comunitas.filter(d => d.id == this.id)[0] ? comunitas.filter(d => d.id == this.id)[0].n : "")
 
 			exis_tooltip = d3.select("#tooltip")
 
@@ -155,7 +234,7 @@ function cambiar_de_comuna(id_comuna) {
 
 		function leave() {
 			d3.select(this).style("opacity", d => {
-				return d3.select(this).style("opacity")*1 - 0.1
+				return d3.select(this).style("opacity") * 1 - 0.1
 			});
 		}
 
@@ -248,6 +327,7 @@ function cambiar_de_comuna(id_comuna) {
 		function over() {
 			if (this.id == "CA1")
 				return true
+
 			svg.selectAll('path').style("opacity", 0.9);
 			d3.select(this).style("opacity", 1);
 
