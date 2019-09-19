@@ -339,6 +339,12 @@ function dibujar_sunburst_comuna(data) {
     }
 
     function clicked(p) {
+        d3.select('#atras').style("visibility", "visible");
+
+        $('#atras').click(d => {
+            clicked(root);
+            d3.select('#atras').style("visibility", "hidden");
+        });
 
         console.log("p en click comuna", p)
 

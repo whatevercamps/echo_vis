@@ -127,6 +127,8 @@ function cambiar_de_comuna(id_comuna) {
 		});
 
 		function over(d) {
+
+
 			console.log("this afuera", this)
 			if (this.id == "CA1")
 				return true
@@ -135,6 +137,9 @@ function cambiar_de_comuna(id_comuna) {
 				return d3.select(this).style("opacity")*1 + 0.1
 			});
 			cambiar_ods_comuna(this);
+			log("com fil", comunitas.filter(d => d.id == this.id))
+			
+			d3.select("#nombre_comuna_titulo").text(comunitas.filter(d => d.id == this.id)[0] ? comunitas.filter(d => d.id == this.id)[0].n : "")
 
 			exis_tooltip = d3.select("#tooltip")
 

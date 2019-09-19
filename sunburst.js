@@ -386,7 +386,12 @@ function dibujar_sunburst(data) {
 
     function clicked(p) {
         console.log("p en click comuna", p)
+        d3.select('#atras').style("visibility", "visible");
 
+        $('#atras').click(d => {
+            clicked(root);
+            d3.select('#atras').style("visibility", "hidden");
+        });
         parent.datum(p.parent || root);
 
         root.each(d => d.target = {
