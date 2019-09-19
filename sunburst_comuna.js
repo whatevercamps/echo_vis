@@ -68,7 +68,7 @@ function dibujar_sunburst_comuna(data) {
 
     var width_sunburst = width_sunburst_col_pregunta2;
     const escala_para_radio = d3.scaleLinear()
-        .domain([100, 1000]).range([2, 4])
+        .domain([100, 1000]).range([3, 5])
 
 
     radius_sunburst_comuna = Math.min(height_sunburst_col_pregunta2, width_sunburst_col_pregunta2) / escala_para_radio(Math.min(height_sunburst_col_pregunta2, width_sunburst_col_pregunta2));
