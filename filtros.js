@@ -40,7 +40,16 @@ function click_filtro() {
 
     if (this.id == "todo_hombres") {
 
-            
+
+        for(key in params){
+            if (params[key]){
+                
+                params[key] = false
+                d3.select("#" + key).style("fill-opacity", 0.7)
+
+            }
+        }
+
             let selected = params["mayor_hombre"] && params["adulto_hombre"] && params["joven_hombre"];
 
             let opacity = (!selected) ? 1: 0.7;
@@ -56,6 +65,16 @@ function click_filtro() {
 
     } else if (this.id == "todo_mujeres") {
 
+        for(key in params){
+            if (params[key]){
+                
+                params[key] = false
+                d3.select("#" + key).style("fill-opacity", 0.7)
+
+            }
+        }
+
+
         let selected = params["mayor_mujer"] && params["adulto_mujer"] && params["joven_mujer"]
             
         let opacity = (!selected) ? 1: 0.7;
@@ -70,6 +89,17 @@ function click_filtro() {
         
     } else if (this.id == "todo_jovenes") {
         
+        for(key in params){
+            if (params[key]){
+                
+                params[key] = false
+                d3.select("#" + key).style("fill-opacity", 0.7)
+
+            }
+        }
+
+
+
         let selected = params["joven_hombre"] && params["joven_mujer"]
         
         let opacity = (!selected) ? 1: 0.7;
@@ -82,6 +112,16 @@ function click_filtro() {
         //volver para abajo
     } else if (this.id == "todo_adultos") {
 
+        for(key in params){
+            if (params[key]){
+                
+                params[key] = false
+                d3.select("#" + key).style("fill-opacity", 0.7)
+
+            }
+        }
+
+
         let selected = params["adulto_hombre"] && params["adulto_mujer"]
             
         let opacity = (!selected) ? 1: 0.7;
@@ -93,6 +133,16 @@ function click_filtro() {
         d3.select("#adulto_mujer").style("fill-opacity", opacity)
 
     } else if (this.id == "todo_mayores") {
+        
+        for(key in params){
+            if (params[key]){
+                
+                params[key] = false
+                d3.select("#" + key).style("fill-opacity", 0.7)
+
+            }
+        }
+        
         let selected = params["mayor_hombre"] && params["mayor_mujer"]
 
         let opacity = (!selected) ? 1: 0.7;
@@ -104,7 +154,16 @@ function click_filtro() {
         d3.select("#mayor_mujer").style("fill-opacity", 1)
 
     } else if (this == "restart") {
-        params.fill(false);
+        
+        for(key in params){
+            if (params[key]){
+                
+                params[key] = false
+                d3.select("#" + key).style("fill-opacity", 0.7)
+
+            }
+        }
+
         d3.select("#mayor_hombre").style("fill-opacity", 0.7)
         d3.select("#mayor_mujer").style("fill-opacity", 0.7)
         d3.select("#adulto_hombre").style("fill-opacity", 0.7)
