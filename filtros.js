@@ -9,8 +9,8 @@ var edades = ["jovenes", "adultos", "mayores"];
 //nuevas variables
 
 var params = {
-    "adulto_mayor_hombre": false,
-    "adulto_mayor_mujer": false,
+    "mayor_hombre": false,
+    "mayor_mujer": false,
     "adulto_hombre": false,
     "adulto_mujer": false,
     "joven_hombre": false,
@@ -41,30 +41,30 @@ function click_filtro() {
     if (this.id == "todo_hombres") {
 
             
-            let selected = params["adulto_mayor_hombre"] && params["adulto_hombre"] && params["joven_hombre"];
+            let selected = params["mayor_hombre"] && params["adulto_hombre"] && params["joven_hombre"];
 
             let opacity = (!selected) ? 1: 0.7;
 
-            params["adulto_mayor_hombre"] = !selected;
+            params["mayor_hombre"] = !selected;
             params["adulto_hombre"] = !selected;
             params["joven_hombre"] = !selected;
 
-            d3.select("#adulto_mayor_hombre").style("fill-opacity", opacity)
+            d3.select("#mayor_hombre").style("fill-opacity", opacity)
             d3.select("#adulto_hombre").style("fill-opacity", opacity)
             d3.select("#joven_hombre").style("fill-opacity", opacity)
 
 
     } else if (this.id == "todo_mujeres") {
 
-        let selected = params["adulto_mayor_mujer"] && params["adulto_mujer"] && params["joven_mujer"]
+        let selected = params["mayor_mujer"] && params["adulto_mujer"] && params["joven_mujer"]
             
         let opacity = (!selected) ? 1: 0.7;
             
-        params["adulto_mayor_mujer"] = !selected,
+        params["mayor_mujer"] = !selected,
         params["adulto_mujer"] = !selected,
         params["joven_mujer"] = !selected;
 
-        d3.select("#adulto_mayor_mujer").style("fill-opacity", opacity)
+        d3.select("#mayor_mujer").style("fill-opacity", opacity)
         d3.select("#adulto_mujer").style("fill-opacity", opacity)
         d3.select("#joven_mujer").style("fill-opacity", opacity)
         
@@ -93,20 +93,20 @@ function click_filtro() {
         d3.select("#adulto_mujer").style("fill-opacity", opacity)
 
     } else if (this.id == "todo_mayores") {
-        let selected = params["adulto_mayor_hombre"] && params["adulto_mayor_mujer"]
+        let selected = params["mayor_hombre"] && params["mayor_mujer"]
 
         let opacity = (!selected) ? 1: 0.7;
 
-        params["adulto_mayor_hombre"] = !selected,
-        params["adulto_mayor_mujer"] = !selected;
+        params["mayor_hombre"] = !selected,
+        params["mayor_mujer"] = !selected;
 
-        d3.select("#adulto_mayor_hombre").style("fill-opacity", 1)
-        d3.select("#adulto_mayor_mujer").style("fill-opacity", 1)
+        d3.select("#mayor_hombre").style("fill-opacity", 1)
+        d3.select("#mayor_mujer").style("fill-opacity", 1)
 
     } else if (this == "restart") {
         params.fill(false);
-        d3.select("#adulto_mayor_hombre").style("fill-opacity", 0.7)
-        d3.select("#adulto_mayor_mujer").style("fill-opacity", 0.7)
+        d3.select("#mayor_hombre").style("fill-opacity", 0.7)
+        d3.select("#mayor_mujer").style("fill-opacity", 0.7)
         d3.select("#adulto_hombre").style("fill-opacity", 0.7)
         d3.select("#adulto_mujer").style("fill-opacity", 0.7)
         d3.select("#joven_hombre").style("fill-opacity", 0.7)
@@ -119,8 +119,29 @@ function click_filtro() {
     }
 
     else {
+<<<<<<< HEAD
         caracteristicas = this.id.split("_")
         console.log("caracteristicas", caracteristicas)
+=======
+
+
+        let [edad,sexo] = this.id.split("_")
+
+        for(key in params){
+            if (params[key]){
+                
+                let [edadInner,sexoInner] = key.split("_")
+
+                if (edadInner != edad && sexoInner != sexo){
+                    params[key] = false
+                    d3.select("#" + key).style("fill-opacity", 0.7)
+                }
+
+            }
+        }
+
+
+>>>>>>> 3296a3244e7e839b0774799f26d0330cdf4c87f2
         params[this.id] = !params[this.id];
         d3.select("#" + this.id).style("fill-opacity", params[this.id] ? 1 : 0.7)
     }
@@ -131,11 +152,11 @@ function click_filtro() {
 
     sexos = [];
     edades = [];
-    if (params["adulto_hombre"] || params["joven_hombre"] || params["adulto_mayor_hombre"]) {
+    if (params["adulto_hombre"] || params["joven_hombre"] || params["mayor_hombre"]) {
         sexos.push("Hombre");
     }
 
-    if (params["joven_mujer"] || params["adulto_mujer"] || params["adulto_mayor_mujer"]) {
+    if (params["joven_mujer"] || params["adulto_mujer"] || params["mayor_mujer"]) {
         sexos.push("Mujer");
     }
 
@@ -147,11 +168,11 @@ function click_filtro() {
         edades.push("adultos");
     }
 
-    if (params["adulto_mayor_hombre"] || params["adulto_mayor_mujer"]) {
+    if (params["mayor_hombre"] || params["mayor_mujer"]) {
         edades.push("mayores");
     }
 
-    if (!params["adulto_mayor_hombre"] && !params["adulto_mayor_mujer"] && !params["adulto_hombre"] && !params["adulto_mujer"] && !params["joven_hombre"] && !params["joven_mujer"]) {
+    if (!params["mayor_hombre"] && !params["mayor_mujer"] && !params["adulto_hombre"] && !params["adulto_mujer"] && !params["joven_hombre"] && !params["joven_mujer"]) {
         edades.push("adultos");
         edades.push("mayores");
         edades.push("jovenes");
@@ -211,8 +232,8 @@ function click_filtro() {
 
 
 
-d3.select("#adulto_mayor_hombre").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
-d3.select("#adulto_mayor_mujer").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
+d3.select("#mayor_hombre").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
+d3.select("#mayor_mujer").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
 d3.select("#adulto_hombre").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
 d3.select("#adulto_mujer").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)
 d3.select("#joven_hombre").on("click", click_filtro).style("cursor", "pointer").style("fill-opacity", 0.7)

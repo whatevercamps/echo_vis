@@ -78,8 +78,8 @@ function cambiar_de_comuna(id_comuna) {
 			$("#titulo_svg_pregunta_2").remove();
 			$("#comuna_aislada #seleccionable_pregunta_2 #titulo_svg_pregunta_2").remove();
 			if (
-				params["adulto_mayor_hombre"] &&
-				!params["adulto_mayor_mujer"] &&
+				params["mayor_hombre"] &&
+				!params["mayor_mujer"] &&
 				params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				params["joven_hombre"] &&
@@ -88,54 +88,54 @@ function cambiar_de_comuna(id_comuna) {
 
 
 			else if (
-				!params["adulto_mayor_hombre"] &&
-				params["adulto_mayor_mujer"] &&
+				!params["mayor_hombre"] &&
+				params["mayor_mujer"] &&
 				!params["adulto_hombre"] &&
 				params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
 				params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c)
 
 			else if (
-				!params["adulto_mayor_hombre"] &&
-				!params["adulto_mayor_mujer"] &&
+				!params["mayor_hombre"] &&
+				!params["mayor_mujer"] &&
 				params["adulto_hombre"] &&
 				params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
 				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_h_m_a)
 			else if (
-				!params["adulto_mayor_hombre"] &&
-				params["adulto_mayor_mujer"] &&
+				!params["mayor_hombre"] &&
+				params["mayor_mujer"] &&
 				!params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
 				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_m_am)
 			else if (
-				!params["adulto_mayor_hombre"] &&
-				!params["adulto_mayor_mujer"] &&
+				!params["mayor_hombre"] &&
+				!params["mayor_mujer"] &&
 				params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
 				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_h_a)
 
 			else if (
-				!params["adulto_mayor_hombre"] &&
-				!params["adulto_mayor_mujer"] &&
+				!params["mayor_hombre"] &&
+				!params["mayor_mujer"] &&
 				!params["adulto_hombre"] &&
 				params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
 				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_m_a)
 
 			else if (
-				params["adulto_mayor_hombre"] &&
-				params["adulto_mayor_mujer"] &&
+				params["mayor_hombre"] &&
+				params["mayor_mujer"] &&
 				!params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
 				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_h_m_am)
 
 			else if (
-				params["adulto_mayor_hombre"] &&
-				!params["adulto_mayor_mujer"] &&
+				params["mayor_hombre"] &&
+				!params["mayor_mujer"] &&
 				!params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				!params["joven_hombre"] &&

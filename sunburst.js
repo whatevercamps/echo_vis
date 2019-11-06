@@ -32,56 +32,56 @@ function dibujar_sunburst(data) {
     var titulo_src = "assets/pregunta-medellin.svg";
 
     if (
-        params["adulto_mayor_hombre"] &&
-        !params["adulto_mayor_mujer"] &&
+        params["mayor_hombre"] &&
+        !params["mayor_mujer"] &&
         params["adulto_hombre"] &&
         !params["adulto_mujer"] &&
         params["joven_hombre"] &&
         !params["joven_mujer"]) titulo_src = "assets/p1-h.svg"
 
     else if (
-        !params["adulto_mayor_hombre"] &&
-        params["adulto_mayor_mujer"] &&
+        !params["mayor_hombre"] &&
+        params["mayor_mujer"] &&
         !params["adulto_hombre"] &&
         params["adulto_mujer"] &&
         !params["joven_hombre"] &&
         params["joven_mujer"]) titulo_src = "assets/p1-m.svg"
 
     else if (
-        !params["adulto_mayor_hombre"] &&
-        !params["adulto_mayor_mujer"] &&
+        !params["mayor_hombre"] &&
+        !params["mayor_mujer"] &&
         params["adulto_hombre"] &&
         params["adulto_mujer"] &&
         !params["joven_hombre"] &&
         !params["joven_mujer"]) titulo_src = "assets/p1-h-m-a.svg"
 
     else if (
-        !params["adulto_mayor_hombre"] &&
-        !params["adulto_mayor_mujer"] &&
+        !params["mayor_hombre"] &&
+        !params["mayor_mujer"] &&
         params["adulto_hombre"] &&
         !params["adulto_mujer"] &&
         !params["joven_hombre"] &&
         !params["joven_mujer"]) titulo_src = "assets/p1-h-a.svg"
 
     else if (
-        !params["adulto_mayor_hombre"] &&
-        !params["adulto_mayor_mujer"] &&
+        !params["mayor_hombre"] &&
+        !params["mayor_mujer"] &&
         !params["adulto_hombre"] &&
         params["adulto_mujer"] &&
         !params["joven_hombre"] &&
         !params["joven_mujer"]) titulo_src = "assets/p1-m-a.svg"
 
     else if (
-        params["adulto_mayor_hombre"] &&
-        params["adulto_mayor_mujer"] &&
+        params["mayor_hombre"] &&
+        params["mayor_mujer"] &&
         !params["adulto_hombre"] &&
         !params["adulto_mujer"] &&
         !params["joven_hombre"] &&
         !params["joven_mujer"]) titulo_src = "assets/p1-h-m-am.svg"
 
     else if (
-        params["adulto_mayor_hombre"] &&
-        !params["adulto_mayor_mujer"] &&
+        params["mayor_hombre"] &&
+        !params["mayor_mujer"] &&
         !params["adulto_hombre"] &&
         !params["adulto_mujer"] &&
         !params["joven_hombre"] &&
