@@ -39,88 +39,71 @@ function click_filtro() {
 
 
     if (this.id == "todo_hombres") {
-        if (params["adulto_mayor_hombre"] && params["adulto_hombre"] && params["joven_hombre"]) {
-            params["adulto_mayor_hombre"] = false,
-                params["adulto_hombre"] = false,
-                params["joven_hombre"] = false;
 
-            d3.select("#adulto_mayor_hombre").style("fill-opacity", 0.7)
-            d3.select("#adulto_hombre").style("fill-opacity", 0.7)
-            d3.select("#joven_hombre").style("fill-opacity", 0.7)
-        } else {
-            params["adulto_mayor_hombre"] = true,
-                params["adulto_hombre"] = true,
-                params["joven_hombre"] = true;
+            
+            let selected = params["adulto_mayor_hombre"] && params["adulto_hombre"] && params["joven_hombre"];
 
-            d3.select("#adulto_mayor_hombre").style("fill-opacity", 1)
-            d3.select("#adulto_hombre").style("fill-opacity", 1)
-            d3.select("#joven_hombre").style("fill-opacity", 1)
-        }
+            let opacity = (!selected) ? 1: 0.7;
+
+            params["adulto_mayor_hombre"] = !selected;
+            params["adulto_hombre"] = !selected;
+            params["joven_hombre"] = !selected;
+
+            d3.select("#adulto_mayor_hombre").style("fill-opacity", opacity)
+            d3.select("#adulto_hombre").style("fill-opacity", opacity)
+            d3.select("#joven_hombre").style("fill-opacity", opacity)
+
 
     } else if (this.id == "todo_mujeres") {
-        if (params["adulto_mayor_mujer"] && params["adulto_mujer"] && params["joven_mujer"]) {
-            params["adulto_mayor_mujer"] = false,
-                params["adulto_mujer"] = false,
-                params["joven_mujer"] = false;
 
-            d3.select("#adulto_mayor_mujer").style("fill-opacity", 0.7)
-            d3.select("#adulto_mujer").style("fill-opacity", 0.7)
-            d3.select("#joven_mujer").style("fill-opacity", 0.7)
-        } else {
-            params["adulto_mayor_mujer"] = true,
-                params["adulto_mujer"] = true,
-                params["joven_mujer"] = true;
+        let selected = params["adulto_mayor_mujer"] && params["adulto_mujer"] && params["joven_mujer"]
+            
+        let opacity = (!selected) ? 1: 0.7;
+            
+        params["adulto_mayor_mujer"] = !selected,
+        params["adulto_mujer"] = !selected,
+        params["joven_mujer"] = !selected;
 
-            d3.select("#adulto_mayor_mujer").style("fill-opacity", 1)
-            d3.select("#adulto_mujer").style("fill-opacity", 1)
-            d3.select("#joven_mujer").style("fill-opacity", 1)
-        }
+        d3.select("#adulto_mayor_mujer").style("fill-opacity", opacity)
+        d3.select("#adulto_mujer").style("fill-opacity", opacity)
+        d3.select("#joven_mujer").style("fill-opacity", opacity)
+        
     } else if (this.id == "todo_jovenes") {
-        if (params["joven_hombre"] && params["joven_mujer"]) {
-            params["joven_hombre"] = false,
-                params["joven_mujer"] = false;
+        
+        let selected = params["joven_hombre"] && params["joven_mujer"]
+        
+        let opacity = (!selected) ? 1: 0.7;
 
-            d3.select("#joven_hombre").style("fill-opacity", 0.7)
-            d3.select("#joven_mujer").style("fill-opacity", 0.7)
-        } else {
-            params["joven_hombre"] = true,
-                params["joven_mujer"] = true;
+        params["joven_hombre"] = !selected,
+        params["joven_mujer"] = !selected;
 
-            d3.select("#joven_hombre").style("fill-opacity", 1)
-            d3.select("#joven_mujer").style("fill-opacity", 1)
-        }
+        d3.select("#joven_hombre").style("fill-opacity", opacity)
+        d3.select("#joven_mujer").style("fill-opacity", opacity)
         //volver para abajo
     } else if (this.id == "todo_adultos") {
-        if (params["adulto_hombre"] && params["adulto_mujer"]) {
-            params["adulto_hombre"] = false,
-                params["adulto_mujer"] = false;
 
-            d3.select("#adulto_hombre").style("fill-opacity", 0.7)
-            d3.select("#adulto_mujer").style("fill-opacity", 0.7)
-        } else {
-            params["adulto_hombre"] = true,
-                params["adulto_mujer"] = true;
+        let selected = params["adulto_hombre"] && params["adulto_mujer"]
+            
+        let opacity = (!selected) ? 1: 0.7;
 
-            d3.select("#adulto_hombre").style("fill-opacity", 1)
-            d3.select("#adulto_mujer").style("fill-opacity", 1)
-        }
+        params["adulto_hombre"] = !selected,
+        params["adulto_mujer"] = !selected;
+
+        d3.select("#adulto_hombre").style("fill-opacity", opacity)
+        d3.select("#adulto_mujer").style("fill-opacity", opacity)
 
     } else if (this.id == "todo_mayores") {
-        if (params["adulto_mayor_hombre"] && params["adulto_mayor_mujer"]) {
-            params["adulto_mayor_hombre"] = false,
-                params["adulto_mayor_mujer"] = false;
+        let selected = params["adulto_mayor_hombre"] && params["adulto_mayor_mujer"]
 
-            d3.select("#adulto_mayor_hombre").style("fill-opacity", 0.7)
-            d3.select("#adulto_mayor_mujer").style("fill-opacity", 0.7)
-        } else {
-            params["adulto_mayor_hombre"] = true,
-                params["adulto_mayor_mujer"] = true;
+        let opacity = (!selected) ? 1: 0.7;
 
-            d3.select("#adulto_mayor_hombre").style("fill-opacity", 1)
-            d3.select("#adulto_mayor_mujer").style("fill-opacity", 1)
-        }
+        params["adulto_mayor_hombre"] = !selected,
+        params["adulto_mayor_mujer"] = !selected;
+
+        d3.select("#adulto_mayor_hombre").style("fill-opacity", 1)
+        d3.select("#adulto_mayor_mujer").style("fill-opacity", 1)
+
     } else if (this == "restart") {
-        log("si reinicia");
         params.fill(false);
         d3.select("#adulto_mayor_hombre").style("fill-opacity", 0.7)
         d3.select("#adulto_mayor_mujer").style("fill-opacity", 0.7)
@@ -147,27 +130,22 @@ function click_filtro() {
     sexos = [];
     edades = [];
     if (params["adulto_hombre"] || params["joven_hombre"] || params["adulto_mayor_hombre"]) {
-        log("es hombre")
         sexos.push("Hombre");
     }
 
     if (params["joven_mujer"] || params["adulto_mujer"] || params["adulto_mayor_mujer"]) {
-        log("es mujer")
         sexos.push("Mujer");
     }
 
     if (params["joven_hombre"] || params["joven_mujer"]) {
-        log("es joven")
         edades.push("jovenes");
     }
 
     if (params["adulto_hombre"] || params["adulto_mujer"]) {
-        log("es adulto")
         edades.push("adultos");
     }
 
     if (params["adulto_mayor_hombre"] || params["adulto_mayor_mujer"]) {
-        log("es adulto mayor")
         edades.push("mayores");
     }
 
