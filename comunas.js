@@ -2,10 +2,9 @@ var data_para_el_cambio;
 var height_svg_mapa1;
 var comuna_act = "C1";
 function cambiar_de_comuna(id_comuna) {
-	console.log()
+	console.log("entro aca")
 	id_comuna = id_comuna || "C1";
 	comuna_act = id_comuna;
-
 
 	var svg = d3.select("#mapa_svg_dos");
 	var comunas_svg = svg.select('#Layer_2_dos').select('#Layer_1-2_dos');
