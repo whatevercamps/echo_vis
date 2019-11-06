@@ -136,6 +136,8 @@ function click_filtro() {
     }
 
     else {
+        caracteristicas = this.id.split("_")
+        console.log("caracteristicas", caracteristicas)
         params[this.id] = !params[this.id];
         d3.select("#" + this.id).style("fill-opacity", params[this.id] ? 1 : 0.7)
     }
