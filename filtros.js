@@ -119,10 +119,6 @@ function click_filtro() {
     }
 
     else {
-<<<<<<< HEAD
-        caracteristicas = this.id.split("_")
-        console.log("caracteristicas", caracteristicas)
-=======
 
 
         let [edad,sexo] = this.id.split("_")
@@ -141,7 +137,6 @@ function click_filtro() {
         }
 
 
->>>>>>> 3296a3244e7e839b0774799f26d0330cdf4c87f2
         params[this.id] = !params[this.id];
         d3.select("#" + this.id).style("fill-opacity", params[this.id] ? 1 : 0.7)
     }
