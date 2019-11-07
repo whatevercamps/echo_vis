@@ -22,6 +22,21 @@ function subir_scroll() {
     //wait_im_scrolling = true;
 
     act_sect--;
+
+    
+    switch (act_sect) {
+        case 0:
+                d3.select("#titulo_footer").text("¿Cuál es el problema principal de Medellín?")
+            break;
+        case 1:
+            d3.select("#flechita").transition().duration(100).style("opacity",1)
+            d3.select("#titulo_footer").text("¿Cuál es el problema principal de su comuna?")
+            break;
+        case 2:
+            d3.select("#titulo_footer").text("")
+            break;
+    }
+
     $('#sect' + (act_sect)).css('visibility', 'visible');
     $('html, body').animate({
         scrollTop: $("#sect" + act_sect).offset().top - 85
@@ -34,6 +49,20 @@ function subir_scroll() {
 function bajar_scroll() {
     //wait_im_scrolling = true;
     act_sect++;
+
+
+    switch (act_sect) {
+        case 0:
+                d3.select("#titulo_footer").text("¿Cuál es el problema principal de Medellín?")
+            break;
+        case 1:
+            d3.select("#titulo_footer").text("¿Cuál es el problema principal por comuna?")
+            break;
+        case 2:
+            d3.select("#flechita").transition().duration(100).style("opacity",0)
+            d3.select("#titulo_footer").text("")
+            break;
+    }
     $('#sect' + (act_sect)).css('visibility', 'visible');
     $('html, body').animate({
         scrollTop: $("#sect" + act_sect).offset().top - 85
