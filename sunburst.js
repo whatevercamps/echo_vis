@@ -12,11 +12,14 @@ var height_sunburst_col_pregunta1;
 var meta_seleccionada_primera = null;
 var escala;
 var radius_sunburst_medellin;
+var testimonios_cargados_medellin = false;
+var testimonios_medellin  = ["Cargando testimonios...", "Testimonio no encontrado."];
 postData('https://echoun.herokuapp.com/sunburst', req_sun_inic).then(data => {
     data.name = "ODS";
     console.log("medellin", data)
     log("req_medellin", req_sun_inic)
     dibujar_sunburst(data);
+    d3.select('#testimonio_sun').text(testimonios_medellin[0]);
     avisar();
 });
 
@@ -329,8 +332,21 @@ function dibujar_sunburst(data) {
 
                     var selected_meta = null;
                     root2.each(d => { if (d.data.name == sdg_bur_id) selected_meta = d });
-                    log("selected_meta", selected_meta);
 
+
+                    var selected_testimonio_medellin = null;
+
+                    if (selected_meta) {
+                        testimonios_medellin.forEach(d => {
+                            if (d.meta) {
+                                if (d.meta.replace("s", "") == selected_meta.data.name) {
+                                    selected_testimonio_medellin = d
+                                }
+                            }
+                        })
+                    }
+
+                    d3.select('#testimonio_sun').text(selected_testimonio_medellin ? selected_testimonio_medellin.respuesta + "." : testimonios_cargados_medellin ? testimonios_medellin[1] : testimonios_medellin[0])
 
                     max_meta = selected_meta.parent.children.slice(0, 1)[0];
                     selected_meta.parent.children.forEach(element => {
@@ -628,7 +644,13 @@ function dibujar_sunburst(data) {
             pata.ods = [max_meta.parent.data.name];
 
             postData('https://echoun.herokuapp.com/historias/1', pata).then(testimonio => {
-                d3.select('#testimonio_sun').text(testimonio[0] != undefined ? testimonio[0].respuesta + "." : "")
+                
+
+                testimonio.forEach(element => {
+                    testimonios_medellin.push(element)
+                });
+                testimonios_cargados_medellin = true;
+                d3.select('#testimonio_sun').text(testimonio[0] != undefined ? testimonio[0].respuesta + "." : testimonios_medellin[1])
             });
         }
 

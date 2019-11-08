@@ -8,9 +8,12 @@ req_sun_inic_dos.numero = 1023;
 var scale_per_barrita_sun_comuna;
 var meta_seleccionada_segunda;
 var radius_sunburst_comuna;
+var testimonios_cargados_comuna = false;
+var testimonios_comuna = ["Cargando testimonios...", "Testimonio no encontrado."];
 postData('https://echoun.herokuapp.com/sunburst', req_sun_inic_dos).then(data => {
     data.name = "ODS";
     dibujar_sunburst_comuna(data);
+    d3.select('#comuna_aislada').select('#testimonio_sun').text(testimonios_comuna[0]);
     avisar();
 });
 
@@ -354,6 +357,21 @@ function dibujar_sunburst_comuna(data) {
 
                     var selected_meta = null;
                     root2.each(d => { if (d.data.name == sdg_bur_id) selected_meta = d });
+                    var selected_testimonio = null;
+
+                    if (selected_meta) {
+                        testimonios_comuna.forEach(d => {
+                            if (d.meta) {
+                                if (d.meta.replace("s", "") == selected_meta.data.name) {
+                                    selected_testimonio = d
+                                }
+                            }
+                        })
+                    }
+
+                    console.log("selected_testimonio", selected_testimonio)
+                    d3.select('#comuna_aislada').select('#testimonio_sun').text(selected_testimonio ? selected_testimonio.respuesta + "." : testimonios_cargados_comuna ? testimonios_comuna[1] : testimonios_comuna[0])
+
 
 
 
@@ -427,8 +445,8 @@ function dibujar_sunburst_comuna(data) {
 
     function mouseover_sunburst() {
 
-
         sdg_bur_id = `${this.id.toString()}`.split(/\//g)[1].split("_")[1];
+
 
         path.attr("fill-opacity", d => {
             if (arcVisible(d.current)) {
@@ -536,7 +554,7 @@ function dibujar_sunburst_comuna(data) {
 
             const bounds_sunburst_barrita_col = sunburst_barrita_col.node().getBoundingClientRect();
 
-            const width_percent_sunb_col = bounds_sunburst_barrita_col.width - bounds_sunburst_barrita_col.width*20/100;
+            const width_percent_sunb_col = bounds_sunburst_barrita_col.width - bounds_sunburst_barrita_col.width * 20 / 100;
             const height_percent_sunb_col = bounds_sunburst_barrita_col.height;
 
             max_meta = p.children[0];
@@ -612,7 +630,12 @@ function dibujar_sunburst_comuna(data) {
             pata.ods = [max_meta.parent.data.name];
 
             postData('https://echoun.herokuapp.com/historias/1', pata).then(testimonio => {
-                d3.select('#comuna_aislada').select('#testimonio_sun').text(testimonio[0] != undefined ? testimonio[0].respuesta + "." : "")
+                console.log("respuestas", testimonio)
+                testimonio.forEach(element => {
+                    testimonios_comuna.push(element)
+                });
+                testimonios_cargados_comuna = true;
+                d3.select('#comuna_aislada').select('#testimonio_sun').text(testimonio[0] != undefined ? testimonio[0].respuesta + "." : testimonios_comuna[1])
             });
         }
 

@@ -918,3 +918,9 @@ div[class*=box] {
 }
 
 
+
+#test_col {
+    height: 40vh;
+    overflow: scroll;
+    border-top: solid;
+}

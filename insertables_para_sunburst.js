@@ -206,7 +206,7 @@ var profundidad_2 = `
                                         <div class="item active carousel-item">
                                             <blockquote>
                                                 <div class="row">
-                                                    <div class="col-12">
+                                                    <div class="col-12" id="test_col">
                                                         <p id="testimonio_sun" style="color:whitesmoke; font-size: 24px">
                                                             </p> <small style="color:whitesmoke"></small>
                                                     </div>

@@ -72,17 +72,17 @@ function bajar_scroll() {
     //setTimeout(function () { wait_im_scrolling = false }, 500);
 }
 
-$('body').bind('mousewheel', $.debounce(50, true, function (e) {
+// $('body').bind('mousewheel', $.debounce(50, true, function (e) {
 
-    if (e.originalEvent.deltaY > 0 && act_sect < max_sect && !wait_im_scrolling) {
-        bajar_scroll();
-    }
-    else if (e.originalEvent.deltaY < 0 && act_sect > 0 && !wait_im_scrolling) {
-        subir_scroll();
-    }
-    //console.log(act_sect)
-})
-);
+//     if (e.originalEvent.deltaY > 0 && act_sect < max_sect && !wait_im_scrolling) {
+//         bajar_scroll();
+//     }
+//     else if (e.originalEvent.deltaY < 0 && act_sect > 0 && !wait_im_scrolling) {
+//         subir_scroll();
+//     }
+//     //console.log(act_sect)
+// })
+// );
 
 
 $("#footer").click(d => {
