@@ -85,7 +85,10 @@ function cambiar_de_comuna(id_comuna) {
 				params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h : p2_c_h)
+				!params["joven_mujer"]) {
+					$("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h : p2_c_h)
+					$("#seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h : p2_c_h)
+				}
 
 
 			//Mujeres
@@ -95,7 +98,10 @@ function cambiar_de_comuna(id_comuna) {
 				!params["adulto_hombre"] &&
 				params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
-				params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m : p2_c_m)
+				params["joven_mujer"]) {
+					$("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m : p2_c_m)
+					$("#seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m : p2_c_m)
+				}
 
 			//Mayores
 			else if (
@@ -104,7 +110,10 @@ function cambiar_de_comuna(id_comuna) {
 				!params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_m_am : p2_c_h_m_am)
+				!params["joven_mujer"]) {
+					$("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_m_am : p2_c_h_m_am)
+					$("#seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_m_am : p2_c_h_m_am)
+				}
 
 
 			//Adultos
@@ -114,7 +123,10 @@ function cambiar_de_comuna(id_comuna) {
 				params["adulto_hombre"] &&
 				params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_m_a : p2_c_h_m_a)
+				!params["joven_mujer"]) {
+					$("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_m_a : p2_c_h_m_a)
+					$("#seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_m_a : p2_c_h_m_a)
+				}
 
 				//Jovenes
 				else if (
@@ -123,7 +135,10 @@ function cambiar_de_comuna(id_comuna) {
 					!params["adulto_hombre"] &&
 					!params["adulto_mujer"] &&
 					params["joven_hombre"] &&
-					params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_m_j : p2_c_h_m_j)
+					params["joven_mujer"]){
+						 $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_m_j : p2_c_h_m_j)
+						 $("#seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_m_j : p2_c_h_m_j)
+						}
 	
 			//Hombres mayores
 			else if (
@@ -132,7 +147,10 @@ function cambiar_de_comuna(id_comuna) {
 				!params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_am : p2_c_h_am)
+				!params["joven_mujer"]) {
+					$("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_am : p2_c_h_am)
+					$("#seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_am : p2_c_h_am)
+				}
 
 			//Hombres adultos
 			else if (
@@ -141,7 +159,10 @@ function cambiar_de_comuna(id_comuna) {
 				params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_a : p2_c_h_a)
+				!params["joven_mujer"]) {
+					$("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_a : p2_c_h_a)
+					$("#seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_a : p2_c_h_a)
+				}
 
 			//Hombres jovenes
 			else if (
@@ -150,7 +171,10 @@ function cambiar_de_comuna(id_comuna) {
 				!params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_j : p2_c_h_j)
+				!params["joven_mujer"]) {
+					$("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_j : p2_c_h_j)
+				$("#seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_j : p2_c_h_j)
+			}
 
 
 			//Mujeres mayores
@@ -160,7 +184,10 @@ function cambiar_de_comuna(id_comuna) {
 				!params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m_am : p2_c_m_am)
+				!params["joven_mujer"]) {
+					$("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m_am : p2_c_m_am)
+					$("#seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m_am : p2_c_m_am)
+			}
 
 			
 			//Mujeres adultos
@@ -170,7 +197,10 @@ function cambiar_de_comuna(id_comuna) {
 				!params["adulto_hombre"] &&
 				params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m_a : p2_c_m_a)
+				!params["joven_mujer"]) {
+					$("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m_a : p2_c_m_a)
+					$("#seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m_a : p2_c_m_a)
+				}
 
 			//Mujeres jovenes
 			else if (
@@ -179,7 +209,10 @@ function cambiar_de_comuna(id_comuna) {
 				!params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
-				params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m_j : p2_c_m_j)
+				params["joven_mujer"]){
+					$("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m_j : p2_c_m_j)
+					$("#seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m_j : p2_c_m_j)
+				} 
 
 				
 			else {
