@@ -77,72 +77,115 @@ function cambiar_de_comuna(id_comuna) {
 
 			$("#titulo_svg_pregunta_2").remove();
 			$("#comuna_aislada #seleccionable_pregunta_2 #titulo_svg_pregunta_2").remove();
+
+			//Hombres
 			if (
 				params["mayor_hombre"] &&
 				!params["mayor_mujer"] &&
 				params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c)
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h : p2_c_h)
 
 
-
+			//Mujeres
 			else if (
 				!params["mayor_hombre"] &&
 				params["mayor_mujer"] &&
 				!params["adulto_hombre"] &&
 				params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
-				params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c)
+				params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m : p2_c_m)
 
-			else if (
-				!params["mayor_hombre"] &&
-				!params["mayor_mujer"] &&
-				params["adulto_hombre"] &&
-				params["adulto_mujer"] &&
-				!params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_h_m_a)
-			else if (
-				!params["mayor_hombre"] &&
-				params["mayor_mujer"] &&
-				!params["adulto_hombre"] &&
-				!params["adulto_mujer"] &&
-				!params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_m_am)
-			else if (
-				!params["mayor_hombre"] &&
-				!params["mayor_mujer"] &&
-				params["adulto_hombre"] &&
-				!params["adulto_mujer"] &&
-				!params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_h_a)
-
-			else if (
-				!params["mayor_hombre"] &&
-				!params["mayor_mujer"] &&
-				!params["adulto_hombre"] &&
-				params["adulto_mujer"] &&
-				!params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_m_a)
-
+			//Mayores
 			else if (
 				params["mayor_hombre"] &&
 				params["mayor_mujer"] &&
 				!params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_h_m_am)
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_m_am : p2_c_h_m_am)
 
+
+			//Adultos
+			else if (
+				!params["mayor_hombre"] &&
+				!params["mayor_mujer"] &&
+				params["adulto_hombre"] &&
+				params["adulto_mujer"] &&
+				!params["joven_hombre"] &&
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_m_a : p2_c_h_m_a)
+
+				//Jovenes
+				else if (
+					!params["mayor_hombre"] &&
+					!params["mayor_mujer"] &&
+					!params["adulto_hombre"] &&
+					!params["adulto_mujer"] &&
+					params["joven_hombre"] &&
+					params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_m_j : p2_c_h_m_j)
+	
+			//Hombres mayores
 			else if (
 				params["mayor_hombre"] &&
 				!params["mayor_mujer"] &&
 				!params["adulto_hombre"] &&
 				!params["adulto_mujer"] &&
 				!params["joven_hombre"] &&
-				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(p2_c_h_am)
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_am : p2_c_h_am)
+
+			//Hombres adultos
+			else if (
+				!params["mayor_hombre"] &&
+				!params["mayor_mujer"] &&
+				params["adulto_hombre"] &&
+				!params["adulto_mujer"] &&
+				!params["joven_hombre"] &&
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_a : p2_c_h_a)
+
+			//Hombres jovenes
+			else if (
+				!params["mayor_hombre"] &&
+				!params["mayor_mujer"] &&
+				!params["adulto_hombre"] &&
+				!params["adulto_mujer"] &&
+				params["joven_hombre"] &&
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_h_j : p2_c_h_j)
+
+
+			//Mujeres mayores
+			else if (
+				!params["mayor_hombre"] &&
+				params["mayor_mujer"] &&
+				!params["adulto_hombre"] &&
+				!params["adulto_mujer"] &&
+				!params["joven_hombre"] &&
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m_am : p2_c_m_am)
+
+			
+			//Mujeres adultos
+			else if (
+				!params["mayor_hombre"] &&
+				!params["mayor_mujer"] &&
+				!params["adulto_hombre"] &&
+				params["adulto_mujer"] &&
+				!params["joven_hombre"] &&
+				!params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m_a : p2_c_m_a)
+
+			//Mujeres jovenes
+			else if (
+				!params["mayor_hombre"] &&
+				!params["mayor_mujer"] &&
+				!params["adulto_hombre"] &&
+				!params["adulto_mujer"] &&
+				!params["joven_hombre"] &&
+				params["joven_mujer"]) $("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co_m_j : p2_c_m_j)
+
+				
 			else {
-				$("#titulo_svg_pregunta_2_div").append(p2_c)
-				$("#seleccionable_pregunta_2").append(p2_c)
+				console.log("bool", comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15)
+				$("#titulo_svg_pregunta_2_div").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co : p2_c)
+				$("#seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_seleccionada.id) > 15 ? p2_co : p2_c)
 			}
 
 			d3.select("#svg_nombre_comuna").text(comunitas.filter(d => d.id == comuna_seleccionada.id)[0] ? comunitas.filter(d => d.id == comuna_seleccionada.id)[0].n : "")

@@ -271,7 +271,7 @@ function click_filtro() {
     req_mapa.respuesta = [1];
     postData('https://echoun.herokuapp.com/odsComuna', req_mapa).then(data => {
         dibujar_mapita(data);
-        log("comuna actual a filtro", comuna_act)
+        log("corregimientos", data)
         cambiar_de_comuna(comuna_act);
         terminadas++;
         if (terminadas == 2) {

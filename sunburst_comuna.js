@@ -18,29 +18,29 @@ postData('https://echoun.herokuapp.com/sunburst', req_sun_inic_dos).then(data =>
 
 function dibujar_sunburst_comuna(data) {
 
-    	var comunitas = [
-		{ id: "C8", n: "Villa Hermosa" },
-		{ id: "C9", n: "Buenos Aires" },
-		{ id: "C10", n: "La Candelaria" },
-		{ id: "C4", n: "Aranjuez" },
-		{ id: "C2", n: "Santa Cruz" },
-		{ id: "C3", n: "Manrique" },
-		{ id: "C1", n: "Popular" },
-		{ id: "C14", n: "El Poblado" },
-		{ id: "C11", n: "Laureles-Estadio" },
-		{ id: "C12", n: "La América" },
-		{ id: "C13", n: "San Javier" },
-		{ id: "C15", n: "Guayabal" },
-		{ id: "C16", n: "Belén" },
-		{ id: "C7", n: "Robledo" },
-		{ id: "C5", n: "Castilla" },
-		{ id: "C6", n: "Doce de Octubre" },
-		{ id: "CO1", n: "Altavista" },
-		{ id: "CO2", n: "San Antonio de Prado" },
-		{ id: "CO3", n: "San Sebastián de Palmitas" },
-		{ id: "CO4", n: "San Cristóbal" },
-		{ id: "CO5", n: "Santa Elena" }
-	];
+    var comunitas = [
+        { id: "C8", n: "Villa Hermosa" },
+        { id: "C9", n: "Buenos Aires" },
+        { id: "C10", n: "La Candelaria" },
+        { id: "C4", n: "Aranjuez" },
+        { id: "C2", n: "Santa Cruz" },
+        { id: "C3", n: "Manrique" },
+        { id: "C1", n: "Popular" },
+        { id: "C14", n: "El Poblado" },
+        { id: "C11", n: "Laureles-Estadio" },
+        { id: "C12", n: "La América" },
+        { id: "C13", n: "San Javier" },
+        { id: "C15", n: "Guayabal" },
+        { id: "C16", n: "Belén" },
+        { id: "C7", n: "Robledo" },
+        { id: "C5", n: "Castilla" },
+        { id: "C6", n: "Doce de Octubre" },
+        { id: "CO1", n: "Altavista" },
+        { id: "CO2", n: "San Antonio de Prado" },
+        { id: "CO3", n: "San Sebastián de Palmitas" },
+        { id: "CO4", n: "San Cristóbal" },
+        { id: "CO5", n: "Santa Elena" }
+    ];
 
     var col_5_ods = null;
     var act_sdg = 0;
@@ -183,69 +183,115 @@ function dibujar_sunburst_comuna(data) {
         $("#comuna_aislada #seleccionable_pregunta_2 #titulo_primera_pregunta").remove()
 
         $("#comuna_aislada #seleccionable_pregunta_2 #titulo_svg_pregunta_2").remove();
+
+        console.log("comuna disque", comuna_act)
+        //Hombres
         if (
             params["mayor_hombre"] &&
             !params["mayor_mujer"] &&
             params["adulto_hombre"] &&
             !params["adulto_mujer"] &&
             params["joven_hombre"] &&
-            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c)
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_act) > 15 ? p2_co_h : p2_c_h)
 
+        //Mujeres
         else if (
             !params["mayor_hombre"] &&
             params["mayor_mujer"] &&
             !params["adulto_hombre"] &&
             params["adulto_mujer"] &&
             !params["joven_hombre"] &&
-            params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c)
+            params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_act) > 15 ? p2_co_m : p2_c_m)
 
-        else if (
-            !params["mayor_hombre"] &&
-            !params["mayor_mujer"] &&
-            params["adulto_hombre"] &&
-            params["adulto_mujer"] &&
-            !params["joven_hombre"] &&
-            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c_h_m_a)
-        else if (
-            !params["mayor_hombre"] &&
-            params["mayor_mujer"] &&
-            !params["adulto_hombre"] &&
-            !params["adulto_mujer"] &&
-            !params["joven_hombre"] &&
-            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c_m_am)
-        else if (
-            !params["mayor_hombre"] &&
-            !params["mayor_mujer"] &&
-            params["adulto_hombre"] &&
-            !params["adulto_mujer"] &&
-            !params["joven_hombre"] &&
-            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c_h_a)
 
-        else if (
-            !params["mayor_hombre"] &&
-            !params["mayor_mujer"] &&
-            !params["adulto_hombre"] &&
-            params["adulto_mujer"] &&
-            !params["joven_hombre"] &&
-            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c_m_a)
-
+        //Mayores
         else if (
             params["mayor_hombre"] &&
             params["mayor_mujer"] &&
             !params["adulto_hombre"] &&
             !params["adulto_mujer"] &&
             !params["joven_hombre"] &&
-            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c_h_m_am)
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_act) > 15 ? p2_co_h_m_am : p2_c_h_m_am)
 
+
+        //Adultos
+        else if (
+            !params["mayor_hombre"] &&
+            !params["mayor_mujer"] &&
+            params["adulto_hombre"] &&
+            params["adulto_mujer"] &&
+            !params["joven_hombre"] &&
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_act) > 15 ? p2_co_h_m_a : p2_c_h_m_a)
+
+        //Jovenes
+        else if (
+            !params["mayor_hombre"] &&
+            !params["mayor_mujer"] &&
+            !params["adulto_hombre"] &&
+            !params["adulto_mujer"] &&
+            params["joven_hombre"] &&
+            params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_act) > 15 ? p2_co_h_m_j : p2_c_h_m_j)
+
+        //Mujeres mayores
+        else if (
+            !params["mayor_hombre"] &&
+            params["mayor_mujer"] &&
+            !params["adulto_hombre"] &&
+            !params["adulto_mujer"] &&
+            !params["joven_hombre"] &&
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_act) > 15 ? p2_co_m_am : p2_c_m_am)
+
+        //Mujeres adultos
+        else if (
+            !params["mayor_hombre"] &&
+            !params["mayor_mujer"] &&
+            !params["adulto_hombre"] &&
+            params["adulto_mujer"] &&
+            !params["joven_hombre"] &&
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_act) > 15 ? p2_co_m_a : p2_c_m_a)
+
+        //Mujeres jovenes
+        else if (
+            !params["mayor_hombre"] &&
+            !params["mayor_mujer"] &&
+            !params["adulto_hombre"] &&
+            !params["adulto_mujer"] &&
+            !params["joven_hombre"] &&
+            params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_act) > 15 ? p2_co_m_j : p2_c_m_j)
+
+
+        //Hombres mayores
         else if (
             params["mayor_hombre"] &&
             !params["mayor_mujer"] &&
             !params["adulto_hombre"] &&
             !params["adulto_mujer"] &&
             !params["joven_hombre"] &&
-            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c_h_am)
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_act) > 15 ? p2_co_h_am : p2_c_h_am)
+
+        //Hombres adultos
+        else if (
+            !params["mayor_hombre"] &&
+            !params["mayor_mujer"] &&
+            params["adulto_hombre"] &&
+            !params["adulto_mujer"] &&
+            !params["joven_hombre"] &&
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_act) > 15 ? p2_co_h_a : p2_c_h_a)
+
+
+        //Hombres jovenes
+        else if (
+            !params["mayor_hombre"] &&
+            !params["mayor_mujer"] &&
+            !params["adulto_hombre"] &&
+            !params["adulto_mujer"] &&
+            params["joven_hombre"] &&
+            !params["joven_mujer"]) $("#comuna_aislada #seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_act) > 15 ? p2_co_h_j : p2_c_h_j)
+
+
+
         else {
-            $("#comuna_aislada #seleccionable_pregunta_2").append(p2_c)
+            $("#comuna_aislada #seleccionable_pregunta_2").append(comunas_ordenadas.indexOf(comuna_act) > 15 ? p2_co : p2_c)
         }
 
         d3.select("#comuna_aislada #seleccionable_pregunta_2 #svg_nombre_comuna").text(comunitas.filter(d => d.id == comuna_act)[0] ? comunitas.filter(d => d.id == comuna_act)[0].n : "")
@@ -490,7 +536,7 @@ function dibujar_sunburst_comuna(data) {
 
             const bounds_sunburst_barrita_col = sunburst_barrita_col.node().getBoundingClientRect();
 
-            const width_percent_sunb_col = bounds_sunburst_barrita_col.width;
+            const width_percent_sunb_col = bounds_sunburst_barrita_col.width - bounds_sunburst_barrita_col.width*20/100;
             const height_percent_sunb_col = bounds_sunburst_barrita_col.height;
 
             max_meta = p.children[0];
@@ -515,7 +561,7 @@ function dibujar_sunburst_comuna(data) {
 
             meta_seleccionada_segunda = max_meta.data.name
             barritas_meta = d3.select('#comuna_aislada').selectAll('.perc_barras_metas_sun').data(p.children.slice(0, 1)).join().append("svg")
-                .attr("viewBox", [0, 0, width_percent_sunb_col, height_percent_sunb_col])
+                .attr("viewBox", [0, 0, width_percent_sunb_col, height_percent_sunb_col]).attr("width", width_percent_sunb_col)
                 .append("g")
                 .attr("fill", ods[p.data.name].color)
                 .attr("height", 40);
@@ -539,7 +585,7 @@ function dibujar_sunburst_comuna(data) {
                 .attr("opacity", 1)
                 .attr("font-family", "Arial")
                 .attr("font-size", "2vh")
-                .attr("fill", "#272838");
+                .attr("fill", "#fff");
 
             barritas_meta.append("text")
                 .attr("id", "porcentaje_meta_en_barra")

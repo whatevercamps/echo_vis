@@ -31,6 +31,8 @@ function dibujar_sunburst(data) {
     //def titulo
     var titulo_src = "assets/pregunta-medellin.svg";
 
+
+    //hombres
     if (
         params["mayor_hombre"] &&
         !params["mayor_mujer"] &&
@@ -39,6 +41,7 @@ function dibujar_sunburst(data) {
         params["joven_hombre"] &&
         !params["joven_mujer"]) titulo_src = "assets/p1-h.svg"
 
+    //mujeres
     else if (
         !params["mayor_hombre"] &&
         params["mayor_mujer"] &&
@@ -47,30 +50,7 @@ function dibujar_sunburst(data) {
         !params["joven_hombre"] &&
         params["joven_mujer"]) titulo_src = "assets/p1-m.svg"
 
-    else if (
-        !params["mayor_hombre"] &&
-        !params["mayor_mujer"] &&
-        params["adulto_hombre"] &&
-        params["adulto_mujer"] &&
-        !params["joven_hombre"] &&
-        !params["joven_mujer"]) titulo_src = "assets/p1-h-m-a.svg"
-
-    else if (
-        !params["mayor_hombre"] &&
-        !params["mayor_mujer"] &&
-        params["adulto_hombre"] &&
-        !params["adulto_mujer"] &&
-        !params["joven_hombre"] &&
-        !params["joven_mujer"]) titulo_src = "assets/p1-h-a.svg"
-
-    else if (
-        !params["mayor_hombre"] &&
-        !params["mayor_mujer"] &&
-        !params["adulto_hombre"] &&
-        params["adulto_mujer"] &&
-        !params["joven_hombre"] &&
-        !params["joven_mujer"]) titulo_src = "assets/p1-m-a.svg"
-
+    //mayores
     else if (
         params["mayor_hombre"] &&
         params["mayor_mujer"] &&
@@ -79,6 +59,25 @@ function dibujar_sunburst(data) {
         !params["joven_hombre"] &&
         !params["joven_mujer"]) titulo_src = "assets/p1-h-m-am.svg"
 
+    //adultos
+    else if (
+        !params["mayor_hombre"] &&
+        !params["mayor_mujer"] &&
+        params["adulto_hombre"] &&
+        params["adulto_mujer"] &&
+        !params["joven_hombre"] &&
+        !params["joven_mujer"]) titulo_src = "assets/p1-h-m-a.svg"
+
+    //jovenes 
+    else if (
+        !params["mayor_hombre"] &&
+        !params["mayor_mujer"] &&
+        !params["adulto_hombre"] &&
+        !params["adulto_mujer"] &&
+        params["joven_hombre"] &&
+        params["joven_mujer"]) titulo_src = "assets/p1-h-m-j.svg"
+
+    //hombres mayores
     else if (
         params["mayor_hombre"] &&
         !params["mayor_mujer"] &&
@@ -87,7 +86,54 @@ function dibujar_sunburst(data) {
         !params["joven_hombre"] &&
         !params["joven_mujer"]) titulo_src = "assets/p1-h-am.svg"
 
-        
+    //hombres adultos
+    else if (
+        !params["mayor_hombre"] &&
+        !params["mayor_mujer"] &&
+        params["adulto_hombre"] &&
+        !params["adulto_mujer"] &&
+        !params["joven_hombre"] &&
+        !params["joven_mujer"]) titulo_src = "assets/p1-h-a.svg"
+
+    //hombres jovenes
+    else if (
+        !params["mayor_hombre"] &&
+        !params["mayor_mujer"] &&
+        !params["adulto_hombre"] &&
+        !params["adulto_mujer"] &&
+        params["joven_hombre"] &&
+        !params["joven_mujer"]) titulo_src = "assets/p1-h-j.svg"
+
+
+    //mujeres mayores
+    else if (
+        !params["mayor_hombre"] &&
+        params["mayor_mujer"] &&
+        !params["adulto_hombre"] &&
+        !params["adulto_mujer"] &&
+        !params["joven_hombre"] &&
+        !params["joven_mujer"]) titulo_src = "assets/p1-m-am.svg"
+
+    //mujeres adultos
+    else if (
+        !params["mayor_hombre"] &&
+        !params["mayor_mujer"] &&
+        !params["adulto_hombre"] &&
+        params["adulto_mujer"] &&
+        !params["joven_hombre"] &&
+        !params["joven_mujer"]) titulo_src = "assets/p1-m-a.svg"
+
+    //mujeres jovenes
+    else if (
+        !params["mayor_hombre"] &&
+        !params["mayor_mujer"] &&
+        !params["adulto_hombre"] &&
+        !params["adulto_mujer"] &&
+        !params["joven_hombre"] &&
+        params["joven_mujer"]) titulo_src = "assets/p1-m-j.svg"
+
+
+
 
     d3.select("#titulo_primera_pregunta").attr("src", titulo_src)
     //fin def 
@@ -512,7 +558,7 @@ function dibujar_sunburst(data) {
 
             const bounds_sunburst_barrita_col = sunburst_barrita_col.node().getBoundingClientRect();
 
-            const width_percent_sunb_col = bounds_sunburst_barrita_col.width;
+            const width_percent_sunb_col_p1 = bounds_sunburst_barrita_col.width - bounds_sunburst_barrita_col.width*20/100;
             const height_percent_sunb_col = bounds_sunburst_barrita_col.height;
 
             //console.log(bounds_sunburst_barrita_col)
@@ -526,11 +572,11 @@ function dibujar_sunburst(data) {
             });
 
             scale_per_barrita_sun = d3.scaleLinear()
-                .domain([0, max_meta.value]).range([0, width_percent_sunb_col - (width_percent_sunb_col / 100) * 20])
+                .domain([0, max_meta.value]).range([0, width_percent_sunb_col_p1 - (width_percent_sunb_col_p1 / 100) * 20])
 
             meta_seleccionada_primera = max_meta.data.name
             barritas_meta = d3.selectAll('.perc_barras_metas_sun').data(p.children.slice(0, 1)).join().append("svg")
-                .attr("viewBox", [0, 0, width_percent_sunb_col, height_percent_sunb_col])
+                .attr("id", "barritas_svg").attr("viewBox", [0, 0, width_percent_sunb_col_p1, height_percent_sunb_col]).attr("width", width_percent_sunb_col_p1)
                 .append("g")
                 .attr("fill", ods[p.data.name].color)
                 .attr("height", 40);

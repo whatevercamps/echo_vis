@@ -3,6 +3,8 @@ var svg_burbujas;
 var xx_burb;
 var data_burb;
 var force;
+
+
 d3.json('https://raw.githubusercontent.com/whatevercamps/graph_jsons_tw_unfpa/master/ods.json').then(res_ods => {
     odss_res = res_ods;
 });
@@ -21,7 +23,7 @@ function dibujar_burbujas(res_hist) {
     const height_col_burb = bounds_div_burb.height / 2;
     const body_width = d3.select('#sect2').node().getBoundingClientRect().width;
     const body_height = d3.select('#sect2').node().getBoundingClientRect().height;
-    const radio_calc = d3.scalePow().exponent(0.8).domain([0, d3.max(histograma, d => d.value)]).range([10, height_col_burb / 6]);
+    const radio_calc = d3.scalePow().exponent(0.7).domain([0, d3.max(histograma, d => d.value)]).range([10, height_col_burb / 6]);
     iwidth = width_col_burb / 2 - margin.left - margin.right;
     iheight = height_col_burb - margin.top - margin.bottom;
     // div_burb.select("svg").remove();
@@ -29,11 +31,12 @@ function dibujar_burbujas(res_hist) {
 
     if (xx_burb) {
         pie_st = [true, true];
-        d3.selectAll('.node')
+        let nodos = d3.selectAll('.node')
             .transition().duration(2000)
             .tween('radius', function (d) {
                 var that = d3.select(this);
                 const ods = histograma.find(x => x.name == d.id);
+
                 var i = d3.interpolate(d.radius, radio_calc(parseInt((ods ? ods['value'] : 0) || 0)));
                 return function (t) {
                     d.radius = i(t);
@@ -42,7 +45,25 @@ function dibujar_burbujas(res_hist) {
                     });
                     force.nodes(data_burb)
                 }
-            });
+            });     
+            
+        
+            
+            d3.selectAll(".text_node")
+            .transition().duration(500)
+            .attr("opacity", 0)
+            .text(function (d, i) {
+                console.log("text_burb", d)
+                if (histograma[0] && histograma[1] && histograma[2]) {
+                    if (d.id == histograma[0].name || d.id == histograma[1].name || d.id == histograma[2].name) {
+                        return d.percent;
+                    }
+                }
+            })
+            .transition().delay(500).duration(500)
+            .attr("opacity", 1)
+            .style('fill', '#fff')
+            .style('font-size', '20px');
 
         force.alpha(1).restart();
 
@@ -65,6 +86,7 @@ function dibujar_burbujas(res_hist) {
                 id: `ods_${d + 1}`,
                 name: `ods ${d + 1}`,
                 marked: false,
+                percent: (ods ? (ods['porcentaje']*100).toFixed(0) + '%' : 0) || 0,
                 value: (ods ? parseInt(ods['value']) : 0) || 0
             }
         });
@@ -111,7 +133,7 @@ function dibujar_burbujas(res_hist) {
                         return d.y;
                     })
                     .attr('x', function (d) {
-                        return d.x - d.radius / 5;
+                        return d.x - d.radius / 3;
                     })
                     .attr('y', function (d) {
                         return d.y;
@@ -160,13 +182,20 @@ function dibujar_burbujas(res_hist) {
         const circle_is = circle.append('circle').classed('inside', true).attr('r', 5)
             .attr("fill", d => '#ddd');
 
-        // node.append("text")
-        //     .attr("class", "text_node")
-        //     .text(function (d, i) {
-        //         return d.value;
-        //     })
-        //     .style('fill', '#000')
-        //     .style('font-size', '12px')
+        console.log("supuesto histograma", histograma)
+
+        node.append("text")
+            .attr("class", "text_node")
+            .text(function (d, i) {
+                console.log("burb", d)
+                if (histograma[0] && histograma[1] && histograma[2]) {
+                    if (d.id == histograma[0].name || d.id == histograma[1].name || d.id == histograma[2].name) {
+                        return d.percent;
+                    }
+                }
+            })
+            .style('fill', '#fff')
+            .style('font-size', '20px')
 
         force.nodes(data_burb)
             .alpha(1)
