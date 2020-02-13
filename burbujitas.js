@@ -56,7 +56,8 @@ function dibujar_burbujas(res_hist) {
                 console.log("text_burb", d)
                 if (histograma[0] && histograma[1] && histograma[2]) {
                     if (d.id == histograma[0].name || d.id == histograma[1].name || d.id == histograma[2].name) {
-                        return d.percent;
+                        var por= histograma.filter(h => h.name==d.id)[0].porcentaje;
+                        return  (por*100).toFixed(0) + '%'
                     }
                 }
             })
