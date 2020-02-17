@@ -152,7 +152,7 @@ function click_filtro(command) {
         d3.select("#mayor_hombre").style("fill-opacity", 1)
         d3.select("#mayor_mujer").style("fill-opacity", 1)
 
-    } else if (this == "restart") {
+    } else if (command == "restart") {
         
         for(key in params){
             if (params[key]){
@@ -174,17 +174,7 @@ function click_filtro(command) {
         d3.select("#todo_adultos").style("fill-opacity", 0.7)
         d3.select("#todo_mayores").style("fill-opacity", 0.7)
         d3.select("#todo_jovenes").style("fill-opacity", 0.7)
-    } else if (command == "restart") {
-        
-        for(key in params){
-            if (params[key]){
-                
-                params[key] = false
-                d3.select("#" + key).style("fill-opacity", 0.7)
-
-            }
-        }
-    }
+    } 
 
     else {
 
