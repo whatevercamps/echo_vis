@@ -30,7 +30,7 @@ function subir_scroll() {
             break;
         case 1:
             d3.select("#flechita").transition().duration(100).style("opacity",1)
-            d3.select("#titulo_footer").text("¿Cuál es el problema principal de su comuna?")
+            d3.select("#titulo_footer").text("¿Cuál es el problema principal de su comuna o corregimiento?")
             break;
         case 2:
             d3.select("#titulo_footer").text("")
@@ -56,7 +56,7 @@ function bajar_scroll() {
                 d3.select("#titulo_footer").text("¿Cuál es el problema principal de Medellín?")
             break;
         case 1:
-            d3.select("#titulo_footer").text("¿Cuál es el problema principal por comuna?")
+            d3.select("#titulo_footer").text("¿Cuál es el problema principal por comuna o corregimiento?")
             break;
         case 2:
             d3.select("#flechita").transition().duration(100).style("opacity",0)

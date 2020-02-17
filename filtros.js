@@ -33,8 +33,7 @@ var respuesta = [0];
 var numero = 40;
 var req = { sexos: sexos, edades: edades, respuesta: respuesta, numero: numero };
 
-function click_filtro() {
-
+function click_filtro(command) {
 
 
 
@@ -175,6 +174,16 @@ function click_filtro() {
         d3.select("#todo_adultos").style("fill-opacity", 0.7)
         d3.select("#todo_mayores").style("fill-opacity", 0.7)
         d3.select("#todo_jovenes").style("fill-opacity", 0.7)
+    } else if (command == "restart") {
+        
+        for(key in params){
+            if (params[key]){
+                
+                params[key] = false
+                d3.select("#" + key).style("fill-opacity", 0.7)
+
+            }
+        }
     }
 
     else {
@@ -318,4 +327,6 @@ function postData(url = '', data) {
         );
 
 }
+
+d3.select("#resetFil").on('click', d => click_filtro("restart"))
 
